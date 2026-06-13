@@ -1,0 +1,13 @@
+name: PMC Open Access API Rate Limits
+description: >
+  NCBI does not publish specific numeric rate limits for the PMC OA Service.
+  Standard responsible-use guidelines apply. For bulk harvesting, the
+  OAI-PMH service is recommended over repeated OA Service calls.
+provider: National Center for Biotechnology Information (NCBI) / PMC
+url: https://pmc.ncbi.nlm.nih.gov/tools/oa-service/
+
+guidelines:
+  - Use incremental date-range harvesting with the cursor parameter
+  - Do not submit excessive concurrent requests
+  - For bulk needs use the PMC OAI-PMH service or FTP bulk downloads
+  - FTP bulk data: https://ftp.ncbi.nlm.nih.gov/pub/pmc/

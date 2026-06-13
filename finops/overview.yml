@@ -1,0 +1,63 @@
+name: NCBI APIs Financial Overview
+description: >
+  All NCBI public APIs are provided free of charge as a public service of the
+  National Library of Medicine (NLM) and National Institutes of Health (NIH),
+  funded by the US federal government. There are no subscription fees, usage
+  fees, or data egress charges. API keys are also free. The only financial
+  consideration for high-volume users is the cost of their own infrastructure
+  for processing and storing retrieved data.
+provider: National Center for Biotechnology Information (NCBI)
+url: https://www.ncbi.nlm.nih.gov/home/develop/
+
+funding:
+  model: US Federal Government (NIH / NLM)
+  cost: Free to all users worldwide
+
+apis:
+
+  - name: E-utilities (Entrez)
+    cost: Free
+    apiKey: Free (no-cost registration via NCBI account)
+    notes: >
+      API key raises rate limits from 3 to 10 req/s. Higher limits
+      negotiable at no cost upon request to NCBI.
+
+  - name: BLAST URL API
+    cost: Free
+    apiKey: Not required
+    notes: >
+      Standard BLAST searches on NCBI servers at no charge. Cloud BLAST
+      execution costs depend on the cloud provider chosen by the user.
+
+  - name: NCBI Datasets API
+    cost: Free
+    apiKey: Free (shared with E-utilities key)
+    notes: >
+      Data package downloads are free. Bandwidth costs for very large
+      genome downloads may apply to the user's own cloud egress.
+
+  - name: PubChem PUG REST
+    cost: Free
+    apiKey: Not required
+    notes: >
+      Bulk needs served by free FTP downloads to avoid rate-limit constraints.
+
+  - name: PMC OA Service
+    cost: Free
+    apiKey: Not required
+
+  - name: PMC ID Converter
+    cost: Free
+    apiKey: Not required
+
+  - name: PMC OAI-PMH
+    cost: Free
+    apiKey: Not required
+
+costOptimization:
+  - Use API keys to raise E-utilities rate limits without cost
+  - Schedule large jobs during off-peak hours (nights/weekends)
+  - Use batch requests (EPost + EFetch) to reduce total request count
+  - Cache responses locally to avoid redundant API calls
+  - Use FTP bulk downloads for very large datasets instead of the REST API
+  - Use OAI-PMH resumption tokens for efficient PMC full-archive harvesting

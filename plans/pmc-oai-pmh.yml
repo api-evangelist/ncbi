@@ -1,0 +1,22 @@
+name: PMC OAI-PMH Service Plans
+description: >
+  The PMC OAI-PMH service is free to use and follows the standard OAI-PMH 2.0
+  protocol. It is intended for metadata and full-text harvesting of the PMC archive.
+provider: National Center for Biotechnology Information (NCBI) / PMC
+url: https://pmc.ncbi.nlm.nih.gov/tools/oai/
+
+plans:
+
+  - name: Public (Free)
+    description: >
+      Free, unauthenticated OAI-PMH 2.0 harvesting. Supports incremental
+      harvesting using datestamp ranges and resumption tokens for large
+      result sets. Full text available for Creative Commons licensed articles.
+    free: true
+    features:
+      - OAI-PMH 2.0 protocol compliance
+      - Metadata harvesting for all PMC articles
+      - Full-text harvesting for Creative Commons licensed content
+      - Incremental harvesting with datestamp ranges
+      - Resumption tokens for large record sets
+      - Dublin Core and custom NCBI metadata formats

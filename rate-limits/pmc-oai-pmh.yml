@@ -1,0 +1,14 @@
+name: PMC OAI-PMH Service Rate Limits
+description: >
+  NCBI does not publish specific numeric rate limits for the PMC OAI-PMH
+  service. The OAI-PMH protocol's resumption token mechanism is built for
+  large incremental harvests; clients should pace requests and not hammer
+  the server with rapid consecutive resumption calls.
+provider: National Center for Biotechnology Information (NCBI) / PMC
+url: https://pmc.ncbi.nlm.nih.gov/tools/oai/
+
+guidelines:
+  - Use resumption tokens for large harvests rather than small date ranges
+  - Pause between resumption token requests (recommended: a few seconds)
+  - Harvest incrementally using the from/until datestamp parameters
+  - Avoid full re-harvests when incremental updates suffice

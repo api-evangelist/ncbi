@@ -1,0 +1,21 @@
+name: PMC ID Converter API Plans
+description: >
+  The PMC ID Converter API is free to use with no authentication required.
+  It supports batch conversion between PMCID, PMID, Manuscript ID, and DOI.
+provider: National Center for Biotechnology Information (NCBI) / PMC
+url: https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/
+
+plans:
+
+  - name: Public (Free)
+    description: >
+      Free, unauthenticated batch identifier conversion. Submit one or more
+      identifiers of any supported type and receive equivalents in all other
+      supported types.
+    free: true
+    features:
+      - PMCID to PMID, DOI, Manuscript ID conversion
+      - PMID to PMCID, DOI conversion
+      - DOI to PMCID, PMID conversion
+      - Batch requests (multiple identifiers per call)
+      - JSON and XML response formats

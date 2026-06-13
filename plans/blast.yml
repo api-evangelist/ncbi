@@ -1,0 +1,23 @@
+name: NCBI BLAST URL API Plans
+description: >
+  The NCBI BLAST URL API is free to use with no API key required. Responsible
+  use guidelines apply; automated large-scale submissions should be throttled
+  appropriately to avoid overloading NCBI servers.
+provider: National Center for Biotechnology Information (NCBI)
+url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
+
+plans:
+
+  - name: Public (Free)
+    description: >
+      Open, unauthenticated access for submitting BLAST search requests,
+      polling job status, and retrieving results in XML, JSON, tabular, or
+      HTML formats. NCBI requests that automated clients include a meaningful
+      email address in requests and avoid submitting excessive concurrent jobs.
+    free: true
+    features:
+      - HTTPS job submission (Put request)
+      - Asynchronous job status polling (Get request)
+      - Result retrieval in XML, JSON, tabular, and HTML formats
+      - Cloud-based processing option
+      - All BLAST program variants (blastn, blastp, blastx, tblastn, tblastx)

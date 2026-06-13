@@ -1,0 +1,22 @@
+name: PMC Open Access API Plans
+description: >
+  The PMC Open Access API (OA Service) is free to use with no authentication
+  required. It is intended for retrieving open-access article metadata and
+  file locations from the PubMed Central archive.
+provider: National Center for Biotechnology Information (NCBI) / PMC
+url: https://pmc.ncbi.nlm.nih.gov/tools/oa-service/
+
+plans:
+
+  - name: Public (Free)
+    description: >
+      Free, unauthenticated access to Open Access article citation data,
+      licensing information, and FTP file locations. Supports queries by
+      PMCID with optional date range filtering.
+    free: true
+    features:
+      - Citation metadata retrieval by PMCID
+      - Article license type information
+      - FTP and HTTPS download links for full-text XML and PDF
+      - Date-range cursor support for incremental harvesting
+      - XML response format

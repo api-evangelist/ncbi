@@ -1,0 +1,40 @@
+name: NCBI E-utilities API Plans
+description: >
+  The NCBI E-utilities API is free to use. Access tiers are differentiated
+  by API key registration. All plans are no-cost; the API key raises the
+  per-second rate limit and enables higher-volume access upon request.
+provider: National Center for Biotechnology Information (NCBI)
+url: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+
+plans:
+
+  - name: Anonymous (No API Key)
+    description: >
+      Unauthenticated access to all nine E-utilities endpoints. Suitable for
+      interactive queries and low-volume integrations. No registration required.
+    free: true
+    rateLimit:
+      requests: 3
+      period: second
+    features:
+      - Access to all 38 Entrez databases
+      - ESearch, EFetch, ESummary, ELink, EInfo, EPost, EGQuery, ESpell, ECitMatch
+      - JSON and XML response formats
+      - Entrez History Server support (WebEnv / query_key)
+
+  - name: Registered API Key
+    description: >
+      Free API key obtained from NCBI account settings. Raises the default
+      rate limit to 10 requests per second. Higher limits are available upon
+      request by emailing NCBI. Requires registering a tool name and contact
+      email in request parameters.
+    free: true
+    rateLimit:
+      requests: 10
+      period: second
+    features:
+      - All Anonymous tier features
+      - API key parameter (&api_key=) in requests
+      - Higher rate limits available on request
+      - Priority during peak hours
+    registration: https://www.ncbi.nlm.nih.gov/account/

@@ -1,0 +1,28 @@
+name: NCBI Datasets API Rate Limits
+description: >
+  The NCBI Datasets v2 REST API shares the same API key and rate-limit
+  framework as E-utilities. Anonymous access is permitted at 3 requests
+  per second per IP; an NCBI API key raises this to 10 per second.
+provider: National Center for Biotechnology Information (NCBI)
+url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+
+tiers:
+
+  - name: Without API Key
+    requests:
+      limit: 3
+      period: second
+      scope: ip
+
+  - name: With NCBI API Key
+    requests:
+      limit: 10
+      period: second
+      scope: ip
+    notes: >
+      Supply the same API key used for E-utilities via the api_key query
+      parameter or the api-key HTTP header.
+
+notes: >
+  For large-scale downloads, NCBI recommends using the Datasets command-line
+  tool or bulk FTP access rather than the REST API, to reduce server load.

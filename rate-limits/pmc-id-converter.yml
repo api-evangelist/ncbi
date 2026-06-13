@@ -1,0 +1,12 @@
+name: PMC ID Converter API Rate Limits
+description: >
+  NCBI does not publish specific numeric rate limits for the PMC ID Converter
+  API. Standard responsible-use guidelines apply. Batch requests are supported
+  to minimize the number of API calls needed.
+provider: National Center for Biotechnology Information (NCBI) / PMC
+url: https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/
+
+guidelines:
+  - Use batch requests to convert multiple identifiers in a single call
+  - Avoid excessive polling or repeated identical queries
+  - Cache conversion results locally to reduce API traffic

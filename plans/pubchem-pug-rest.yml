@@ -1,0 +1,29 @@
+name: PubChem PUG REST API Plans
+description: >
+  The PubChem PUG REST API is free to use with no registration required.
+  Rate limits are enforced per IP address to ensure fair use. For high-volume
+  needs, users are directed to download PubChem FTP data dumps.
+provider: National Center for Biotechnology Information (NCBI) / PubChem
+url: https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
+
+plans:
+
+  - name: Public (Free)
+    description: >
+      Unauthenticated, free access to compound, substance, and bioassay data.
+      Queries support lookup by name, CID, SID, AID, SMILES, InChI, and
+      structure similarity. Responses available in JSON, XML, CSV, and SDF.
+    free: true
+    rateLimit:
+      note: >
+        PubChem recommends no more than 5 requests per second per IP and
+        no more than 400 requests per minute. Large-scale needs should use
+        FTP bulk downloads.
+    features:
+      - Compound lookup by name, CID, SMILES, InChI
+      - Substance and bioassay retrieval
+      - Property tables (molecular weight, formula, etc.)
+      - Synonyms and cross-references
+      - Structure search (substructure, similarity)
+      - JSON, XML, SDF, CSV response formats
+      - Integration with E-utilities cross-database links

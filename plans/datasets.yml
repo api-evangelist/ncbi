@@ -1,0 +1,25 @@
+name: NCBI Datasets API Plans
+description: >
+  The NCBI Datasets v2 REST API is free to use. It follows the same
+  authentication and rate-limit model as E-utilities when an NCBI API key
+  is provided; anonymous use is also permitted.
+provider: National Center for Biotechnology Information (NCBI)
+url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+
+plans:
+
+  - name: Public (Free)
+    description: >
+      Free, open access to gene, genome, taxonomy, virus, and ortholog datasets.
+      Data packages are delivered as zip archives containing FASTA, GFF3, and
+      JSON summary files. The OpenAPI 3.0 specification is publicly available
+      for client code generation.
+    free: true
+    features:
+      - Gene data downloads (by gene ID, symbol, taxon)
+      - Genome data downloads (by assembly accession, taxon)
+      - Taxonomy data (lineage, names)
+      - Virus sequence sets
+      - Ortholog sets
+      - OpenAPI 3.0 specification for client generation
+      - Same API key as E-utilities for higher rate limits

@@ -1,0 +1,32 @@
+name: PubChem PUG REST API Rate Limits
+description: >
+  PubChem enforces rate limits per IP address to ensure fair access. No API
+  key is required. For high-volume data needs, PubChem recommends using FTP
+  bulk data downloads rather than the REST API.
+provider: National Center for Biotechnology Information (NCBI) / PubChem
+url: https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
+
+tiers:
+
+  - name: Public (No Key Required)
+    requests:
+      limit: 5
+      period: second
+      scope: ip
+    monthly:
+      limit: 400
+      period: minute
+      scope: ip
+    notes: >
+      Exceeding limits results in HTTP 503 responses. PubChem may throttle
+      or temporarily block IPs that consistently exceed guidelines.
+
+guidelines:
+  - No more than 5 requests per second per IP
+  - No more than 400 requests per minute per IP
+  - Avoid submitting multiple concurrent requests from a single IP
+  - For bulk data needs use PubChem FTP: https://ftp.ncbi.nlm.nih.gov/pubchem/
+
+enforcement:
+  - HTTP 503 Service Unavailable returned when limits exceeded
+  - Persistent violators may be temporarily or permanently blocked

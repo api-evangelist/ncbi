@@ -1,0 +1,48 @@
+name: NCBI E-utilities API Rate Limits
+description: >
+  E-utilities rate limits are enforced per IP address. An NCBI API key raises
+  the limit from 3 to 10 requests per second. Higher limits are available
+  upon request. Large automated jobs should run on weekends or between
+  9 PM and 5 AM ET on weekdays to minimize impact on NCBI servers.
+provider: National Center for Biotechnology Information (NCBI)
+url: https://www.ncbi.nlm.nih.gov/books/NBK25497/#chapter2.Usage_Guidelines_and_Requiremen
+
+tiers:
+
+  - name: Without API Key
+    requests:
+      limit: 3
+      period: second
+      scope: ip
+    notes: >
+      Exceeding the limit returns {"error":"API rate limit exceeded"}.
+      IP addresses that persistently exceed limits may be blocked.
+
+  - name: With API Key (Default)
+    requests:
+      limit: 10
+      period: second
+      scope: ip
+    notes: >
+      API key must be included as &api_key=YOUR_KEY in every request.
+      One API key per NCBI account; regenerating a key invalidates the old one.
+
+  - name: With API Key (Higher Rate – On Request)
+    requests:
+      limit: negotiated
+      period: second
+      scope: ip
+    notes: >
+      Contact NCBI at vog.hin.mln.ibcn@seitilitue to request a higher rate.
+      Required registration of tool name and email in all requests.
+
+scheduling:
+  recommendation: >
+    NCBI requests that large batch jobs be scheduled on weekends or between
+    9:00 PM and 5:00 AM US Eastern Time on weekdays.
+  endpoint: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+
+enforcement:
+  - Requests exceeding limits receive an HTTP error response
+  - Persistent violators may have their IP address blocked
+  - Recovery requires contacting NCBI and registering tool/email parameters

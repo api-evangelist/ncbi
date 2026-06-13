@@ -1,0 +1,20 @@
+name: NCBI BLAST URL API Rate Limits
+description: >
+  NCBI does not publish explicit numeric rate limits for the BLAST URL API.
+  Users are expected to follow responsible-use guidelines: submit jobs
+  asynchronously, poll for status at reasonable intervals (no less than
+  every 60 seconds for long-running jobs), and avoid submitting large
+  volumes of concurrent searches.
+provider: National Center for Biotechnology Information (NCBI)
+url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
+
+guidelines:
+  - Submit jobs asynchronously using the two-step Put/Get pattern
+  - Poll for status no more frequently than every 60 seconds
+  - Include a valid email address in all automated requests
+  - Avoid submitting more than 20 concurrent BLAST jobs
+  - For bulk sequence analysis, consider using standalone BLAST+
+
+enforcement:
+  - Automated clients that violate guidelines may be blocked
+  - NCBI reserves the right to limit or terminate access for misuse
