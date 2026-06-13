@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kinlane.github.io/ncbi/json-schema/v2OrthologRequest.json",
+  "title": "v2OrthologRequest",
+  "description": "Schema for v2OrthologRequest",
+  "type": "object",
+  "properties": {
+    "gene_id": {
+      "type": "integer",
+      "title": "One or more NCBI GeneIDs"
+    },
+    "returned_content": {
+      "$ref": "#/components/schemas/v2OrthologRequestContentType",
+      "title": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+    },
+    "taxon_filter": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "page_size": {
+      "type": "integer",
+      "title": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+    },
+    "page_token": {
+      "type": "string",
+      "title": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+    }
+  }
+}

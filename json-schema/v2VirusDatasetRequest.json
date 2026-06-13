@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kinlane.github.io/ncbi/json-schema/v2VirusDatasetRequest.json",
+  "title": "v2VirusDatasetRequest",
+  "description": "Schema for v2VirusDatasetRequest",
+  "type": "object",
+  "properties": {
+    "accessions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "taxon": {
+      "type": "string",
+      "title": "NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+    },
+    "taxons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "refseq_only": {
+      "type": "boolean",
+      "title": "If true, limit results to RefSeq genomes."
+    },
+    "annotated_only": {
+      "type": "boolean",
+      "title": "If true, limit results to annotated genomes."
+    },
+    "released_since": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_since": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "host": {
+      "type": "string",
+      "title": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+    },
+    "pangolin_classification": {
+      "type": "string",
+      "title": "Limit to SARS-CoV-2 genomes from the specified Pango lineage."
+    },
+    "geo_location": {
+      "type": "string",
+      "title": "Limit to genomes collected from the specified geographic location."
+    },
+    "usa_state": {
+      "type": "string",
+      "title": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+    },
+    "complete_only": {
+      "type": "boolean",
+      "title": "Limit to genomes designated as complete, as defined by the submitter."
+    },
+    "table_fields": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2VirusTableField"
+      }
+    },
+    "include_sequence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2ViralSequenceType"
+      }
+    },
+    "aux_report": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2VirusDatasetReportType"
+      }
+    },
+    "format": {
+      "$ref": "#/components/schemas/v2TableFormat",
+      "title": "Choose download format (tsv, csv or jsonl)"
+    },
+    "use_psg": {
+      "type": "boolean",
+      "title": "Experimental approach to retrieving sequence data."
+    }
+  }
+}

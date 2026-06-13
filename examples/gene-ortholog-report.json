@@ -1,0 +1,11 @@
+{
+  "title": "Gene Ortholog Dataset Report",
+  "description": "Retrieve ortholog genes across species by gene ID",
+  "path": "/gene/id/{gene_ids}/orthologs/dataset_report",
+  "method": "GET",
+  "baseURL": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+  "parameters": {
+    "gene_ids": "672"
+  },
+  "notes": "Gene ID 672 is BRCA1"
+}

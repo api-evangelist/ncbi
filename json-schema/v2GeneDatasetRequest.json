@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kinlane.github.io/ncbi/json-schema/v2GeneDatasetRequest.json",
+  "title": "v2GeneDatasetRequest",
+  "description": "Schema for v2GeneDatasetRequest",
+  "type": "object",
+  "properties": {
+    "gene_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "include_annotation_type": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2Fasta"
+      }
+    },
+    "returned_content": {
+      "$ref": "#/components/schemas/v2GeneDatasetRequestContentType",
+      "title": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+    },
+    "fasta_filter": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "accession_filter": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "aux_report": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2GeneDatasetRequestGeneDatasetReportType"
+      }
+    },
+    "tabular_reports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2GeneDatasetRequestGeneDatasetReportType"
+      }
+    },
+    "table_fields": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "table_report_type": {
+      "$ref": "#/components/schemas/v2GeneDatasetRequestGeneDatasetReportType",
+      "title": "Specify the report from which the table fields will be taken. This is currently deprecated - use tabular_reports instead."
+    }
+  }
+}

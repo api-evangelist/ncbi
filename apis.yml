@@ -107,7 +107,7 @@ apis:
       - type: documentation
         url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
       - type: openapi
-        url: https://api.ncbi.nlm.nih.gov/datasets/v2/openapi.yaml
+        url: https://raw.githubusercontent.com/ncbi/datasets/master/datasets.openapi.yaml
       - type: rate-limits
         url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
       - type: plans

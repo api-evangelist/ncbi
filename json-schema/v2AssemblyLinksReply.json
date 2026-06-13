@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kinlane.github.io/ncbi/json-schema/v2AssemblyLinksReply.json",
+  "title": "v2AssemblyLinksReply",
+  "description": "Schema for v2AssemblyLinksReply",
+  "type": "object",
+  "properties": {
+    "assembly_links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2AssemblyLinksReplyAssemblyLink"
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Virus Genome Dataset Download",
+  "description": "Download virus genome dataset by taxon",
+  "path": "/virus/taxon/{taxon}/genome/download",
+  "method": "GET",
+  "baseURL": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+  "parameters": {
+    "taxon": "2697049"
+  },
+  "notes": "Taxon 2697049 is SARS-CoV-2"
+}

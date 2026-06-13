@@ -1,0 +1,78 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "ncbi": "https://www.ncbi.nlm.nih.gov/vocab/",
+    "datasets": "https://api.ncbi.nlm.nih.gov/datasets/v2/",
+    "eutils": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+    "blast": "https://blast.ncbi.nlm.nih.gov/blast/Blast.cgi",
+    "pubchem": "https://pubchem.ncbi.nlm.nih.gov/rest/pug",
+    "pmc": "https://pmc.ncbi.nlm.nih.gov/",
+
+    "Organization": "schema:Organization",
+    "WebAPI": "schema:WebAPI",
+    "DataCatalog": "schema:DataCatalog",
+    "Dataset": "schema:Dataset",
+    "Gene": "schema:Gene",
+    "Taxon": "schema:Taxon",
+    "ChemicalSubstance": "schema:ChemicalSubstance",
+    "MolecularEntity": "schema:MolecularEntity",
+    "BioChemEntity": "schema:BioChemEntity",
+
+    "accession": "ncbi:accession",
+    "taxId": "ncbi:taxId",
+    "taxon": "ncbi:taxon",
+    "assemblyAccession": "ncbi:assemblyAccession",
+    "geneId": "ncbi:geneId",
+    "pubmedId": "ncbi:pubmedId",
+    "pmcId": "ncbi:pmcId",
+    "doi": "schema:identifier",
+    "cid": "ncbi:compoundId",
+    "sid": "ncbi:substanceId",
+    "aid": "ncbi:assayId",
+    "smiles": "ncbi:smiles",
+    "inchi": "ncbi:inchi",
+    "inchiKey": "ncbi:inchiKey",
+
+    "eSearch": "eutils:esearch.fcgi",
+    "eFetch": "eutils:efetch.fcgi",
+    "eSummary": "eutils:esummary.fcgi",
+    "eLink": "eutils:elink.fcgi",
+    "eInfo": "eutils:einfo.fcgi",
+    "ePost": "eutils:epost.fcgi",
+    "eSpell": "eutils:espell.fcgi",
+    "eCitMatch": "eutils:ecitmatch.cgi",
+    "eGQuery": "eutils:egquery.fcgi",
+
+    "database": "ncbi:database",
+    "retmode": "ncbi:retmode",
+    "rettype": "ncbi:rettype",
+    "term": "ncbi:searchTerm",
+    "apiKey": "ncbi:apiKey",
+
+    "genomeAssembly": "ncbi:genomeAssembly",
+    "fastaSequence": "ncbi:fastaSequence",
+    "gff3Annotation": "ncbi:gff3Annotation",
+    "sequenceLength": "ncbi:sequenceLength",
+    "chromosomeCount": "ncbi:chromosomeCount",
+    "scaffoldCount": "ncbi:scaffoldCount",
+    "n50": "ncbi:n50",
+    "gcPercent": "ncbi:gcPercent",
+
+    "provider": {
+      "@id": "schema:provider",
+      "@type": "@id"
+    },
+    "documentation": {
+      "@id": "schema:documentation",
+      "@type": "@id"
+    },
+    "license": {
+      "@id": "schema:license",
+      "@type": "@id"
+    },
+    "identifier": "schema:identifier",
+    "name": "schema:name",
+    "description": "schema:description",
+    "url": "schema:url"
+  }
+}

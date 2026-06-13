@@ -1,0 +1,84 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kinlane.github.io/ncbi/json-schema/v2TaxonomyNode.json",
+  "title": "v2TaxonomyNode",
+  "description": "Schema for v2TaxonomyNode",
+  "type": "object",
+  "properties": {
+    "tax_id": {
+      "type": "integer",
+      "title": "NCBI Taxonomy identifier"
+    },
+    "organism_name": {
+      "type": "string",
+      "title": "Scientific name"
+    },
+    "common_name": {
+      "type": "string",
+      "title": "Common name"
+    },
+    "genbank_common_name": {
+      "type": "string",
+      "title": "GenBank common name"
+    },
+    "acronyms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "genbank_acronym": {
+      "type": "string",
+      "title": "GenBank acronym"
+    },
+    "blast_name": {
+      "type": "string",
+      "title": "blast name for organism"
+    },
+    "lineage": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "children": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "descendent_with_described_species_names_count": {
+      "type": "integer",
+      "title": "The number of descendants (grand total) that are specified."
+    },
+    "rank": {
+      "$ref": "#/components/schemas/v2reportsRankType",
+      "title": "The rank of the organism.  An enumerated set of values."
+    },
+    "has_described_species_name": {
+      "type": "boolean",
+      "title": "If the taxonomy node has a proper species name"
+    },
+    "counts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2TaxonomyNodeCountByType"
+      }
+    },
+    "min_ord": {
+      "type": "integer",
+      "title": "ordinal values for any node are the full range of the ordinal values in the subtree underneath this node, and are used for faster range-based lookups"
+    },
+    "max_ord": {
+      "type": "integer"
+    },
+    "extinct": {
+      "type": "boolean",
+      "title": "True if organism is extinct"
+    },
+    "genomic_moltype": {
+      "type": "string",
+      "title": "genomic molecule type (dsDNA, ssDNA, ssDNA(-), ssRNA)"
+    }
+  }
+}

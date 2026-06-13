@@ -1,0 +1,84 @@
+{
+  "@context": "https://kinlane.github.io/ncbi/json-ld/ncbi-context.jsonld",
+  "@type": "Organization",
+  "@id": "https://www.ncbi.nlm.nih.gov/",
+  "name": "National Center for Biotechnology Information (NCBI)",
+  "description": "The National Center for Biotechnology Information (NCBI) provides a suite of free, publicly accessible REST APIs for querying and retrieving biological and biomedical data.",
+  "url": "https://www.ncbi.nlm.nih.gov/",
+  "sameAs": [
+    "https://twitter.com/NCBI",
+    "https://www.youtube.com/user/NCBINLM"
+  ],
+  "parentOrganization": {
+    "@type": "Organization",
+    "@id": "https://www.nlm.nih.gov/",
+    "name": "National Library of Medicine (NLM)",
+    "url": "https://www.nlm.nih.gov/"
+  },
+  "hasAPI": [
+    {
+      "@type": "WebAPI",
+      "@id": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/",
+      "name": "NCBI Entrez E-utilities API",
+      "description": "The Entrez Programming Utilities (E-utilities) are the public API to the NCBI Entrez system, providing access to over 38 Entrez databases including PubMed, GenBank, Gene, Taxonomy, and Protein.",
+      "url": "https://www.ncbi.nlm.nih.gov/books/NBK25497/",
+      "documentation": "https://www.ncbi.nlm.nih.gov/books/NBK25497/",
+      "provider": "https://www.ncbi.nlm.nih.gov/"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://blast.ncbi.nlm.nih.gov/blast/Blast.cgi",
+      "name": "NCBI BLAST URL API",
+      "description": "The BLAST (Basic Local Alignment Search Tool) URL API allows developers to submit nucleotide and protein sequence homology searches via HTTPS.",
+      "url": "https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html",
+      "documentation": "https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html",
+      "provider": "https://www.ncbi.nlm.nih.gov/"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+      "name": "NCBI Datasets API",
+      "description": "The NCBI Datasets v2 REST API provides programmatic access to genomic sequences, gene records, taxonomy data, virus sequences, and ortholog information.",
+      "url": "https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/",
+      "documentation": "https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/",
+      "license": "https://www.ncbi.nlm.nih.gov/home/about/policies/",
+      "provider": "https://www.ncbi.nlm.nih.gov/"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://pubchem.ncbi.nlm.nih.gov/rest/pug",
+      "name": "PubChem PUG REST API",
+      "description": "The PubChem Power User Gateway (PUG) REST API provides programmatic access to PubChem's chemical compound, substance, and bioassay data.",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest",
+      "documentation": "https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest",
+      "provider": "https://www.ncbi.nlm.nih.gov/"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://www.ncbi.nlm.nih.gov/pmc/utils/oa/oa.fcgi",
+      "name": "PMC Open Access API (OA Service)",
+      "description": "The PubMed Central Open Access API retrieves citation data, licensing details, and FTP download locations for Open Access articles in the PMC archive.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/tools/oa-service/",
+      "documentation": "https://pmc.ncbi.nlm.nih.gov/tools/oa-service/",
+      "provider": "https://www.ncbi.nlm.nih.gov/"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://pmc.ncbi.nlm.nih.gov/tools/idconv/api/v1/articles/",
+      "name": "PMC ID Converter API",
+      "description": "The PMC ID Converter API translates between PubMed Central identifiers (PMCID), PubMed identifiers (PMID), Manuscript IDs, and Digital Object Identifiers (DOI).",
+      "url": "https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/",
+      "documentation": "https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/",
+      "provider": "https://www.ncbi.nlm.nih.gov/"
+    },
+    {
+      "@type": "WebAPI",
+      "@id": "https://pmc.ncbi.nlm.nih.gov/api/oai/v1/mh/",
+      "name": "PMC OAI-PMH Service",
+      "description": "The PMC OAI-PMH service allows bulk harvesting of metadata for all items in the PMC archive and full-text content for articles with Creative Commons licenses.",
+      "url": "https://pmc.ncbi.nlm.nih.gov/tools/oai/",
+      "documentation": "https://pmc.ncbi.nlm.nih.gov/tools/oai/",
+      "provider": "https://www.ncbi.nlm.nih.gov/"
+    }
+  ]
+}

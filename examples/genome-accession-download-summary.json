@@ -1,0 +1,15 @@
+{
+  "title": "Genome Accession Download Summary",
+  "description": "Retrieve download summary for genome assemblies by accession",
+  "path": "/genome/accession/{accessions}/download_summary",
+  "method": "GET",
+  "baseURL": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+  "parameters": {
+    "accessions": "GCF_000001405.40"
+  },
+  "example_response_fields": [
+    "assemblies",
+    "hydrated",
+    "dehydrated"
+  ]
+}

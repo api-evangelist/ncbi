@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kinlane.github.io/ncbi/json-schema/v2AssemblyDatasetRequest.json",
+  "title": "v2AssemblyDatasetRequest",
+  "description": "Schema for v2AssemblyDatasetRequest",
+  "type": "object",
+  "properties": {
+    "accessions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "chromosomes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "include_annotation_type": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2AnnotationForAssemblyType"
+      }
+    },
+    "hydrated": {
+      "$ref": "#/components/schemas/v2AssemblyDatasetRequestResolution",
+      "title": "Specify whether to download a hydrated (with sequence and annotation files included) or dehydrated data package. A dehydrated data package includes the assembly data report and `fetch.txt`, which includes paths to the requested data files on NCBI servers."
+    },
+    "include_tsv": {
+      "type": "boolean",
+      "title": "Set to true to include a TSV representation of the data-report."
+    }
+  }
+}

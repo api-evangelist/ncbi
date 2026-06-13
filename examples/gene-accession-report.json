@@ -1,0 +1,14 @@
+{
+  "title": "Gene Accession Report",
+  "description": "Retrieve gene data report by RefSeq accession",
+  "path": "/gene/accession/{accessions}/dataset_report",
+  "method": "GET",
+  "baseURL": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+  "parameters": {
+    "accessions": "NM_000518.5"
+  },
+  "example_response_fields": [
+    "reports",
+    "total_count"
+  ]
+}

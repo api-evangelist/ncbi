@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kinlane.github.io/ncbi/json-schema/v2DownloadSummary.json",
+  "title": "v2DownloadSummary",
+  "description": "Schema for v2DownloadSummary",
+  "type": "object",
+  "properties": {
+    "record_count": {
+      "type": "integer",
+      "title": "The number of records for the requested filter."
+    },
+    "assembly_count": {
+      "type": "integer",
+      "title": "For backwards compatability with old VirusDatasetSummary"
+    },
+    "resource_updated_on": {
+      "type": "string",
+      "format": "date-time",
+      "title": "The latest date on which the resource was updated."
+    },
+    "hydrated": {
+      "$ref": "#/components/schemas/v2DownloadSummaryHydrated"
+    },
+    "dehydrated": {
+      "$ref": "#/components/schemas/v2DownloadSummaryDehydrated"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2reportsError"
+      }
+    },
+    "messages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2reportsMessage"
+      }
+    },
+    "available_files": {
+      "$ref": "#/components/schemas/v2DownloadSummaryAvailableFiles"
+    }
+  }
+}

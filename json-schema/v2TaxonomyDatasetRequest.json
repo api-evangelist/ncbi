@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://kinlane.github.io/ncbi/json-schema/v2TaxonomyDatasetRequest.json",
+  "title": "v2TaxonomyDatasetRequest",
+  "description": "Schema for v2TaxonomyDatasetRequest",
+  "type": "object",
+  "properties": {
+    "tax_ids": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "aux_reports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/v2TaxonomyDatasetRequestTaxonomyReportType"
+      }
+    }
+  }
+}

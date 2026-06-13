@@ -1,0 +1,11 @@
+{
+  "title": "Taxonomy Name Report",
+  "description": "Retrieve taxonomy data by organism name",
+  "path": "/taxonomy/taxon/{taxons}/dataset_report",
+  "method": "GET",
+  "baseURL": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+  "parameters": {
+    "taxons": "9606"
+  },
+  "notes": "Taxon can be scientific name, common name, or NCBI Taxonomy ID"
+}
