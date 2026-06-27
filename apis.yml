@@ -46,13 +46,13 @@ apis:
       - Sequences
       - Literature
     properties:
-      - type: documentation
+      - type: Documentation
         url: https://www.ncbi.nlm.nih.gov/books/NBK25497/
-      - type: quickstart
+      - type: GettingStarted
         url: https://www.ncbi.nlm.nih.gov/books/NBK25500/
-      - type: rate-limits
+      - type: RateLimits
         url: https://kinlane.github.io/ncbi/rate-limits/e-utilities.yml
-      - type: plans
+      - type: Plans
         url: https://kinlane.github.io/ncbi/plans/e-utilities.yml
     contact:
       - FN: NCBI E-utilities Support
@@ -76,11 +76,11 @@ apis:
       - Homology
       - Genomics
     properties:
-      - type: documentation
+      - type: Documentation
         url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
-      - type: rate-limits
+      - type: RateLimits
         url: https://kinlane.github.io/ncbi/rate-limits/blast.yml
-      - type: plans
+      - type: Plans
         url: https://kinlane.github.io/ncbi/plans/blast.yml
     contact:
       - FN: NCBI BLAST Support
@@ -104,13 +104,13 @@ apis:
       - Virus
       - Genome
     properties:
-      - type: documentation
+      - type: Documentation
         url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
-      - type: openapi
+      - type: OpenAPI
         url: https://raw.githubusercontent.com/ncbi/datasets/master/datasets.openapi.yaml
-      - type: rate-limits
+      - type: RateLimits
         url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
-      - type: plans
+      - type: Plans
         url: https://kinlane.github.io/ncbi/plans/datasets.yml
     contact:
       - FN: NCBI Datasets Support
@@ -135,11 +135,11 @@ apis:
       - Structures
       - Bioassay
     properties:
-      - type: documentation
+      - type: Documentation
         url: https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
-      - type: rate-limits
+      - type: RateLimits
         url: https://kinlane.github.io/ncbi/rate-limits/pubchem-pug-rest.yml
-      - type: plans
+      - type: Plans
         url: https://kinlane.github.io/ncbi/plans/pubchem-pug-rest.yml
     contact:
       - FN: PubChem Support
@@ -161,11 +161,11 @@ apis:
       - Literature
       - PMC
     properties:
-      - type: documentation
+      - type: Documentation
         url: https://pmc.ncbi.nlm.nih.gov/tools/oa-service/
-      - type: rate-limits
+      - type: RateLimits
         url: https://kinlane.github.io/ncbi/rate-limits/pmc-oa.yml
-      - type: plans
+      - type: Plans
         url: https://kinlane.github.io/ncbi/plans/pmc-oa.yml
     contact:
       - FN: PMC Support
@@ -187,11 +187,11 @@ apis:
       - PMID
       - PMCID
     properties:
-      - type: documentation
+      - type: Documentation
         url: https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/
-      - type: rate-limits
+      - type: RateLimits
         url: https://kinlane.github.io/ncbi/rate-limits/pmc-id-converter.yml
-      - type: plans
+      - type: Plans
         url: https://kinlane.github.io/ncbi/plans/pmc-id-converter.yml
     contact:
       - FN: PMC Support
@@ -214,34 +214,34 @@ apis:
       - Literature
       - Open Access
     properties:
-      - type: documentation
+      - type: Documentation
         url: https://pmc.ncbi.nlm.nih.gov/tools/oai/
-      - type: rate-limits
+      - type: RateLimits
         url: https://kinlane.github.io/ncbi/rate-limits/pmc-oai-pmh.yml
-      - type: plans
+      - type: Plans
         url: https://kinlane.github.io/ncbi/plans/pmc-oai-pmh.yml
     contact:
       - FN: PMC Support
         url: https://support.nlm.nih.gov/support/create-case/
 
 common:
-  - type: authentication
+  - type: Authentication
     url: https://www.ncbi.nlm.nih.gov/account/
-  - type: developer-portal
+  - type: DeveloperPortal
     url: https://www.ncbi.nlm.nih.gov/home/develop/
-  - type: terms-of-service
+  - type: TermsOfService
     url: https://www.ncbi.nlm.nih.gov/home/about/policies/
-  - type: support
+  - type: Support
     url: https://support.nlm.nih.gov/support/create-case/
   - type: status
     url: https://ncbiinsights.ncbi.nlm.nih.gov/
-  - type: blog
+  - type: Blog
     url: https://ncbiinsights.ncbi.nlm.nih.gov/
-  - type: twitter
+  - type: Twitter
     url: https://twitter.com/NCBI
-  - type: youtube
+  - type: YouTube
     url: https://www.youtube.com/user/NCBINLM
-  - type: finops
+  - type: FinOps
     url: https://kinlane.github.io/ncbi/finops/overview.yml
 
 maintainers:
