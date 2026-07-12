@@ -225,6 +225,10 @@ apis:
         url: https://support.nlm.nih.gov/support/create-case/
 
 common:
+  - type: DomainSecurity
+    url: security/ncbi-domain-security.yml
+  - type: Authentication
+    url: authentication/ncbi-authentication.yml
   - type: Authentication
     url: https://www.ncbi.nlm.nih.gov/account/
   - type: DeveloperPortal
