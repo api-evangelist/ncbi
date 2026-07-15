@@ -225,6 +225,8 @@ apis:
         url: https://support.nlm.nih.gov/support/create-case/
 
 common:
+  - type: AgenticAccess
+    url: agentic-access/ncbi-agentic-access.yml
   - type: DomainSecurity
     url: security/ncbi-domain-security.yml
   - type: Authentication
