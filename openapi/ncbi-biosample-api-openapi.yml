@@ -1,0 +1,452 @@
+openapi: 3.0.1
+info:
+  title: NCBI Datasets BioSample API
+  version: v2
+  description: '### NCBI Datasets is a resource that lets you easily gather data from NCBI.
+
+    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.
+
+    '
+servers:
+- url: https://api.ncbi.nlm.nih.gov/datasets/v2
+security:
+- ApiKeyAuthHeader: []
+tags:
+- name: BioSample
+  description: '#### Options to download BioSample data.
+
+    This BioSample service allows you to get BioSample data as a data report.
+
+    '
+paths:
+  /biosample/accession/{accessions}/biosample_report:
+    get:
+      summary: Get BioSample dataset reports by accession(s)
+      description: 'Get BioSample dataset reports by accession(s). By default, in paged JSON format, but also available as tabular (accept: text/tab-separated-values) or json-lines (accept: application/x-ndjson)'
+      tags:
+      - BioSample
+      operationId: BioSample_dataset_report
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2reportsBioSampleDataReportPage'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/v2reportsBioSampleDataReportPage'
+            text/tab-separated-values:
+              schema:
+                type: string
+      parameters:
+      - name: accessions
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          example-0:
+            value: SAMN15960293
+            summary: Animal sample from Gallus gallus, bGalGal3
+          example-1:
+            value: SAMN12629504
+            summary: Animal sample from Carcharodon carcharias
+components:
+  schemas:
+    v2reportsInfraspecificNames:
+      type: object
+      properties:
+        breed:
+          type: string
+          title: A homogenous group of animals within a domesticated species
+        cultivar:
+          type: string
+          title: A variety of plant within a species produced and maintained by cultivation
+        ecotype:
+          type: string
+          title: A population or subspecies occupying a distinct habitat
+        isolate:
+          type: string
+          title: The individual isolate from which the sequences in the genome assembly were derived
+        sex:
+          type: string
+          title: Physical sex of sampled organism
+        strain:
+          type: string
+          title: A genetic variant, subtype or culture within a species
+    v2reportsBioSampleStatus:
+      type: object
+      properties:
+        status:
+          type: string
+        when:
+          type: string
+    v2reportsWarning:
+      type: object
+      properties:
+        gene_warning_code:
+          $ref: '#/components/schemas/v2reportsWarningGeneWarningCode'
+        reason:
+          type: string
+        message:
+          type: string
+        replaced_id:
+          $ref: '#/components/schemas/v2reportsWarningReplacedId'
+        unrecognized_identifier:
+          type: string
+    v2reportsBioSampleId:
+      type: object
+      properties:
+        db:
+          type: string
+        label:
+          type: string
+        value:
+          type: string
+    v2reportsBioSampleOwner:
+      type: object
+      properties:
+        name:
+          type: string
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsBioSampleContact'
+    v2reportsErrorGeneErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_ERROR_CODE
+      - INCOMPLETE_LOOKUP_SYMBOL
+      - INVALID_TAXON_GENE_ARGUMENT
+      default: UNKNOWN_GENE_ERROR_CODE
+    v2reportsOrganism:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        sci_name:
+          type: string
+          title: Scientific name
+        organism_name:
+          type: string
+          title: Scientific name
+        common_name:
+          type: string
+          title: Common name
+        lineage:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsLineageOrganism'
+        strain:
+          type: string
+        pangolin_classification:
+          type: string
+        infraspecific_names:
+          $ref: '#/components/schemas/v2reportsInfraspecificNames'
+    v2reportsBioSampleAttribute:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+    v2reportsErrorAssemblyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ASSEMBLY_ERROR_CODE
+      - INVALID_BIOPROJECT_IDS
+      - NO_ASSEMBLIES_FOR_BIOPROJECTS
+      - INVALID_TAXON
+      - MISSING_SEARCH_FIELD
+      - INVALID_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
+      - INVALID_WGS_ACCESSIONS
+      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
+      default: UNKNOWN_ASSEMBLY_ERROR_CODE
+    v2reportsBioSampleDescription:
+      type: object
+      properties:
+        title:
+          type: string
+        organism:
+          $ref: '#/components/schemas/v2reportsOrganism'
+        comment:
+          type: string
+    v2reportsErrorVirusErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_VIRUS_ERROR_CODE
+      default: UNKNOWN_VIRUS_ERROR_CODE
+    v2reportsErrorTaxonomyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_TAXONOMY_ERROR_CODE
+      - INVALID_TAXONOMY_TAXON
+      default: UNKNOWN_TAXONOMY_ERROR_CODE
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/protobufAny'
+    v2reportsBioSampleDataReportPage:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsBioSampleDataReport'
+        total_count:
+          type: integer
+          title: The total count of available datasets (ignoring the page_size parameter).
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+    v2reportsError:
+      type: object
+      properties:
+        assembly_error_code:
+          $ref: '#/components/schemas/v2reportsErrorAssemblyErrorCode'
+        gene_error_code:
+          $ref: '#/components/schemas/v2reportsErrorGeneErrorCode'
+        organelle_error_code:
+          $ref: '#/components/schemas/v2reportsErrorOrganelleErrorCode'
+        virus_error_code:
+          $ref: '#/components/schemas/v2reportsErrorVirusErrorCode'
+        taxonomy_error_code:
+          $ref: '#/components/schemas/v2reportsErrorTaxonomyErrorCode'
+        reason:
+          type: string
+        message:
+          type: string
+        invalid_identifiers:
+          type: array
+          items:
+            type: string
+    v2reportsBioSampleDataReport:
+      type: object
+      properties:
+        accession:
+          type: string
+          title: BioSample Accession identifier
+        last_updated:
+          type: string
+          title: When the biosample object was last updated.
+        publication_date:
+          type: string
+          title: BioSample object publication date.
+        submission_date:
+          type: string
+          title: BioSample object submission date.
+        sample_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsBioSampleId'
+        description:
+          $ref: '#/components/schemas/v2reportsBioSampleDescription'
+          title: BioSample description.
+        owner:
+          $ref: '#/components/schemas/v2reportsBioSampleOwner'
+          title: BioSample owner.
+        models:
+          type: array
+          items:
+            type: string
+        bioprojects:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsBioProject'
+        package:
+          type: string
+          title: Package identifier.
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsBioSampleAttribute'
+        status:
+          $ref: '#/components/schemas/v2reportsBioSampleStatus'
+          title: Current status of the object.
+        age:
+          type: string
+          title: Age at the time of sampling
+        biomaterial_provider:
+          type: string
+          title: Name and address of the lab or PI
+        breed:
+          type: string
+          title: Breed name
+        collected_by:
+          type: string
+          title: Name of persons or institute who collected the sample
+        collection_date:
+          type: string
+          title: Date on which the sample was collected
+        cultivar:
+          type: string
+          title: Cultivated variety of plant
+        dev_stage:
+          type: string
+          title: Developmental stage at the time of sampling
+        ecotype:
+          type: string
+          title: Population within a given species adapted to a local habitat
+        geo_loc_name:
+          type: string
+          title: Geographical origin of the sample
+        host:
+          type: string
+          title: The natural host to the organism
+        host_disease:
+          type: string
+          title: Name of relevant disease
+        identified_by:
+          type: string
+          title: Name of the taxonomist who identified the specimen
+        ifsac_category:
+          type: string
+          title: Interagency Food Safety Analytics Collaboration (IFSAC) category
+        isolate:
+          type: string
+          title: Description of the specific individual from which the sample was derived
+        isolate_name_alias:
+          type: string
+          title: Other IDs associated with this isolate
+        isolation_source:
+          type: string
+          title: Source of the sample
+        lat_lon:
+          type: string
+          title: Geogrpahic coordinates of the location where the sample was collected
+        project_name:
+          type: string
+          title: Name of the project
+        sample_name:
+          type: string
+          title: Sample name in source database
+        serovar:
+          type: string
+          title: Taxonomic name below subspecies. Same as serotype.
+        sex:
+          type: string
+          title: Physical sex of sampled organism
+        source_type:
+          type: string
+          title: Controlled vocabulary describing the isolation source
+        strain:
+          type: string
+          title: Strain name
+        sub_species:
+          type: string
+          title: Sub-species taxonomic name
+        tissue:
+          type: string
+          title: Type of tissue from which the sample was derived
+        serotype:
+          type: string
+          title: Taxonomic name below subspecies. Same as serovar
+    v2reportsLineageOrganism:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        name:
+          type: string
+          title: Scientific name
+    v2reportsMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/v2reportsError'
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+    v2reportsWarningGeneWarningCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_WARNING_CODE
+      - ACCESSION_VERSION_MISMATCH
+      - REPLACED_GENE_ID
+      - DISCONTINUED_GENE_ID
+      - UNRECOGNIZED_GENE_ID
+      - UNRECOGNIZED_GENE_SYMBOL
+      - UNRECOGNIZED_ACCESSION
+      - UNRECOGNIZED_TAX_TOKEN
+      - NO_GENE_ANNOTATION_FOUND
+      - ABOVE_SPECIES_TAXON
+      default: UNKNOWN_GENE_WARNING_CODE
+    v2reportsErrorOrganelleErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ORGANELLE_ERROR_CODE
+      - INVALID_ORGANELLE_TAXON
+      - NO_ORGANELLES_FOR_ACCESSION
+      default: UNKNOWN_ORGANELLE_ERROR_CODE
+    v2reportsBioSampleContact:
+      type: object
+      properties:
+        lab:
+          type: string
+          title: Submitter lab name.
+    v2reportsBioProject:
+      type: object
+      properties:
+        accession:
+          type: string
+          title: BioProject accession
+        title:
+          type: string
+          title: Title of the BioProject provided by the submitter
+        parent_accession:
+          type: string
+        parent_accessions:
+          type: array
+          items:
+            type: string
+    protobufAny:
+      type: object
+      properties:
+        type_url:
+          type: string
+        value:
+          type: string
+          format: byte
+    v2reportsWarningReplacedId:
+      type: object
+      properties:
+        requested:
+          type: string
+        returned:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+    ApiKeyAuthHeader:
+      type: apiKey
+      in: header
+      name: api-key
+externalDocs:
+  description: Interactively explore genome assembly datasets
+  url: https://www.ncbi.nlm.nih.gov/datasets/genomes/

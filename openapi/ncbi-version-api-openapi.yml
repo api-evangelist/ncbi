@@ -1,0 +1,84 @@
+openapi: 3.0.1
+info:
+  title: NCBI Datasets BioSample Version API
+  version: v2
+  description: '### NCBI Datasets is a resource that lets you easily gather data from NCBI.
+
+    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.
+
+    '
+servers:
+- url: https://api.ncbi.nlm.nih.gov/datasets/v2
+security:
+- ApiKeyAuthHeader: []
+tags:
+- name: Version
+  description: '#### Retrieve the current version of all NCBI Datasets services.
+
+    NCBI Datasets services follow the [Semantic Versioning 2.0.0 Schema](https://semver.org/spec/v2.0.0.html). '
+paths:
+  /version:
+    get:
+      summary: Retrieve service version
+      description: Retrieve the latest version of the Datasets services.
+      tags:
+      - Version
+      operationId: version
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2VersionReply'
+components:
+  schemas:
+    v2VersionReply:
+      type: object
+      properties:
+        version:
+          type: string
+        major_ver:
+          type: integer
+        minor_ver:
+          type: integer
+        patch_ver:
+          type: integer
+    protobufAny:
+      type: object
+      properties:
+        type_url:
+          type: string
+        value:
+          type: string
+          format: byte
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/protobufAny'
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+    ApiKeyAuthHeader:
+      type: apiKey
+      in: header
+      name: api-key
+externalDocs:
+  description: Interactively explore genome assembly datasets
+  url: https://www.ncbi.nlm.nih.gov/datasets/genomes/

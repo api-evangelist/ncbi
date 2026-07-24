@@ -1,0 +1,801 @@
+openapi: 3.0.1
+info:
+  title: NCBI Datasets BioSample Organelle API
+  version: v2
+  description: '### NCBI Datasets is a resource that lets you easily gather data from NCBI.
+
+    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.
+
+    '
+servers:
+- url: https://api.ncbi.nlm.nih.gov/datasets/v2
+security:
+- ApiKeyAuthHeader: []
+tags:
+- name: Organelle
+  description: '#### Options to download RefSeq organelle genome data, including the associated sequence and metadata.
+
+    These organelle services allow you to get RefSeq organelle genome metadata as a data report or download gene, transcript and protein sequence, and metadata, as an organelle data package, for RefSeq organelle genomes.
+
+    '
+paths:
+  /organelle/accession/{accessions}/download:
+    get:
+      summary: Get an organelle data package by nucleotide accession
+      description: Download an organelle data package including sequence, annotation, and detailed data reports as a compressed zip archive.
+      tags:
+      - Organelle
+      operationId: download_organelle_package
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/zip:
+              schema:
+                format: binary
+                type: string
+                description: Zip compressed stream
+      parameters:
+      - name: accessions
+        description: NCBI organelle assembly accessions
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          example-0:
+            value: NC_001643.1
+            summary: Chimpanzee mitochondrial genome
+          example-1:
+            value:
+            - NC_001643.1
+            - NC_002082.1
+            summary: Chimpanzee and common Gibbon mitochondrial genomes
+      - name: include_annotation_type
+        description: Specify which sequence files to include in the data package.
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2AnnotationForOrganelleType'
+      - name: filename
+        description: Output file name.
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ncbi_dataset.zip
+  /organelle/download:
+    post:
+      summary: Get an organelle data package
+      description: Download an organelle data package including sequence, annotation, and detailed data reports as a compressed zip archive.
+      tags:
+      - Organelle
+      operationId: download_organelle_package_by_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/zip:
+              schema:
+                format: binary
+                type: string
+                description: Zip compressed stream
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2OrganelleDownloadRequest'
+            examples:
+              Single organelle accession example:
+                description: Organelle accession (just one)
+                value:
+                  accessions:
+                  - NC_001643.1
+      parameters:
+      - name: filename
+        description: Output file name.
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ncbi_dataset.zip
+  /organelle/accessions/{accessions}/dataset_report:
+    get:
+      summary: Get an organelle data report by nucleotide accession
+      description: Get an organelle data report in JSON format.
+      tags:
+      - Organelle
+      operationId: organelle_datareport_by_accession
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2reportsOrganelleDataReports'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/v2reportsOrganelleDataReports'
+            text/tab-separated-values:
+              schema:
+                type: string
+      parameters:
+      - name: accessions
+        description: One or more organelle nucleotide accessions
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          example-0:
+            value: NC_001643.1
+            summary: Chimpanzee mitochondrial genome
+          example-1:
+            value:
+            - NC_001643.1
+            - NC_002082.1
+            summary: Chimpanzee and common gibbon mitochondrial genomes
+      - name: organelle_types
+        description: Limit results to the specified organelle types.
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsOrganelleType'
+      - name: first_release_date
+        description: Limit results to organelle genomes released on or after the specified date.
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        examples:
+          example-0:
+            value: '2015-01-10'
+            summary: Jan 10, 2015, in ISO 8601 YYYY-MM-DD format
+      - name: last_release_date
+        description: Limit results to organelle genomes released on or before the specified date.
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        examples:
+          example-0:
+            value: '2021-01-10'
+            summary: Jan 10, 2021, in ISO 8601 YYYY-MM-DD format
+      - name: sort.field
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sort.direction
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2SortDirection'
+      - name: returned_content
+        description: Return complete organelle reports or nucleotide accessions only.
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2OrganelleMetadataRequestContentType'
+        examples:
+          example-0:
+            value: ASSM_ACC
+            summary: Return nucleotide accessions only
+      - name: table_format
+        description: 'Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`.'
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2OrganelleMetadataRequestOrganelleTableFormat'
+        examples:
+          example-0:
+            value: SUMMARY
+            summary: This template specifies a basic set of fields available from the organelle report
+      - name: include_tabular_header
+        description: Specify when to include the table header when requesting a tabular report.
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2IncludeTabularHeader'
+  /organelle/taxon/{taxons}/dataset_report:
+    get:
+      summary: Get an organelle data report by taxon
+      description: Get an organelle data report  in JSON format.
+      tags:
+      - Organelle
+      operationId: organelle_datareport_by_taxon
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2reportsOrganelleDataReports'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/v2reportsOrganelleDataReports'
+            text/tab-separated-values:
+              schema:
+                type: string
+      parameters:
+      - name: taxons
+        description: NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          example-0:
+            value: '9443'
+            summary: Primate organelle genomes
+          example-1:
+            value:
+            - '9606'
+            - '10090'
+            summary: Human and mouse organelle genomes
+      - name: organelle_types
+        description: Limit results to the specified organelle types.
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsOrganelleType'
+      - name: first_release_date
+        description: Limit results to organelle genomes released on or after the specified date.
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        examples:
+          example-0:
+            value: '2015-01-10'
+            summary: Jan 10, 2015, in ISO 8601 YYYY-MM-DD format
+      - name: last_release_date
+        description: Limit results to organelle genomes released on or before the specified date.
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+        examples:
+          example-0:
+            value: '2021-01-10'
+            summary: Jan 10, 2021, in ISO 8601 YYYY-MM-DD format
+      - name: tax_exact_match
+        description: If true, only return assemblies with the given NCBI Taxonomy ID, or name. Otherwise, assemblies from taxonomy subtree are included, too.
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: sort.field
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: sort.direction
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2SortDirection'
+      - name: returned_content
+        description: Return complete organelle reports or nucleotide accessions only.
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2OrganelleMetadataRequestContentType'
+        examples:
+          example-0:
+            value: ASSM_ACC
+            summary: Return nucleotide accessions only
+      - name: page_size
+        description: The maximum number of organelle assemblies to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page_token
+        description: A page token is returned from an `OrganelleMetadata` call with more than `page_size` results. Use this token, along with the previous `OrganelleMetadata` parameters, to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: table_format
+        description: 'Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`.'
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2OrganelleMetadataRequestOrganelleTableFormat'
+        examples:
+          example-0:
+            value: SUMMARY
+            summary: This template specifies a basic set of fields available from the organelle report
+      - name: include_tabular_header
+        description: Specify when to include the table header when requesting a tabular report.
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2IncludeTabularHeader'
+  /organelle/dataset_report:
+    post:
+      summary: Get an organelle data report
+      description: Get an organelle data report in JSON format.
+      tags:
+      - Organelle
+      operationId: organelle_datareport_by_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2reportsOrganelleDataReports'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/v2reportsOrganelleDataReports'
+            text/tab-separated-values:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2OrganelleMetadataRequest'
+            examples:
+              Single TaxID example:
+                description: Primate organelle genomes
+                value:
+                  taxons:
+                  - '9443'
+components:
+  schemas:
+    v2reportsInfraspecificNames:
+      type: object
+      properties:
+        breed:
+          type: string
+          title: A homogenous group of animals within a domesticated species
+        cultivar:
+          type: string
+          title: A variety of plant within a species produced and maintained by cultivation
+        ecotype:
+          type: string
+          title: A population or subspecies occupying a distinct habitat
+        isolate:
+          type: string
+          title: The individual isolate from which the sequences in the genome assembly were derived
+        sex:
+          type: string
+          title: Physical sex of sampled organism
+        strain:
+          type: string
+          title: A genetic variant, subtype or culture within a species
+    v2OrganelleMetadataRequestOrganelleTableFormat:
+      type: string
+      enum:
+      - ORGANELLE_TABLE_FORMAT_NO_TABLE
+      - SUMMARY
+      default: ORGANELLE_TABLE_FORMAT_NO_TABLE
+    v2reportsWarning:
+      type: object
+      properties:
+        gene_warning_code:
+          $ref: '#/components/schemas/v2reportsWarningGeneWarningCode'
+        reason:
+          type: string
+        message:
+          type: string
+        replaced_id:
+          $ref: '#/components/schemas/v2reportsWarningReplacedId'
+        unrecognized_identifier:
+          type: string
+    v2reportsErrorGeneErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_ERROR_CODE
+      - INCOMPLETE_LOOKUP_SYMBOL
+      - INVALID_TAXON_GENE_ARGUMENT
+      default: UNKNOWN_GENE_ERROR_CODE
+    v2OrganelleMetadataRequestContentType:
+      type: string
+      enum:
+      - COMPLETE
+      - ASSM_ACC
+      default: COMPLETE
+    v2reportsOrganelleDataReports:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsOrganelle'
+        total_count:
+          type: integer
+          title: The total count of available datasets (ignoring the cutoff parameter). Only provided for the first page of results (when `page_token` is empty in the request).
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    v2OrganelleSort:
+      type: object
+      properties:
+        field:
+          type: string
+        direction:
+          $ref: '#/components/schemas/v2SortDirection'
+    v2reportsOrganelleBiosample:
+      type: object
+      properties:
+        accession:
+          type: string
+          title: BioSample Accession identifier
+    v2reportsOrganism:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        sci_name:
+          type: string
+          title: Scientific name
+        organism_name:
+          type: string
+          title: Scientific name
+        common_name:
+          type: string
+          title: Common name
+        lineage:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsLineageOrganism'
+        strain:
+          type: string
+        pangolin_classification:
+          type: string
+        infraspecific_names:
+          $ref: '#/components/schemas/v2reportsInfraspecificNames'
+    v2reportsOrganelleTopology:
+      type: string
+      enum:
+      - TOPOLOGY_UNKNOWN
+      - Circular
+      - Linear
+      - Tandem
+      default: TOPOLOGY_UNKNOWN
+    v2reportsOrganelleGeneCounts:
+      type: object
+      properties:
+        total:
+          type: integer
+          title: Total number of annotated genes
+        protein_coding:
+          type: integer
+          title: Count of annotated genes that encode a protein
+        rrna:
+          type: integer
+          title: Count of ribosomal RNAs
+        trna:
+          type: integer
+          title: Count of transfer RNAs
+        lncrna:
+          type: integer
+          title: Count of long, non-coding RNAs
+    v2reportsErrorAssemblyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ASSEMBLY_ERROR_CODE
+      - INVALID_BIOPROJECT_IDS
+      - NO_ASSEMBLIES_FOR_BIOPROJECTS
+      - INVALID_TAXON
+      - MISSING_SEARCH_FIELD
+      - INVALID_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
+      - INVALID_WGS_ACCESSIONS
+      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
+      default: UNKNOWN_ASSEMBLY_ERROR_CODE
+    v2reportsErrorVirusErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_VIRUS_ERROR_CODE
+      default: UNKNOWN_VIRUS_ERROR_CODE
+    v2AnnotationForOrganelleType:
+      type: string
+      enum:
+      - DEFAULT
+      - GENOME_FASTA
+      - CDS_FASTA
+      - PROTEIN_FASTA
+      default: DEFAULT
+    v2IncludeTabularHeader:
+      type: string
+      enum:
+      - INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
+      - INCLUDE_TABULAR_HEADER_ALWAYS
+      - INCLUDE_TABULAR_HEADER_NEVER
+      default: INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
+    v2reportsErrorTaxonomyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_TAXONOMY_ERROR_CODE
+      - INVALID_TAXONOMY_TAXON
+      default: UNKNOWN_TAXONOMY_ERROR_CODE
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/protobufAny'
+    v2reportsError:
+      type: object
+      properties:
+        assembly_error_code:
+          $ref: '#/components/schemas/v2reportsErrorAssemblyErrorCode'
+        gene_error_code:
+          $ref: '#/components/schemas/v2reportsErrorGeneErrorCode'
+        organelle_error_code:
+          $ref: '#/components/schemas/v2reportsErrorOrganelleErrorCode'
+        virus_error_code:
+          $ref: '#/components/schemas/v2reportsErrorVirusErrorCode'
+        taxonomy_error_code:
+          $ref: '#/components/schemas/v2reportsErrorTaxonomyErrorCode'
+        reason:
+          type: string
+        message:
+          type: string
+        invalid_identifiers:
+          type: array
+          items:
+            type: string
+    v2OrganelleDownloadRequest:
+      type: object
+      properties:
+        accessions:
+          type: array
+          items:
+            type: string
+        exclude_sequence:
+          type: boolean
+          title: If true, exclude the genome sequence from the data package.
+        include_annotation_type:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2AnnotationForOrganelleType'
+    v2reportsLineageOrganism:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        name:
+          type: string
+          title: Scientific name
+    v2OrganelleMetadataRequest:
+      type: object
+      properties:
+        taxons:
+          type: array
+          items:
+            type: string
+        accessions:
+          type: array
+          items:
+            type: string
+        organelle_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsOrganelleType'
+        first_release_date:
+          type: string
+          format: date-time
+          title: Limit results to organelle genomes released on or after the specified date.
+        last_release_date:
+          type: string
+          format: date-time
+          title: Limit results to organelle genomes released on or before the specified date.
+        tax_exact_match:
+          type: boolean
+          title: If true, only return assemblies with the given NCBI Taxonomy ID, or name. Otherwise, assemblies from taxonomy subtree are included, too.
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2OrganelleSort'
+        returned_content:
+          $ref: '#/components/schemas/v2OrganelleMetadataRequestContentType'
+          title: Return complete organelle reports or nucleotide accessions only.
+        page_size:
+          type: integer
+          title: The maximum number of organelle assemblies to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        page_token:
+          type: string
+          title: A page token is returned from an `OrganelleMetadata` call with more than `page_size` results. Use this token, along with the previous `OrganelleMetadata` parameters, to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+        table_format:
+          $ref: '#/components/schemas/v2OrganelleMetadataRequestOrganelleTableFormat'
+          title: 'Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`.'
+        include_tabular_header:
+          $ref: '#/components/schemas/v2IncludeTabularHeader'
+          title: Specify when to include the table header when requesting a tabular report.
+    v2reportsMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/v2reportsError'
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+    v2reportsSequenceInformation:
+      type: object
+      properties:
+        accession:
+          type: string
+          title: The accession.version of the organelle genomic nucleotide sequence.
+        submission_date:
+          type: string
+          title: Date record was submitted to GenBank or Curated into RefSeq (ISO 8601)
+        submitter:
+          type: string
+          title: The submitter, e.g. NCBI Genome Project for RefSeq
+    v2reportsOrganelle:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/v2reportsOrganelleType'
+        genbank:
+          $ref: '#/components/schemas/v2reportsSequenceInformation'
+        refseq:
+          $ref: '#/components/schemas/v2reportsSequenceInformation'
+        organism:
+          $ref: '#/components/schemas/v2reportsOrganism'
+          title: Taxon for the organelle
+        bioprojects:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsBioProject'
+        biosample:
+          $ref: '#/components/schemas/v2reportsOrganelleBiosample'
+          title: The associated BioSample.
+        gene_counts:
+          $ref: '#/components/schemas/v2reportsOrganelleGeneCounts'
+        length:
+          type: integer
+          title: Genome length
+        topology:
+          $ref: '#/components/schemas/v2reportsOrganelleTopology'
+        gene_count:
+          type: integer
+    v2reportsWarningGeneWarningCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_WARNING_CODE
+      - ACCESSION_VERSION_MISMATCH
+      - REPLACED_GENE_ID
+      - DISCONTINUED_GENE_ID
+      - UNRECOGNIZED_GENE_ID
+      - UNRECOGNIZED_GENE_SYMBOL
+      - UNRECOGNIZED_ACCESSION
+      - UNRECOGNIZED_TAX_TOKEN
+      - NO_GENE_ANNOTATION_FOUND
+      - ABOVE_SPECIES_TAXON
+      default: UNKNOWN_GENE_WARNING_CODE
+    v2reportsOrganelleType:
+      type: string
+      enum:
+      - ORGANELLE_TYPE_UNKNOWN
+      - Mitochondrion
+      - Chloroplast
+      - Plastid
+      - Kinetoplast
+      - Apicoplast
+      - Chromatophore
+      - Cyanelle
+      default: ORGANELLE_TYPE_UNKNOWN
+    v2reportsErrorOrganelleErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ORGANELLE_ERROR_CODE
+      - INVALID_ORGANELLE_TAXON
+      - NO_ORGANELLES_FOR_ACCESSION
+      default: UNKNOWN_ORGANELLE_ERROR_CODE
+    v2reportsBioProject:
+      type: object
+      properties:
+        accession:
+          type: string
+          title: BioProject accession
+        title:
+          type: string
+          title: Title of the BioProject provided by the submitter
+        parent_accession:
+          type: string
+        parent_accessions:
+          type: array
+          items:
+            type: string
+    v2SortDirection:
+      type: string
+      enum:
+      - SORT_DIRECTION_UNSPECIFIED
+      - SORT_DIRECTION_ASCENDING
+      - SORT_DIRECTION_DESCENDING
+      default: SORT_DIRECTION_UNSPECIFIED
+    protobufAny:
+      type: object
+      properties:
+        type_url:
+          type: string
+        value:
+          type: string
+          format: byte
+    v2reportsWarningReplacedId:
+      type: object
+      properties:
+        requested:
+          type: string
+        returned:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+    ApiKeyAuthHeader:
+      type: apiKey
+      in: header
+      name: api-key
+externalDocs:
+  description: Interactively explore genome assembly datasets
+  url: https://www.ncbi.nlm.nih.gov/datasets/genomes/

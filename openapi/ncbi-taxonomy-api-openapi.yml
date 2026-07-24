@@ -1,0 +1,1944 @@
+openapi: 3.0.1
+info:
+  title: NCBI Datasets BioSample Taxonomy API
+  version: v2
+  description: '### NCBI Datasets is a resource that lets you easily gather data from NCBI.
+
+    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.
+
+    '
+servers:
+- url: https://api.ncbi.nlm.nih.gov/datasets/v2
+security:
+- ApiKeyAuthHeader: []
+tags:
+- name: Taxonomy
+  description: '#### Options to download taxonomy data.
+
+    These taxonomy services allow you to get taxonomy data as a data report or download taxonomy data as a taxonomy data package, for taxonomic nodes in NCBI Taxonomy.
+
+    '
+paths:
+  /taxonomy/taxon/{tax_ids}/download:
+    get:
+      summary: Get a taxonomy data package by Taxonomy ID
+      description: Download a taxonomy data package, including taxonomy and names reports, as a compressed zip archive.
+      tags:
+      - Taxonomy
+      operationId: download_taxonomy_package
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/zip:
+              schema:
+                format: binary
+                type: string
+                description: Zip compressed stream
+      parameters:
+      - name: tax_ids
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: integer
+        examples:
+          example-0:
+            value: 9606
+            summary: NCBI Taxonomy ID for human
+          example-1:
+            value:
+            - 9606
+            - 10090
+            summary: NCBI Taxonomy IDs for human and mouse
+      - name: aux_reports
+        description: Specify additional report files to include in the data package. The taxonomy report is always included, and its inclusion is not affected by this parameter.
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TaxonomyDatasetRequestTaxonomyReportType'
+        examples:
+          example-0:
+            value:
+            - NAMES_REPORT
+            - TAXONOMY_SUMMARY
+            summary: Add the names report (JSON Lines format) and taxonomy summary (TSV) files.
+      - name: filename
+        description: Output file name.
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ncbi_dataset.zip
+  /taxonomy/download:
+    post:
+      summary: Get a taxonomy data package by Taxonomy ID
+      description: Download a taxonomy data package, including taxonomy and names reports, as a compressed zip archive.
+      tags:
+      - Taxonomy
+      operationId: download_taxonomy_package_by_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/zip:
+              schema:
+                format: binary
+                type: string
+                description: Zip compressed stream
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TaxonomyDatasetRequest'
+            examples:
+              Multiple TaxID examples:
+                description: Taxonomy report, names report, and taxonomy summary table for human and mouse
+                value:
+                  tax_ids:
+                  - 9606
+                  - 10090
+                  aux_reports:
+                  - NAMES_REPORT
+                  - TAXONOMY_SUMMARY
+      parameters:
+      - name: filename
+        description: Output file name.
+        in: query
+        required: false
+        schema:
+          type: string
+          default: ncbi_dataset.zip
+  /taxonomy/taxon/{taxons}:
+    get:
+      deprecated: true
+      summary: Use taxonomic identifiers to get taxonomic metadata
+      description: Using NCBI Taxonomy IDs or names (common or scientific) at any rank, get metadata about a taxonomic node including taxonomic identifiers, lineage information, child nodes, and gene and genome counts in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_metadata
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyMetadataResponse'
+      parameters:
+      - name: taxons
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          example-0:
+            value: '9606'
+            summary: NCBI Taxonomy ID for human
+          example-1:
+            value:
+            - human
+            - house mouse
+            summary: Common names
+          example-2:
+            value:
+            - Homo sapiens
+            - Mus musculus
+            summary: Scientific names
+      - name: returned_content
+        description: Return complete taxonomy reports, Taxonomy IDs only, or reports without assembly and gene counts (metadata).
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2TaxonomyMetadataRequestContentType'
+        examples:
+          example-0:
+            value: TAXIDS
+            summary: Return Taxonomy IDs only
+          example-1:
+            value: METADATA
+            summary: Return abbreviated taxonomy report without genome assembly and gene counts
+      - name: page_size
+        description: The maximum number of taxons to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: include_tabular_header
+        description: Specify when to include the table header when requesting a tabular report.
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2IncludeTabularHeader'
+      - name: page_token
+        description: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: table_format
+        description: 'Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`.'
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2TaxonomyMetadataRequestTableFormat'
+        examples:
+          example-0:
+            value: SUMMARY
+            summary: This template specifies a basic set of fields available from the taxonomy report
+      - name: children
+        description: If true, return results for child taxa.
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: ranks
+        description: Limit results to taxa of the specified ranks.
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+  /taxonomy:
+    post:
+      deprecated: true
+      summary: Get taxonomy metadata by taxon
+      description: Get taxonomy metadata by taxon in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_metadata_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyMetadataResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TaxonomyMetadataRequest'
+            examples:
+              Multiple TaxID and common name examples:
+                description: NCBI Taxonomy ID for human and common name for Mus musculus
+                value:
+                  taxons:
+                  - '9606'
+                  - house mouse
+  /taxonomy/taxon/{taxons}/dataset_report:
+    get:
+      summary: Get a taxonomy data report by taxon
+      description: 'Get a taxonomy data report by taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats.'
+      tags:
+      - Taxonomy
+      operationId: taxonomy_data_report
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2reportsTaxonomyDataReportPage'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/v2reportsTaxonomyDataReportPage'
+            text/tab-separated-values:
+              schema:
+                type: string
+      parameters:
+      - name: taxons
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          example-0:
+            value: '9606'
+            summary: NCBI Taxonomy ID for human
+          example-1:
+            value:
+            - human
+            - house mouse
+            summary: Common names
+          example-2:
+            value:
+            - Homo sapiens
+            - Mus musculus
+            summary: Scientific names
+      - name: returned_content
+        description: Return complete taxonomy reports, Taxonomy IDs only, or reports without assembly and gene counts (metadata).
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2TaxonomyMetadataRequestContentType'
+        examples:
+          example-0:
+            value: TAXIDS
+            summary: Return Taxonomy IDs only
+          example-1:
+            value: METADATA
+            summary: Return abbreviated taxonomy report without genome assembly and gene counts
+      - name: page_size
+        description: The maximum number of taxons to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: include_tabular_header
+        description: Specify when to include the table header when requesting a tabular report.
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2IncludeTabularHeader'
+      - name: page_token
+        description: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: table_format
+        description: 'Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`.'
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2TaxonomyMetadataRequestTableFormat'
+        examples:
+          example-0:
+            value: SUMMARY
+            summary: This template specifies a basic set of fields available from the taxonomy report
+      - name: children
+        description: If true, return results for child taxa.
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: ranks
+        description: Limit results to taxa of the specified ranks.
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+  /taxonomy/dataset_report:
+    post:
+      summary: Get a taxonomy data report by taxon
+      description: 'Get a taxonomy data report by taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats.'
+      tags:
+      - Taxonomy
+      operationId: taxonomy_data_report_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2reportsTaxonomyDataReportPage'
+            application/x-ndjson:
+              schema:
+                $ref: '#/components/schemas/v2reportsTaxonomyDataReportPage'
+            text/tab-separated-values:
+              schema:
+                type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TaxonomyMetadataRequest'
+            examples:
+              Multiple TaxID and common name examples:
+                description: NCBI Taxonomy ID for human and common name for Mus musculus
+                value:
+                  taxons:
+                  - '9606'
+                  - house mouse
+  /taxonomy/taxon/{taxons}/name_report:
+    get:
+      summary: Get a taxonomy names report by taxon
+      description: Get a taxonomy names report, including common names and other synonyms, in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_names
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2reportsTaxonomyNamesDataReportPage'
+      parameters:
+      - name: taxons
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          example-0:
+            value: '9606'
+            summary: NCBI Taxonomy ID for human
+          example-1:
+            value:
+            - human
+            - house mouse
+            summary: Common names
+          example-2:
+            value:
+            - Homo sapiens
+            - Mus musculus
+            summary: Scientific names
+      - name: page_size
+        description: The maximum number of taxons to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page_token
+        description: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: children
+        description: If true, return results for child taxa.
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: ranks
+        description: Limit results to taxa of the specified ranks.
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+  /taxonomy/name_report:
+    post:
+      summary: Get a taxonomy names report by taxon
+      description: Get a taxonomy names report, including common names and other synonyms, in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_names_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2reportsTaxonomyNamesDataReportPage'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TaxonomyMetadataRequest'
+            examples:
+              Multiple TaxID and common name examples:
+                description: NCBI Taxonomy ID for human and common name for Mus musculus
+                value:
+                  taxons:
+                  - '9606'
+                  - house mouse
+  /taxonomy/taxon/{tax_id}/related_ids:
+    get:
+      summary: Get child nodes, and optionally parent nodes, for a given taxon by Taxonomy ID
+      description: Get child nodes, and optionally parent nodes, in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_related_ids
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyTaxIdsPage'
+      parameters:
+      - name: tax_id
+        in: path
+        required: true
+        schema:
+          type: integer
+        examples:
+          example-0:
+            value: 9606
+            summary: NCBI Taxonomy ID for human
+      - name: include_lineage
+        description: If true, include parent nodes
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: ranks
+        description: Limit to taxonomic nodes from the given ranks.
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+      - name: page_size
+        description: The maximum number of taxids to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        in: query
+        required: false
+        schema:
+          type: integer
+          default: 20
+      - name: page_token
+        description: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+        in: query
+        required: false
+        schema:
+          type: string
+  /taxonomy/related_ids:
+    post:
+      summary: Get child nodes, and optionally parent nodes, for a given taxon by Taxonomy ID
+      description: Get child nodes, and optionally parent nodes, in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_related_ids_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyTaxIdsPage'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TaxonomyRelatedIdRequest'
+            examples:
+              Single TaxID example:
+                description: Child and parent nodes for human
+                value:
+                  tax_id: 9606
+                  include_lineage: true
+  /taxonomy/taxon/{taxons}/filtered_subtree:
+    get:
+      summary: Get a filtered taxonomic subtree by taxon
+      description: Get a filtered taxonomic subtree, including parent and child nodes, in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_filtered_subtree
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponse'
+      parameters:
+      - name: taxons
+        in: path
+        required: true
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          example-0:
+            value: '9606'
+            summary: NCBI Taxonomy ID for human
+          example-1:
+            value:
+            - human
+            - mouse
+            summary: Common Name
+          example-2:
+            value:
+            - Homo sapiens
+            - Mus musculus
+            summary: Scientific Name
+      - name: specified_limit
+        description: Limit to specified species
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: exclude_extinct
+        description: Limit to species that are not extinct
+        in: query
+        required: false
+        schema:
+          type: boolean
+      - name: levels
+        description: Number of taxonomic levels to return with a valid range of 1-5. Values above 5 will return 5 levels and if level is 0 or not specified, 1 level will be returned.
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: rank_limits
+        description: Limit to the provided ranks.  If empty, accept any rank.
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+      - name: include_incertae_sedis
+        description: Include nodes with ranks not in 'rank_limits' if their names meet criteria for incertae sedis (of unknown origin).
+        in: query
+        required: false
+        schema:
+          type: boolean
+  /taxonomy/filtered_subtree:
+    post:
+      summary: Get a filtered taxonomic subtree by taxon
+      description: Get a filtered taxonomic subtree, including parent and child nodes, in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_filtered_subtree_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeRequest'
+            examples:
+              Multiple TaxID example:
+                description: NCBI Taxonomy IDs for human and mouse
+                value:
+                  taxons:
+                  - '9606'
+                  - '10090'
+  /taxonomy/taxon_suggest/{taxon_query}:
+    get:
+      summary: Get a list of taxonomy names and IDs by partial taxonomic name
+      description: Get a list of taxonomy names and IDs in JSON format.
+      tags:
+      - Taxonomy
+      operationId: tax_name_query
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2SciNameAndIds'
+      parameters:
+      - name: taxon_query
+        description: Taxonomy ID or name (common or scientific) at any taxonomic rank
+        in: path
+        required: true
+        schema:
+          type: string
+        examples:
+          example-0:
+            value: hum
+            summary: Partial taxonomic name for human
+      - name: tax_rank_filter
+        description: Optionally return results for taxonomic ranks above species using `higher_taxon`
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2OrganismQueryRequestTaxRankFilter'
+          default: species
+      - name: taxon_resource_filter
+        description: Limit to taxonomy nodes with gene, genome or organelle data
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2OrganismQueryRequestTaxonResourceFilter'
+          default: TAXON_RESOURCE_FILTER_ALL
+        examples:
+          example-0:
+            value: TAXON_RESOURCE_FILTER_GENOME
+            summary: Limit to nodes with genome data
+          example-1:
+            value: TAXON_RESOURCE_FILTER_GENE
+            summary: Limit to nodes with gene data
+      - name: exact_match
+        description: If true, only return results that exactly match the provided taxonomic name
+        in: query
+        required: false
+        schema:
+          type: boolean
+          default: false
+  /taxonomy/taxon_suggest:
+    post:
+      summary: Get a list of taxonomy names and IDs by partial taxonomic name
+      description: Get a list of taxonomy names and IDs in JSON format.
+      tags:
+      - Taxonomy
+      operationId: tax_name_query_by_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2SciNameAndIds'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2OrganismQueryRequest'
+            examples:
+              Incomplete taxon name example:
+                description: Partial taxonomic name for human
+                value:
+                  taxon_query: hum
+  /taxonomy/taxon/{taxon}/links:
+    get:
+      summary: Get external links by Taxonomy ID
+      description: Get external links associated with a given taxon in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_links
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyLinksResponse'
+      parameters:
+      - name: taxon
+        in: path
+        required: true
+        schema:
+          type: string
+        examples:
+          example-0:
+            value: '9606'
+            summary: NCBI Taxonomy ID for human
+  /taxonomy/links:
+    post:
+      summary: Get external links by Taxonomy ID
+      description: Get external links associated with a given taxon in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_links_by_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyLinksResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TaxonomyLinksRequest'
+            examples:
+              Single TaxID example:
+                description: NCBI Taxonomy ID for human
+                value:
+                  taxon: '9606'
+  /taxonomy/taxon/{taxon}/image:
+    get:
+      summary: Get a taxonomy image by taxon
+      description: 'Get an image associated with the specified taxon. By default, in JPEG format, but also available in PNG (accept: image/png), TIFF (accept: accept: image/tiff), and SVG+XML (accept: image/svg+xml) formats.'
+      tags:
+      - Taxonomy
+      operationId: taxonomy_image
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            image/jpeg:
+              schema:
+                format: binary
+                type: string
+                description: Image stream (jpeg/png/tiff)
+            image/png:
+              schema:
+                format: binary
+                type: string
+                description: Image stream (jpeg/png/tiff)
+            image/gif:
+              schema:
+                $ref: '#/components/schemas/v2HttpBody'
+            image/tiff:
+              schema:
+                format: binary
+                type: string
+                description: Image stream (jpeg/png/tiff)
+            image/svg+xml:
+              schema:
+                format: binary
+                type: string
+                description: SVG Image stream
+      parameters:
+      - name: taxon
+        in: path
+        required: true
+        schema:
+          type: string
+        examples:
+          example-0:
+            value: '9606'
+            summary: NCBI Taxonomy ID for human
+      - name: image_size
+        in: query
+        required: false
+        schema:
+          $ref: '#/components/schemas/v2ImageSize'
+  /taxonomy/image:
+    post:
+      summary: Get a taxonomy image by taxon
+      description: 'Get an image associated with the specified taxon. By default, in JPEG format, but also available in PNG (accept: image/png), TIFF (accept: accept: image/tiff), and SVG+XML (accept: image/svg+xml) formats.'
+      tags:
+      - Taxonomy
+      operationId: taxonomy_image_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            image/jpeg:
+              schema:
+                format: binary
+                type: string
+                description: Image stream (jpeg/png/tiff)
+            image/png:
+              schema:
+                format: binary
+                type: string
+                description: Image stream (jpeg/png/tiff)
+            image/tiff:
+              schema:
+                format: binary
+                type: string
+                description: Image stream (jpeg/png/tiff)
+            image/svg+xml:
+              schema:
+                format: binary
+                type: string
+                description: SVG Image stream
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TaxonomyImageRequest'
+            examples:
+              Single TaxID example:
+                description: NCBI Taxonomy ID for human
+                value:
+                  taxon: '9606'
+  /taxonomy/taxon/{taxon}/image/metadata:
+    get:
+      summary: Get taxonomy image metadata by Taxonomy ID
+      description: Get taxonomy image metadata, including the image URL and license information, in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_image_metadata
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyImageMetadataResponse'
+      parameters:
+      - name: taxon
+        in: path
+        required: true
+        schema:
+          type: string
+        examples:
+          example-0:
+            value: '9606'
+            summary: NCBI Taxonomy ID for human
+  /taxonomy/image/metadata:
+    post:
+      summary: Get taxonomy image metadata by Taxonomy ID
+      description: Get taxonomy image metadata, including the image URL and license information, in JSON format.
+      tags:
+      - Taxonomy
+      operationId: taxonomy_image_metadata_post
+      responses:
+        default:
+          description: An unexpected error response.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+        '200':
+          description: A successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2TaxonomyImageMetadataResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2TaxonomyImageMetadataRequest'
+            examples:
+              Single TaxID example:
+                description: NCBI Taxonomy ID for human
+                value:
+                  taxon: '9606'
+components:
+  schemas:
+    v2OrganismQueryRequest:
+      type: object
+      properties:
+        organism_query:
+          type: string
+        taxon_query:
+          type: string
+          title: Taxonomy ID or name (common or scientific) at any taxonomic rank
+        tax_rank_filter:
+          $ref: '#/components/schemas/v2OrganismQueryRequestTaxRankFilter'
+          title: Optionally return results for taxonomic ranks above species using `higher_taxon`
+        taxon_resource_filter:
+          $ref: '#/components/schemas/v2OrganismQueryRequestTaxonResourceFilter'
+          title: Limit to taxonomy nodes with gene, genome or organelle data
+        exact_match:
+          type: boolean
+          title: If true, only return results that exactly match the provided taxonomic name
+    v2TaxonomyFilteredSubtreeResponseEdgeChildStatus:
+      type: string
+      enum:
+      - UNSPECIFIED
+      - HAS_MORE_CHILDREN
+      - NO_VISIBLE_CHILDREN
+      - ONLY_UNSPECIFIED_CHILDREN
+      default: UNSPECIFIED
+      title: HAS_MORE_CHILDREN means there are children of a valid rank that are not unspecified NO_VISIBLE_CHILDREN means there are no children at all, not even unspecified children ONLY_UNSPECIFIED_CHILDREN Means that there are children, but those children are all unspecified (e.g. environmental samples)
+    v2reportsWarning:
+      type: object
+      properties:
+        gene_warning_code:
+          $ref: '#/components/schemas/v2reportsWarningGeneWarningCode'
+        reason:
+          type: string
+        message:
+          type: string
+        replaced_id:
+          $ref: '#/components/schemas/v2reportsWarningReplacedId'
+        unrecognized_identifier:
+          type: string
+    v2SciNameAndIdsSciNameAndId:
+      type: object
+      properties:
+        sci_name:
+          type: string
+          title: Scientific name
+        tax_id:
+          type: string
+          format: uint64
+          title: NCBI Taxonomy ID
+        common_name:
+          type: string
+          title: Common name
+        matched_term:
+          type: string
+          title: Matched term
+        rank:
+          $ref: '#/components/schemas/v2reportsRankType'
+          title: Rank
+        group_name:
+          type: string
+          title: Group name (blast group)
+    v2reportsClassification:
+      type: object
+      properties:
+        superkingdom:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        kingdom:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        phylum:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        class:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        order:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        family:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        genus:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        species:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        domain:
+          $ref: '#/components/schemas/v2reportsTaxData'
+          title: 'NOTE: These are out of order'
+        realm:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        acellular_root:
+          $ref: '#/components/schemas/v2reportsTaxData'
+    v2reportsTaxData:
+      type: object
+      properties:
+        name:
+          type: string
+          title: Taxonomic name
+        id:
+          type: integer
+          title: NCBI Taxonomy identifier
+    v2reportsNameAndAuthority:
+      type: object
+      properties:
+        name:
+          type: string
+          title: This could be the scientific name, common name, synonym, etc. depending on the context.
+        authority:
+          type: string
+          title: The authority that this name was created by. The authority is typically represented by the author(s) name and the year in which it was published.
+        type_strains:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsTaxonomyTypeMaterial'
+        curator_synonym:
+          type: string
+          title: The primary synonym of the scientific name.
+        homotypic_synonyms:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthority'
+        heterotypic_synonyms:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthority'
+        other_synonyms:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthority'
+        informal_names:
+          type: array
+          items:
+            type: string
+        basionym:
+          $ref: '#/components/schemas/v2reportsNameAndAuthority'
+          title: The originally described name, no longer in use. Attached to the type material and species description.
+        publications:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthorityPublication'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthorityNote'
+        formal:
+          type: boolean
+          title: Indicates whether the name is formal (i.e. compliant)
+    v2OrganismQueryRequestTaxRankFilter:
+      type: string
+      enum:
+      - species
+      - higher_taxon
+      default: species
+    v2reportsTaxonomyNamesDescriptorCitation:
+      type: object
+      properties:
+        full_citation:
+          type: string
+        short_citation:
+          type: string
+        pmid:
+          type: string
+          format: uint64
+    v2reportsErrorGeneErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_ERROR_CODE
+      - INCOMPLETE_LOOKUP_SYMBOL
+      - INVALID_TAXON_GENE_ARGUMENT
+      default: UNKNOWN_GENE_ERROR_CODE
+    v2reportsTaxonomyDataReportPage:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsTaxonomyReportMatch'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+        total_count:
+          type: integer
+          title: The total count of available taxons - deprecated because it not supported for multiple-page results.
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    v2TaxonomyDatasetRequestTaxonomyReportType:
+      type: string
+      enum:
+      - TAXONOMY_SUMMARY
+      - NAMES_REPORT
+      default: TAXONOMY_SUMMARY
+    v2TaxonomyImageMetadataResponse:
+      type: object
+      properties:
+        tax_id:
+          type: string
+        src:
+          type: string
+        license:
+          type: string
+        attribution:
+          type: string
+        source:
+          type: string
+        image_sizes:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2ImageSize'
+        format:
+          type: string
+        license_url:
+          type: string
+    v2TaxonomyRelatedIdRequest:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+        include_lineage:
+          type: boolean
+          title: If true, include parent nodes
+        include_subtree:
+          type: boolean
+          title: This field is deprecated because all requests include the subtree, so it has no effect
+        ranks:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+        page_size:
+          type: integer
+          title: The maximum number of taxids to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        page_token:
+          type: string
+          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+    v2TaxonomyFilteredSubtreeResponseEdgesEntry:
+      description: A map.
+      properties:
+        default:
+          $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdge'
+      additionalProperties:
+        $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdge'
+    v2TaxonomyDatasetRequest:
+      type: object
+      properties:
+        tax_ids:
+          type: array
+          items:
+            type: integer
+        aux_reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TaxonomyDatasetRequestTaxonomyReportType'
+    v2TaxonomyImageMetadataRequest:
+      type: object
+      properties:
+        taxon:
+          type: string
+    v2reportsTaxonomyReportMatch:
+      type: object
+      properties:
+        taxonomy:
+          $ref: '#/components/schemas/v2reportsTaxonomyNode'
+        query:
+          type: array
+          items:
+            type: string
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+    v2reportsTaxonomyNode:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        rank:
+          $ref: '#/components/schemas/v2reportsRankType'
+          title: The taxonomic rank of the taxonomic node.
+        current_scientific_name:
+          $ref: '#/components/schemas/v2reportsNameAndAuthority'
+          title: The currently accepted name chosen out of all synonyms for the taxonomic node.
+        basionym:
+          $ref: '#/components/schemas/v2reportsNameAndAuthority'
+          title: The originally described name, no longer in use. Attached to the type material and species description.
+        curator_common_name:
+          type: string
+          title: The canonical common name.
+        group_name:
+          type: string
+          title: A common name describing large, well-known taxa.
+        has_type_material:
+          type: boolean
+          title: A boolean that indicates whether or not type material is available for the species.
+        classification:
+          $ref: '#/components/schemas/v2reportsClassification'
+          title: A subset of parent nodes including well-established ranks.
+        parents:
+          type: array
+          items:
+            type: integer
+        children:
+          type: array
+          items:
+            type: integer
+        counts:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsTaxonomyNodeCountByType'
+        genomic_moltype:
+          type: string
+          title: Genomic molecule type (dsDNA, ssDNA, ssDNA(-), ssRNA)
+        current_scientific_name_is_formal:
+          type: boolean
+          title: Specify if the current scientific name is considered 'formal' or not.
+        secondary_tax_ids:
+          type: array
+          items:
+            type: integer
+        extinct:
+          type: boolean
+          title: True if organism is extinct
+    v2TaxonomyMatch:
+      type: object
+      properties:
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsWarning'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+        query:
+          type: array
+          items:
+            type: string
+        taxonomy:
+          $ref: '#/components/schemas/v2TaxonomyNode'
+    v2reportsTaxonomyNodeCountByType:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/v2reportsCountType'
+        count:
+          type: integer
+    v2HttpBody:
+      type: object
+      properties:
+        content_type:
+          type: string
+          title: The HTTP Content-Type header value specifying the content type of the body.
+        data:
+          type: string
+          format: byte
+          title: The HTTP request/response body as raw binary.
+    v2ImageSize:
+      type: string
+      enum:
+      - UNSPECIFIED
+      - SMALL
+      - MEDIUM
+      default: UNSPECIFIED
+    v2reportsErrorAssemblyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ASSEMBLY_ERROR_CODE
+      - INVALID_BIOPROJECT_IDS
+      - NO_ASSEMBLIES_FOR_BIOPROJECTS
+      - INVALID_TAXON
+      - MISSING_SEARCH_FIELD
+      - INVALID_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
+      - INVALID_WGS_ACCESSIONS
+      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
+      default: UNKNOWN_ASSEMBLY_ERROR_CODE
+    v2TaxonomyLinksResponseGenericLink:
+      type: object
+      properties:
+        link_name:
+          type: string
+        link_url:
+          type: string
+    v2reportsTaxonomyNamesDataReportPage:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsTaxonomyNamesReportMatch'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+        total_count:
+          type: integer
+          title: The total count of available taxons - deprecated because it not supported for multiple-page results.
+        next_page_token:
+          type: string
+          title: A page token.  A token that can be used in a future request as `page_token` to retrieve the next page. If this field is emtpy then there are no subsequent pages available.
+    v2TaxonomyMetadataRequest:
+      type: object
+      properties:
+        taxons:
+          type: array
+          items:
+            type: string
+        returned_content:
+          $ref: '#/components/schemas/v2TaxonomyMetadataRequestContentType'
+          title: Return complete taxonomy reports, Taxonomy IDs only, or reports without assembly and gene counts (metadata).
+        page_size:
+          type: integer
+          title: The maximum number of taxons to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        include_tabular_header:
+          $ref: '#/components/schemas/v2IncludeTabularHeader'
+          title: Specify when to include the table header when requesting a tabular report.
+        page_token:
+          type: string
+          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+        table_format:
+          $ref: '#/components/schemas/v2TaxonomyMetadataRequestTableFormat'
+          title: 'Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`.'
+        children:
+          type: boolean
+          title: If true, return results for child taxa.
+        ranks:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+    v2reportsErrorVirusErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_VIRUS_ERROR_CODE
+      default: UNKNOWN_VIRUS_ERROR_CODE
+    v2TaxonomyMetadataRequestContentType:
+      type: string
+      enum:
+      - COMPLETE
+      - TAXIDS
+      - METADATA
+      default: COMPLETE
+    v2IncludeTabularHeader:
+      type: string
+      enum:
+      - INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
+      - INCLUDE_TABULAR_HEADER_ALWAYS
+      - INCLUDE_TABULAR_HEADER_NEVER
+      default: INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
+    v2reportsErrorTaxonomyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_TAXONOMY_ERROR_CODE
+      - INVALID_TAXONOMY_TAXON
+      default: UNKNOWN_TAXONOMY_ERROR_CODE
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/protobufAny'
+    v2OrganismQueryRequestTaxonResourceFilter:
+      type: string
+      enum:
+      - TAXON_RESOURCE_FILTER_ALL
+      - TAXON_RESOURCE_FILTER_GENOME
+      - TAXON_RESOURCE_FILTER_GENE
+      - TAXON_RESOURCE_FILTER_ORGANELLE
+      default: TAXON_RESOURCE_FILTER_ALL
+    v2reportsNameAndAuthorityNote:
+      type: object
+      properties:
+        name:
+          type: string
+          title: Name of the notation.
+        note:
+          type: string
+          title: Note text.
+        note_classifier:
+          $ref: '#/components/schemas/v2reportsNameAndAuthorityNoteClassifier'
+          title: Note classification
+    v2reportsError:
+      type: object
+      properties:
+        assembly_error_code:
+          $ref: '#/components/schemas/v2reportsErrorAssemblyErrorCode'
+        gene_error_code:
+          $ref: '#/components/schemas/v2reportsErrorGeneErrorCode'
+        organelle_error_code:
+          $ref: '#/components/schemas/v2reportsErrorOrganelleErrorCode'
+        virus_error_code:
+          $ref: '#/components/schemas/v2reportsErrorVirusErrorCode'
+        taxonomy_error_code:
+          $ref: '#/components/schemas/v2reportsErrorTaxonomyErrorCode'
+        reason:
+          type: string
+        message:
+          type: string
+        invalid_identifiers:
+          type: array
+          items:
+            type: string
+    v2TaxonomyFilteredSubtreeResponse:
+      type: object
+      properties:
+        root_nodes:
+          type: array
+          items:
+            type: integer
+        edges:
+          $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdgesEntry'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsWarning'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+    v2TaxonomyLinksResponse:
+      type: object
+      properties:
+        tax_id:
+          type: string
+        encyclopedia_of_life:
+          type: string
+        global_biodiversity_information_facility:
+          type: string
+        inaturalist:
+          type: string
+        viralzone:
+          type: string
+        wikipedia:
+          type: string
+        generic_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TaxonomyLinksResponseGenericLink'
+    v2reportsTaxonomyNamesReportMatch:
+      type: object
+      properties:
+        taxonomy:
+          $ref: '#/components/schemas/v2reportsTaxonomyNamesDescriptor'
+          title: Detailed taxonomic information related to the requested node.
+        query:
+          type: array
+          items:
+            type: string
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+          title: Warnings associated with this request.  Any warning associated with this request.  This is represented by a Warning object which is separately documented.
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+    v2TaxonomyImageRequest:
+      type: object
+      properties:
+        taxon:
+          type: string
+        image_size:
+          $ref: '#/components/schemas/v2ImageSize'
+    v2TaxonomyFilteredSubtreeResponseEdge:
+      type: object
+      properties:
+        visible_children:
+          type: array
+          items:
+            type: integer
+        children_status:
+          $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdgeChildStatus'
+        rank:
+          $ref: '#/components/schemas/v2reportsRankType'
+        scientific_name:
+          type: string
+        curator_common_name:
+          type: string
+        assembly_count:
+          type: integer
+    v2reportsTaxonomyTypeMaterial:
+      type: object
+      properties:
+        type_strain_name:
+          type: string
+          title: The strain name of the type material.
+        type_strain_id:
+          type: string
+          title: The strain ID of the type material.
+        bio_collection_id:
+          type: string
+          title: The biocollection ID of the type material.
+        bio_collection_name:
+          type: string
+          title: The biocollection name of the type material.
+        collection_type:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsCollectionType'
+        type_class:
+          type: string
+          title: Type material classification.
+    v2TaxonomyNode:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        organism_name:
+          type: string
+          title: Scientific name
+        common_name:
+          type: string
+          title: Common name
+        genbank_common_name:
+          type: string
+          title: GenBank common name
+        acronyms:
+          type: array
+          items:
+            type: string
+        genbank_acronym:
+          type: string
+          title: GenBank acronym
+        blast_name:
+          type: string
+          title: blast name for organism
+        lineage:
+          type: array
+          items:
+            type: integer
+        children:
+          type: array
+          items:
+            type: integer
+        descendent_with_described_species_names_count:
+          type: integer
+          title: The number of descendants (grand total) that are specified.
+        rank:
+          $ref: '#/components/schemas/v2reportsRankType'
+          title: The rank of the organism.  An enumerated set of values.
+        has_described_species_name:
+          type: boolean
+          title: If the taxonomy node has a proper species name
+        counts:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TaxonomyNodeCountByType'
+        min_ord:
+          type: integer
+          title: ordinal values for any node are the full range of the ordinal values in the subtree underneath this node, and are used for faster range-based lookups
+        max_ord:
+          type: integer
+        extinct:
+          type: boolean
+          title: True if organism is extinct
+        genomic_moltype:
+          type: string
+          title: genomic molecule type (dsDNA, ssDNA, ssDNA(-), ssRNA)
+    v2TaxonomyMetadataResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+        taxonomy_nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TaxonomyMatch'
+    v2reportsRankType:
+      type: string
+      enum:
+      - NO_RANK
+      - SUPERKINGDOM
+      - DOMAIN
+      - REALM
+      - KINGDOM
+      - SUBKINGDOM
+      - SUPERPHYLUM
+      - SUBPHYLUM
+      - PHYLUM
+      - CLADE
+      - SUPERCLASS
+      - CLASS
+      - SUBCLASS
+      - INFRACLASS
+      - COHORT
+      - SUBCOHORT
+      - SUPERORDER
+      - ORDER
+      - SUBORDER
+      - INFRAORDER
+      - PARVORDER
+      - SUPERFAMILY
+      - FAMILY
+      - SUBFAMILY
+      - GENUS
+      - SUBGENUS
+      - SPECIES_GROUP
+      - SPECIES_SUBGROUP
+      - SPECIES
+      - SUBSPECIES
+      - TRIBE
+      - SUBTRIBE
+      - FORMA
+      - VARIETAS
+      - STRAIN
+      - SECTION
+      - SUBSECTION
+      - PATHOGROUP
+      - SUBVARIETY
+      - GENOTYPE
+      - SEROTYPE
+      - ISOLATE
+      - MORPH
+      - SERIES
+      - FORMA_SPECIALIS
+      - SEROGROUP
+      - BIOTYPE
+      - ACELLULAR_ROOT
+      - CELLULAR_ROOT
+      default: NO_RANK
+      title: Rank level
+    v2TaxonomyMetadataRequestTableFormat:
+      type: string
+      enum:
+      - SUMMARY
+      default: SUMMARY
+      title: Optional pre-defined template for processing a tabular data request
+    v2SciNameAndIds:
+      type: object
+      properties:
+        sci_name_and_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2SciNameAndIdsSciNameAndId'
+    v2reportsMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/v2reportsError'
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+    v2reportsTaxonomyNamesDescriptor:
+      type: object
+      properties:
+        tax_id:
+          type: string
+          format: uint64
+          title: NCBI Taxonomy identifier
+        rank:
+          $ref: '#/components/schemas/v2reportsRankType'
+          title: The taxonomic rank of the taxonomic node.
+        current_scientific_name:
+          $ref: '#/components/schemas/v2reportsNameAndAuthority'
+          title: The currently accepted name chosen out of all synonyms for the taxonomic node.
+        group_name:
+          type: string
+          title: Group name for the species.
+        curator_common_name:
+          type: string
+          title: The canonical common name.
+        other_common_names:
+          type: array
+          items:
+            type: string
+        general_notes:
+          type: array
+          items:
+            type: string
+        links_from_type:
+          type: string
+          title: TBD
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsTaxonomyNamesDescriptorCitation'
+        current_scientific_name_is_formal:
+          type: boolean
+          title: Specify if the current scientific name is considered 'formal' or not.
+    v2reportsWarningGeneWarningCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_WARNING_CODE
+      - ACCESSION_VERSION_MISMATCH
+      - REPLACED_GENE_ID
+      - DISCONTINUED_GENE_ID
+      - UNRECOGNIZED_GENE_ID
+      - UNRECOGNIZED_GENE_SYMBOL
+      - UNRECOGNIZED_ACCESSION
+      - UNRECOGNIZED_TAX_TOKEN
+      - NO_GENE_ANNOTATION_FOUND
+      - ABOVE_SPECIES_TAXON
+      default: UNKNOWN_GENE_WARNING_CODE
+    v2TaxonomyNodeCountByType:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/v2reportsCountType'
+        count:
+          type: integer
+    v2reportsErrorOrganelleErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ORGANELLE_ERROR_CODE
+      - INVALID_ORGANELLE_TAXON
+      - NO_ORGANELLES_FOR_ACCESSION
+      default: UNKNOWN_ORGANELLE_ERROR_CODE
+    v2reportsNameAndAuthorityNoteClassifier:
+      type: string
+      enum:
+      - no_authority_classifier
+      - effective_name
+      - nomen_approbbatum
+      - ictv_accepted
+      default: no_authority_classifier
+      title: Class of authority  If the authority has any special classification, such as having been effectively and validly published or having been included in an approved list.
+    v2TaxonomyTaxIdsPage:
+      type: object
+      properties:
+        tax_ids:
+          type: array
+          items:
+            type: integer
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    v2reportsCollectionType:
+      type: string
+      enum:
+      - no_collection_type
+      - collection_culture_collection
+      - specimen_voucher
+      default: no_collection_type
+    v2TaxonomyFilteredSubtreeRequest:
+      type: object
+      properties:
+        taxons:
+          type: array
+          items:
+            type: string
+        specified_limit:
+          type: boolean
+          title: Limit to specified species
+        exclude_extinct:
+          type: boolean
+          title: Limit to species that are not extinct
+        levels:
+          type: integer
+          title: Number of taxonomic levels to return with a valid range of 1-5. Values above 5 will return 5 levels and if level is 0 or not specified, 1 level will be returned.
+        rank_limits:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+        include_incertae_sedis:
+          type: boolean
+          title: Include nodes with ranks not in 'rank_limits' if their names meet criteria for incertae sedis (of unknown origin).
+    v2reportsCountType:
+      type: string
+      enum:
+      - COUNT_TYPE_UNSPECIFIED
+      - COUNT_TYPE_ASSEMBLY
+      - COUNT_TYPE_GENE
+      - COUNT_TYPE_tRNA
+      - COUNT_TYPE_rRNA
+      - COUNT_TYPE_snRNA
+      - COUNT_TYPE_scRNA
+      - COUNT_TYPE_snoRNA
+      - COUNT_TYPE_PROTEIN_CODING
+      - COUNT_TYPE_PSEUDO
+      - COUNT_TYPE_TRANSPOSON
+      - COUNT_TYPE_miscRNA
+      - COUNT_TYPE_ncRNA
+      - COUNT_TYPE_BIOLOGICAL_REGION
+      - COUNT_TYPE_OTHER
+      - COUNT_TYPE_ORGANELLE
+      default: COUNT_TYPE_UNSPECIFIED
+    v2reportsNameAndAuthorityPublication:
+      type: object
+      properties:
+        name:
+          type: string
+          title: Name of the publication (article, book, etc.).
+        citation:
+          type: string
+          title: Citation to the publication.
+        pmid:
+          type: string
+          format: uint64
+    v2TaxonomyLinksRequest:
+      type: object
+      properties:
+        taxon:
+          type: string
+    protobufAny:
+      type: object
+      properties:
+        type_url:
+          type: string
+        value:
+          type: string
+          format: byte
+    v2reportsWarningReplacedId:
+      type: object
+      properties:
+        requested:
+          type: string
+        returned:
+          type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+    ApiKeyAuthHeader:
+      type: apiKey
+      in: header
+      name: api-key
+externalDocs:
+  description: Interactively explore genome assembly datasets
+  url: https://www.ncbi.nlm.nih.gov/datasets/genomes/
