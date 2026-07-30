@@ -9,6 +9,19 @@ description: >
   for chemical compound data. PMC developer tools provide Open Access article
   retrieval, metadata harvesting, identifier conversion, and citation export.
 url: https://www.ncbi.nlm.nih.gov/home/develop/api/
+accessModel:
+  pricing: free
+  onboarding: open
+  trial: false
+  try_now: true
+  public: true
+  label: Free · Open access
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://www.ncbi.nlm.nih.gov/favicon.ico
 tags:
   - Bioinformatics
@@ -24,206 +37,319 @@ created: "2026-06-13"
 modified: "2026-06-13"
 specificationVersion: "0.19"
 apis:
+- name: NCBI Entrez E-utilities API
+  description: >
+    The Entrez Programming Utilities (E-utilities) are the public API to the NCBI Entrez system, providing
+    access to over 38 Entrez databases including PubMed, GenBank (Nuccore), Gene, Taxonomy, and Protein.
+    Nine server-side programs support text search, record retrieval, batch download, database linking,
+    spelling correction, and citation matching. Requests can be authenticated with an API key to raise
+    rate limits from 3 to 10 requests per second.
+  image: https://www.ncbi.nlm.nih.gov/favicon.ico
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Entrez
+  - PubMed
+  - GenBank
+  - Gene
+  - Taxonomy
+  - Sequences
+  - Literature
+  properties:
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  - type: GettingStarted
+    url: https://www.ncbi.nlm.nih.gov/books/NBK25500/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/e-utilities.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/e-utilities.yml
+  contact:
+  - FN: NCBI E-utilities Support
+    email: vog.hin.mln.ibcn@seitilitue
+    url: https://support.nlm.nih.gov/support/create-case/
+- name: NCBI BLAST URL API
+  description: >
+    The BLAST (Basic Local Alignment Search Tool) URL API allows developers to submit nucleotide and protein
+    sequence homology searches via HTTPS, poll for job status, and retrieve results in multiple formats
+    including XML, JSON, and tabular output. Jobs can be processed at NCBI or at cloud service providers.
+    No API key is required, though responsible use guidelines apply.
+  image: https://www.ncbi.nlm.nih.gov/favicon.ico
+  humanURL: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
+  baseURL: https://blast.ncbi.nlm.nih.gov/blast/Blast.cgi
+  tags:
+  - BLAST
+  - Sequence Alignment
+  - Homology
+  - Genomics
+  properties:
+  - type: Documentation
+    url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/blast.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/blast.yml
+  contact:
+  - FN: NCBI BLAST Support
+    url: https://support.nlm.nih.gov/support/create-case/
+- name: PubChem PUG REST API
+  description: >
+    The PubChem Power User Gateway (PUG) REST API provides programmatic access to PubChem's chemical compound,
+    substance, and bioassay data. Developers can retrieve compound properties, structures, synonyms, and
+    cross-references by name, SMILES, InChI, CID, SID, or AID. The API supports structure search operations
+    and integrates with E-utilities for cross-database queries. Responses are available in JSON, XML,
+    SDF, and other formats.
+  image: https://pubchem.ncbi.nlm.nih.gov/favicon.ico
+  humanURL: https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
+  baseURL: https://pubchem.ncbi.nlm.nih.gov/rest/pug
+  tags:
+  - Chemistry
+  - Compounds
+  - PubChem
+  - Structures
+  - Bioassay
+  properties:
+  - type: Documentation
+    url: https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/pubchem-pug-rest.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/pubchem-pug-rest.yml
+  contact:
+  - FN: PubChem Support
+    url: https://pubchemdocs.ncbi.nlm.nih.gov/contact
+- name: PMC Open Access API (OA Service)
+  description: >
+    The PubMed Central Open Access API retrieves citation data, licensing details, and FTP download locations
+    for Open Access articles in the PMC archive. Queries accept a PMC identifier and return structured
+    XML with article metadata and links to full-text files in formats such as PDF and XML.
+  image: https://pmc.ncbi.nlm.nih.gov/favicon.ico
+  humanURL: https://pmc.ncbi.nlm.nih.gov/tools/oa-service/
+  baseURL: https://www.ncbi.nlm.nih.gov/pmc/utils/oa/oa.fcgi
+  tags:
+  - PubMed Central
+  - Open Access
+  - Literature
+  - PMC
+  properties:
+  - type: Documentation
+    url: https://pmc.ncbi.nlm.nih.gov/tools/oa-service/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/pmc-oa.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/pmc-oa.yml
+  contact:
+  - FN: PMC Support
+    url: https://support.nlm.nih.gov/support/create-case/
+- name: PMC ID Converter API
+  description: >
+    The PMC ID Converter API translates between PubMed Central identifiers (PMCID), PubMed identifiers
+    (PMID), Manuscript IDs, and Digital Object Identifiers (DOI). Batch conversion is supported, making
+    it straightforward to harmonize identifiers across literature databases.
+  image: https://pmc.ncbi.nlm.nih.gov/favicon.ico
+  humanURL: https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/
+  baseURL: https://pmc.ncbi.nlm.nih.gov/tools/idconv/api/v1/articles/
+  tags:
+  - PubMed Central
+  - Identifiers
+  - DOI
+  - PMID
+  - PMCID
+  properties:
+  - type: Documentation
+    url: https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/pmc-id-converter.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/pmc-id-converter.yml
+  contact:
+  - FN: PMC Support
+    url: https://support.nlm.nih.gov/support/create-case/
+- name: PMC OAI-PMH Service
+  description: >
+    The PMC OAI-PMH (Open Archives Initiative Protocol for Metadata Harvesting) service allows bulk harvesting
+    of metadata for all items in the PMC archive and full-text content for articles with Creative Commons
+    licenses. It follows the OAI-PMH 2.0 protocol standard and is suited for building downstream literature
+    indexes and research data pipelines.
+  image: https://pmc.ncbi.nlm.nih.gov/favicon.ico
+  humanURL: https://pmc.ncbi.nlm.nih.gov/tools/oai/
+  baseURL: https://pmc.ncbi.nlm.nih.gov/api/oai/v1/mh/
+  tags:
+  - PubMed Central
+  - OAI-PMH
+  - Metadata Harvesting
+  - Literature
+  - Open Access
+  properties:
+  - type: Documentation
+    url: https://pmc.ncbi.nlm.nih.gov/tools/oai/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/pmc-oai-pmh.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/pmc-oai-pmh.yml
+  contact:
+  - FN: PMC Support
+    url: https://support.nlm.nih.gov/support/create-case/
+- aid: ncbi:ncbi-biosample-api
+  name: National Center for Biotechnology Information (NCBI) BioSample API
+  description: >-
+    #### Options to download BioSample data.
 
-  - name: NCBI Entrez E-utilities API
-    description: >
-      The Entrez Programming Utilities (E-utilities) are the public API to the
-      NCBI Entrez system, providing access to over 38 Entrez databases including
-      PubMed, GenBank (Nuccore), Gene, Taxonomy, and Protein. Nine server-side
-      programs support text search, record retrieval, batch download, database
-      linking, spelling correction, and citation matching. Requests can be
-      authenticated with an API key to raise rate limits from 3 to 10 requests
-      per second.
-    image: https://www.ncbi.nlm.nih.gov/favicon.ico
-    humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
-    baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
-    tags:
-      - Entrez
-      - PubMed
-      - GenBank
-      - Gene
-      - Taxonomy
-      - Sequences
-      - Literature
-    properties:
-      - type: Documentation
-        url: https://www.ncbi.nlm.nih.gov/books/NBK25497/
-      - type: GettingStarted
-        url: https://www.ncbi.nlm.nih.gov/books/NBK25500/
-      - type: RateLimits
-        url: https://kinlane.github.io/ncbi/rate-limits/e-utilities.yml
-      - type: Plans
-        url: https://kinlane.github.io/ncbi/plans/e-utilities.yml
-    contact:
-      - FN: NCBI E-utilities Support
-        email: vog.hin.mln.ibcn@seitilitue
-        url: https://support.nlm.nih.gov/support/create-case/
+    This BioSample service allows you to get BioSample data as a data report.
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - BioSample
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-biosample-api-openapi.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/datasets.yml
+- aid: ncbi:ncbi-gene-api
+  name: National Center for Biotechnology Information (NCBI) Gene API
+  description: >-
+    #### Options to download gene data, including the associated sequence and metadata.
 
-  - name: NCBI BLAST URL API
-    description: >
-      The BLAST (Basic Local Alignment Search Tool) URL API allows developers
-      to submit nucleotide and protein sequence homology searches via HTTPS,
-      poll for job status, and retrieve results in multiple formats including
-      XML, JSON, and tabular output. Jobs can be processed at NCBI or at cloud
-      service providers. No API key is required, though responsible use
-      guidelines apply.
-    image: https://www.ncbi.nlm.nih.gov/favicon.ico
-    humanURL: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
-    baseURL: https://blast.ncbi.nlm.nih.gov/blast/Blast.cgi
-    tags:
-      - BLAST
-      - Sequence Alignment
-      - Homology
-      - Genomics
-    properties:
-      - type: Documentation
-        url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
-      - type: RateLimits
-        url: https://kinlane.github.io/ncbi/rate-limits/blast.yml
-      - type: Plans
-        url: https://kinlane.github.io/ncbi/plans/blast.yml
-    contact:
-      - FN: NCBI BLAST Support
-        url: https://support.nlm.nih.gov/support/create-case/
+    These gene services allow you to get gene metadata as a data report or download gene, transcript and
+    protein sequence, and metadata, as a gene data package, for all genes in NCBI Gene.
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Gene
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-gene-api-openapi.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/datasets.yml
+- aid: ncbi:ncbi-genome-api
+  name: National Center for Biotechnology Information (NCBI) Genome API
+  description: >-
+    #### Options to download assembled genome data, including the associated sequence, annotation and
+    metadata.
 
-  - name: NCBI Datasets API
-    description: >
-      The NCBI Datasets v2 REST API, defined by an OpenAPI 3.0 specification,
-      provides programmatic access to genomic sequences, gene records, taxonomy
-      data, virus sequences, and ortholog information. It is the same API that
-      powers the NCBI Datasets command-line tool and web interface. Data packages
-      can be downloaded in zip archives containing FASTA, GFF3, and JSON summary
-      files.
-    image: https://www.ncbi.nlm.nih.gov/favicon.ico
-    humanURL: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
-    baseURL: https://api.ncbi.nlm.nih.gov/datasets/v2
-    tags:
-      - Genomics
-      - Gene
-      - Taxonomy
-      - Virus
-      - Genome
-    properties:
-      - type: Documentation
-        url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/ncbi/datasets/master/datasets.openapi.yaml
-      - type: RateLimits
-        url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
-      - type: Plans
-        url: https://kinlane.github.io/ncbi/plans/datasets.yml
-    contact:
-      - FN: NCBI Datasets Support
-        url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/troubleshooting/faq/
+    These genome services allow you to get genome metadata as a data report or download genome, transcript
+    and protein sequence, annotation and metadata as a genome data package, for assembled genomes.
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Genome
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-genome-api-openapi.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/datasets.yml
+- aid: ncbi:ncbi-organelle-api
+  name: National Center for Biotechnology Information (NCBI) Organelle API
+  description: >-
+    #### Options to download RefSeq organelle genome data, including the associated sequence and metadata.
 
-  - name: PubChem PUG REST API
-    description: >
-      The PubChem Power User Gateway (PUG) REST API provides programmatic
-      access to PubChem's chemical compound, substance, and bioassay data.
-      Developers can retrieve compound properties, structures, synonyms, and
-      cross-references by name, SMILES, InChI, CID, SID, or AID. The API
-      supports structure search operations and integrates with E-utilities
-      for cross-database queries. Responses are available in JSON, XML,
-      SDF, and other formats.
-    image: https://pubchem.ncbi.nlm.nih.gov/favicon.ico
-    humanURL: https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
-    baseURL: https://pubchem.ncbi.nlm.nih.gov/rest/pug
-    tags:
-      - Chemistry
-      - Compounds
-      - PubChem
-      - Structures
-      - Bioassay
-    properties:
-      - type: Documentation
-        url: https://pubchem.ncbi.nlm.nih.gov/docs/pug-rest
-      - type: RateLimits
-        url: https://kinlane.github.io/ncbi/rate-limits/pubchem-pug-rest.yml
-      - type: Plans
-        url: https://kinlane.github.io/ncbi/plans/pubchem-pug-rest.yml
-    contact:
-      - FN: PubChem Support
-        url: https://pubchemdocs.ncbi.nlm.nih.gov/contact
+    These organelle services allow you to get RefSeq organelle genome metadata as a data report or download
+    gene, transcript and protein sequence, and metadata, as an organelle data package, for RefSeq organelle
+    genomes.
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Organelle
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-organelle-api-openapi.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/datasets.yml
+- aid: ncbi:ncbi-prokaryote-api
+  name: National Center for Biotechnology Information (NCBI) Prokaryote API
+  description: >-
+    #### Options to download prokaryote gene data, including the associated sequence and metadata.
 
-  - name: PMC Open Access API (OA Service)
-    description: >
-      The PubMed Central Open Access API retrieves citation data, licensing
-      details, and FTP download locations for Open Access articles in the PMC
-      archive. Queries accept a PMC identifier and return structured XML with
-      article metadata and links to full-text files in formats such as PDF and
-      XML.
-    image: https://pmc.ncbi.nlm.nih.gov/favicon.ico
-    humanURL: https://pmc.ncbi.nlm.nih.gov/tools/oa-service/
-    baseURL: https://www.ncbi.nlm.nih.gov/pmc/utils/oa/oa.fcgi
-    tags:
-      - PubMed Central
-      - Open Access
-      - Literature
-      - PMC
-    properties:
-      - type: Documentation
-        url: https://pmc.ncbi.nlm.nih.gov/tools/oa-service/
-      - type: RateLimits
-        url: https://kinlane.github.io/ncbi/rate-limits/pmc-oa.yml
-      - type: Plans
-        url: https://kinlane.github.io/ncbi/plans/pmc-oa.yml
-    contact:
-      - FN: PMC Support
-        url: https://support.nlm.nih.gov/support/create-case/
+    These gene services allow you to download gene and protein sequence, and metadata as a prokaryote
+    gene data package, for prokaryotic [RefSeq non-redundant proteins](https://www.ncbi.nlm.nih.gov/refseq/about/nonredundantproteins/).
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Prokaryote
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-prokaryote-api-openapi.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/datasets.yml
+- aid: ncbi:ncbi-taxonomy-api
+  name: National Center for Biotechnology Information (NCBI) Taxonomy API
+  description: >-
+    #### Options to download taxonomy data.
 
-  - name: PMC ID Converter API
-    description: >
-      The PMC ID Converter API translates between PubMed Central identifiers
-      (PMCID), PubMed identifiers (PMID), Manuscript IDs, and Digital Object
-      Identifiers (DOI). Batch conversion is supported, making it straightforward
-      to harmonize identifiers across literature databases.
-    image: https://pmc.ncbi.nlm.nih.gov/favicon.ico
-    humanURL: https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/
-    baseURL: https://pmc.ncbi.nlm.nih.gov/tools/idconv/api/v1/articles/
-    tags:
-      - PubMed Central
-      - Identifiers
-      - DOI
-      - PMID
-      - PMCID
-    properties:
-      - type: Documentation
-        url: https://pmc.ncbi.nlm.nih.gov/tools/id-converter-api/
-      - type: RateLimits
-        url: https://kinlane.github.io/ncbi/rate-limits/pmc-id-converter.yml
-      - type: Plans
-        url: https://kinlane.github.io/ncbi/plans/pmc-id-converter.yml
-    contact:
-      - FN: PMC Support
-        url: https://support.nlm.nih.gov/support/create-case/
+    These taxonomy services allow you to get taxonomy data as a data report or download taxonomy data
+    as a taxonomy data package, for taxonomic nodes in NCBI Taxonomy.
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Taxonomy
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-taxonomy-api-openapi.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/datasets.yml
+- aid: ncbi:ncbi-version-api
+  name: National Center for Biotechnology Information (NCBI) Version API
+  description: >-
+    #### Retrieve the current version of all NCBI Datasets services.
 
-  - name: PMC OAI-PMH Service
-    description: >
-      The PMC OAI-PMH (Open Archives Initiative Protocol for Metadata Harvesting)
-      service allows bulk harvesting of metadata for all items in the PMC archive
-      and full-text content for articles with Creative Commons licenses. It follows
-      the OAI-PMH 2.0 protocol standard and is suited for building downstream
-      literature indexes and research data pipelines.
-    image: https://pmc.ncbi.nlm.nih.gov/favicon.ico
-    humanURL: https://pmc.ncbi.nlm.nih.gov/tools/oai/
-    baseURL: https://pmc.ncbi.nlm.nih.gov/api/oai/v1/mh/
-    tags:
-      - PubMed Central
-      - OAI-PMH
-      - Metadata Harvesting
-      - Literature
-      - Open Access
-    properties:
-      - type: Documentation
-        url: https://pmc.ncbi.nlm.nih.gov/tools/oai/
-      - type: RateLimits
-        url: https://kinlane.github.io/ncbi/rate-limits/pmc-oai-pmh.yml
-      - type: Plans
-        url: https://kinlane.github.io/ncbi/plans/pmc-oai-pmh.yml
-    contact:
-      - FN: PMC Support
-        url: https://support.nlm.nih.gov/support/create-case/
+    NCBI Datasets services follow the [Semantic Versioning 2.0.0 Schema](https://semver.org/spec/v2.0.0.html).
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Version
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-version-api-openapi.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/datasets.yml
+- aid: ncbi:ncbi-virus-api
+  name: National Center for Biotechnology Information (NCBI) Virus API
+  description: >-
+    #### Options to download virus genome data, including the associated sequence and metadata.
 
+    These virus services allow you to get virus genome metadata as a data report or download genome and
+    protein sequence, and metadata, as a virus data package, for virus GenBank genomes.
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Virus
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-virus-api-openapi.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/datasets.yml
 common:
   - type: AgenticAccess
     url: agentic-access/ncbi-agentic-access.yml
