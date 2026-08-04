@@ -1,0 +1,28 @@
+{
+  "provider": "ncbi",
+  "sources": [
+    "ncbi-biosample-api-openapi.yml",
+    "ncbi-gene-api-openapi.yml",
+    "ncbi-genome-api-openapi.yml",
+    "ncbi-organelle-api-openapi.yml",
+    "ncbi-prokaryote-api-openapi.yml",
+    "ncbi-taxonomy-api-openapi.yml",
+    "ncbi-version-api-openapi.yml",
+    "ncbi-virus-api-openapi.yml"
+  ],
+  "outputs": [
+    "ncbi-biosample-api-openapi.yml",
+    "ncbi-gene-api-openapi.yml",
+    "ncbi-genome-api-openapi.yml",
+    "ncbi-organelle-api-openapi.yml",
+    "ncbi-prokaryote-api-openapi.yml",
+    "ncbi-taxonomy-api-openapi.yml",
+    "ncbi-version-api-openapi.yml",
+    "ncbi-virus-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
