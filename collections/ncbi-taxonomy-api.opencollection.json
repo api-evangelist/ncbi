@@ -1,0 +1,562 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCBI Datasets BioSample Taxonomy API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Taxonomy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a taxonomy data package by Taxonomy ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon/:tax_ids/download",
+            "params": [
+              {
+                "name": "tax_ids",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "aux_reports",
+                "value": "",
+                "type": "query",
+                "description": "Specify additional report files to include in the data package. The taxonomy report is always included, and its inclusion is not affected by this parameter."
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ]
+          },
+          "docs": "Download a taxonomy data package, including taxonomy and names reports, as a compressed zip archive."
+        },
+        {
+          "info": {
+            "name": "Get a taxonomy data package by Taxonomy ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/download",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download a taxonomy data package, including taxonomy and names reports, as a compressed zip archive."
+        },
+        {
+          "info": {
+            "name": "Use taxonomic identifiers to get taxonomic metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon/:taxons",
+            "params": [
+              {
+                "name": "taxons",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete taxonomy reports, Taxonomy IDs only, or reports without assembly and gene counts (metadata)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of taxons to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "children",
+                "value": "",
+                "type": "query",
+                "description": "If true, return results for child taxa."
+              },
+              {
+                "name": "ranks",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to taxa of the specified ranks."
+              }
+            ]
+          },
+          "docs": "Using NCBI Taxonomy IDs or names (common or scientific) at any rank, get metadata about a taxonomic node including taxonomic identifiers, lineage information, child nodes, and gene and genome counts in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get taxonomy metadata by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get taxonomy metadata by taxon in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a taxonomy data report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon/:taxons/dataset_report",
+            "params": [
+              {
+                "name": "taxons",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete taxonomy reports, Taxonomy IDs only, or reports without assembly and gene counts (metadata)."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of taxons to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "children",
+                "value": "",
+                "type": "query",
+                "description": "If true, return results for child taxa."
+              },
+              {
+                "name": "ranks",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to taxa of the specified ranks."
+              }
+            ]
+          },
+          "docs": "Get a taxonomy data report by taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a taxonomy data report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/dataset_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a taxonomy data report by taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a taxonomy names report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon/:taxons/name_report",
+            "params": [
+              {
+                "name": "taxons",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of taxons to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "children",
+                "value": "",
+                "type": "query",
+                "description": "If true, return results for child taxa."
+              },
+              {
+                "name": "ranks",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to taxa of the specified ranks."
+              }
+            ]
+          },
+          "docs": "Get a taxonomy names report, including common names and other synonyms, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a taxonomy names report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/name_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a taxonomy names report, including common names and other synonyms, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get child nodes, and optionally parent nodes, for a given taxon by Taxonomy ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon/:tax_id/related_ids",
+            "params": [
+              {
+                "name": "tax_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "include_lineage",
+                "value": "",
+                "type": "query",
+                "description": "If true, include parent nodes"
+              },
+              {
+                "name": "ranks",
+                "value": "",
+                "type": "query",
+                "description": "Limit to taxonomic nodes from the given ranks."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of taxids to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              }
+            ]
+          },
+          "docs": "Get child nodes, and optionally parent nodes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get child nodes, and optionally parent nodes, for a given taxon by Taxonomy ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/related_ids",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get child nodes, and optionally parent nodes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a filtered taxonomic subtree by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon/:taxons/filtered_subtree",
+            "params": [
+              {
+                "name": "taxons",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "specified_limit",
+                "value": "",
+                "type": "query",
+                "description": "Limit to specified species"
+              },
+              {
+                "name": "exclude_extinct",
+                "value": "",
+                "type": "query",
+                "description": "Limit to species that are not extinct"
+              },
+              {
+                "name": "levels",
+                "value": "",
+                "type": "query",
+                "description": "Number of taxonomic levels to return with a valid range of 1-5. Values above 5 will return 5 levels and if level is 0 or not specified, 1 level will be returned."
+              },
+              {
+                "name": "rank_limits",
+                "value": "",
+                "type": "query",
+                "description": "Limit to the provided ranks.  If empty, accept any rank."
+              },
+              {
+                "name": "include_incertae_sedis",
+                "value": "",
+                "type": "query",
+                "description": "Include nodes with ranks not in 'rank_limits' if their names meet criteria for incertae sedis (of unknown origin)."
+              }
+            ]
+          },
+          "docs": "Get a filtered taxonomic subtree, including parent and child nodes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a filtered taxonomic subtree by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/filtered_subtree",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a filtered taxonomic subtree, including parent and child nodes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a list of taxonomy names and IDs by partial taxonomic name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon_suggest/:taxon_query",
+            "params": [
+              {
+                "name": "taxon_query",
+                "value": "",
+                "type": "path",
+                "description": "Taxonomy ID or name (common or scientific) at any taxonomic rank"
+              },
+              {
+                "name": "tax_rank_filter",
+                "value": "",
+                "type": "query",
+                "description": "Optionally return results for taxonomic ranks above species using `higher_taxon`"
+              },
+              {
+                "name": "taxon_resource_filter",
+                "value": "",
+                "type": "query",
+                "description": "Limit to taxonomy nodes with gene, genome or organelle data"
+              },
+              {
+                "name": "exact_match",
+                "value": "",
+                "type": "query",
+                "description": "If true, only return results that exactly match the provided taxonomic name"
+              }
+            ]
+          },
+          "docs": "Get a list of taxonomy names and IDs in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a list of taxonomy names and IDs by partial taxonomic name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon_suggest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a list of taxonomy names and IDs in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get external links by Taxonomy ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon/:taxon/links",
+            "params": [
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get external links associated with a given taxon in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get external links by Taxonomy ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get external links associated with a given taxon in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a taxonomy image by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon/:taxon/image",
+            "params": [
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "image_size",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get an image associated with the specified taxon. By default, in JPEG format, but also available in PNG (accept: image/png), TIFF (accept: accept: image/tiff), and SVG+XML (accept: image/svg+xml) formats."
+        },
+        {
+          "info": {
+            "name": "Get a taxonomy image by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/image",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get an image associated with the specified taxon. By default, in JPEG format, but also available in PNG (accept: image/png), TIFF (accept: accept: image/tiff), and SVG+XML (accept: image/svg+xml) formats."
+        },
+        {
+          "info": {
+            "name": "Get taxonomy image metadata by Taxonomy ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/taxon/:taxon/image/metadata",
+            "params": [
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get taxonomy image metadata, including the image URL and license information, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get taxonomy image metadata by Taxonomy ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/taxonomy/image/metadata",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get taxonomy image metadata, including the image URL and license information, in JSON format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

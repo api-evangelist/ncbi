@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCBI Datasets BioSample Prokaryote API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Prokaryote",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a prokaryote gene data package by RefSeq protein accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/protein/accession/:accessions/download",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more RefSeq non-redundant protein accessions (preceded by `WP_`)"
+              },
+              {
+                "name": "include_annotation_type",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "gene_flank_config.length",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "query",
+                "description": "Limit gene sequences and the genome assemblies described by the [annotation report file](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-reports/prokaryote-gene-location/) to the specified NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank."
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ]
+          },
+          "docs": "Download a prokaryote gene data package including sequence, annotation and data reports by RefSeq non-redundant protein accession."
+        },
+        {
+          "info": {
+            "name": "Get a prokaryote gene data package by RefSeq protein accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/protein/accession/download",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download a prokaryote gene data package including sequence, annotation and data reports by RefSeq non-redundant protein accession."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

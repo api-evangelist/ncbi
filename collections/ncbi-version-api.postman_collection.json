@@ -1,0 +1,170 @@
+{
+  "item": [
+    {
+      "id": "25771e90-bb9c-4d33-bd24-97fc4b4be4ed",
+      "name": "Version",
+      "description": {
+        "content": "#### Retrieve the current version of all NCBI Datasets services.\nNCBI Datasets services follow the [Semantic Versioning 2.0.0 Schema](https://semver.org/spec/v2.0.0.html). ",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "082f475e-331c-4755-9d7c-3c5c5f9ae30f",
+          "name": "Retrieve service version",
+          "request": {
+            "name": "Retrieve service version",
+            "description": {
+              "content": "Retrieve the latest version of the Datasets services.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "version"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3509aef4-cb01-4bfc-83e2-6c16ec420264",
+              "name": "A successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"version\": \"string\",\n  \"major_ver\": 5023,\n  \"minor_ver\": 3202,\n  \"patch_ver\": 5414\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "962fac12-41d1-4ef4-96d4-b0c7c4510b7c",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "version"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1a21cea6-3eab-45a3-9178-2b3399c03886",
+    "name": "NCBI Datasets BioSample Version API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "### NCBI Datasets is a resource that lets you easily gather data from NCBI.\nThe NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCBI Datasets BioSample API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "BioSample",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get BioSample dataset reports by accession(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/biosample/accession/:accessions/biosample_report",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get BioSample dataset reports by accession(s). By default, in paged JSON format, but also available as tabular (accept: text/tab-separated-values) or json-lines (accept: application/x-ndjson)"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

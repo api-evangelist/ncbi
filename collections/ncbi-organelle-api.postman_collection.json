@@ -1,0 +1,1175 @@
+{
+  "item": [
+    {
+      "id": "dc911c78-57d4-4705-a1f3-7c226d160a77",
+      "name": "Organelle",
+      "description": {
+        "content": "#### Options to download RefSeq organelle genome data, including the associated sequence and metadata.\nThese organelle services allow you to get RefSeq organelle genome metadata as a data report or download gene, transcript and protein sequence, and metadata, as an organelle data package, for RefSeq organelle genomes.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "58058390-0d61-4601-8947-d307127d3c9b",
+          "name": "Get an organelle data package by nucleotide accession",
+          "request": {
+            "name": "Get an organelle data package by nucleotide accession",
+            "description": {
+              "content": "Download an organelle data package including sequence, annotation, and detailed data reports as a compressed zip archive.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organelle",
+                "accession",
+                ":accessions",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_annotation_type",
+                  "value": "DEFAULT",
+                  "description": "Specify which sequence files to include in the data package."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_annotation_type",
+                  "value": "DEFAULT",
+                  "description": "Specify which sequence files to include in the data package."
+                },
+                {
+                  "disabled": false,
+                  "key": "filename",
+                  "value": "ncbi_dataset.zip",
+                  "description": "Output file name."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>,<string>",
+                  "key": "accessions",
+                  "description": "(Required) NCBI organelle assembly accessions"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6c37b46-237d-4eb9-977d-6a7eab5034c5",
+              "name": "A successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "accession",
+                    ":accessions",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_annotation_type",
+                      "value": "DEFAULT"
+                    },
+                    {
+                      "key": "include_annotation_type",
+                      "value": "DEFAULT"
+                    },
+                    {
+                      "key": "filename",
+                      "value": "ncbi_dataset.zip"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "accessions",
+                      "description": "(Required) NCBI organelle assembly accessions"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5bf4073e-a236-48f8-abb0-9cd65c49b896",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "accession",
+                    ":accessions",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_annotation_type",
+                      "value": "DEFAULT"
+                    },
+                    {
+                      "key": "include_annotation_type",
+                      "value": "DEFAULT"
+                    },
+                    {
+                      "key": "filename",
+                      "value": "ncbi_dataset.zip"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "accessions",
+                      "description": "(Required) NCBI organelle assembly accessions"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e4105367-b13d-404f-a545-243b3d8a843c",
+          "name": "Get an organelle data package",
+          "request": {
+            "name": "Get an organelle data package",
+            "description": {
+              "content": "Download an organelle data package including sequence, annotation, and detailed data reports as a compressed zip archive.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organelle",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filename",
+                  "value": "ncbi_dataset.zip",
+                  "description": "Output file name."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accessions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"exclude_sequence\": \"<boolean>\",\n  \"include_annotation_type\": [\n    \"DEFAULT\",\n    \"DEFAULT\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "06f77ebe-6773-479a-b41b-c3500c68b0cd",
+              "name": "A successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filename",
+                      "value": "ncbi_dataset.zip"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accessions\": [\n    \"NC_001643.1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c37842b0-12a0-49b4-a8ea-42eb8d802ea7",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filename",
+                      "value": "ncbi_dataset.zip"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accessions\": [\n    \"NC_001643.1\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "77e338df-564c-4bcf-b2dd-d6e289899b59",
+          "name": "Get an organelle data report by nucleotide accession",
+          "request": {
+            "name": "Get an organelle data report by nucleotide accession",
+            "description": {
+              "content": "Get an organelle data report in JSON format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organelle",
+                "accessions",
+                ":accessions",
+                "dataset_report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "organelle_types",
+                  "value": "ORGANELLE_TYPE_UNKNOWN",
+                  "description": "Limit results to the specified organelle types."
+                },
+                {
+                  "disabled": false,
+                  "key": "organelle_types",
+                  "value": "ORGANELLE_TYPE_UNKNOWN",
+                  "description": "Limit results to the specified organelle types."
+                },
+                {
+                  "disabled": false,
+                  "key": "first_release_date",
+                  "value": "<dateTime>",
+                  "description": "Limit results to organelle genomes released on or after the specified date."
+                },
+                {
+                  "disabled": false,
+                  "key": "last_release_date",
+                  "value": "<dateTime>",
+                  "description": "Limit results to organelle genomes released on or before the specified date."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort.field",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort.direction",
+                  "value": "SORT_DIRECTION_UNSPECIFIED"
+                },
+                {
+                  "disabled": false,
+                  "key": "returned_content",
+                  "value": "COMPLETE",
+                  "description": "Return complete organelle reports or nucleotide accessions only."
+                },
+                {
+                  "disabled": false,
+                  "key": "table_format",
+                  "value": "ORGANELLE_TABLE_FORMAT_NO_TABLE",
+                  "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_tabular_header",
+                  "value": "INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY",
+                  "description": "Specify when to include the table header when requesting a tabular report."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>,<string>",
+                  "key": "accessions",
+                  "description": "(Required) One or more organelle nucleotide accessions"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b84773e0-dafa-45aa-855e-60b8e1b418dc",
+              "name": "A successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "accessions",
+                    ":accessions",
+                    "dataset_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organelle_types",
+                      "value": "ORGANELLE_TYPE_UNKNOWN"
+                    },
+                    {
+                      "key": "organelle_types",
+                      "value": "ORGANELLE_TYPE_UNKNOWN"
+                    },
+                    {
+                      "key": "first_release_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "last_release_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort.field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort.direction",
+                      "value": "SORT_DIRECTION_UNSPECIFIED"
+                    },
+                    {
+                      "key": "returned_content",
+                      "value": "ASSM_ACC"
+                    },
+                    {
+                      "key": "table_format",
+                      "value": "SUMMARY"
+                    },
+                    {
+                      "key": "include_tabular_header",
+                      "value": "INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "accessions",
+                      "description": "(Required) One or more organelle nucleotide accessions"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"error\": {\n        \"assembly_error_code\": \"UNKNOWN_ASSEMBLY_ERROR_CODE\",\n        \"gene_error_code\": \"UNKNOWN_GENE_ERROR_CODE\",\n        \"organelle_error_code\": \"UNKNOWN_ORGANELLE_ERROR_CODE\",\n        \"virus_error_code\": \"UNKNOWN_VIRUS_ERROR_CODE\",\n        \"taxonomy_error_code\": \"UNKNOWN_TAXONOMY_ERROR_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"invalid_identifiers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"warning\": {\n        \"gene_warning_code\": \"UNKNOWN_GENE_WARNING_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"replaced_id\": {\n          \"requested\": \"string\",\n          \"returned\": \"string\"\n        },\n        \"unrecognized_identifier\": \"string\"\n      }\n    },\n    {\n      \"error\": {\n        \"assembly_error_code\": \"UNKNOWN_ASSEMBLY_ERROR_CODE\",\n        \"gene_error_code\": \"UNKNOWN_GENE_ERROR_CODE\",\n        \"organelle_error_code\": \"UNKNOWN_ORGANELLE_ERROR_CODE\",\n        \"virus_error_code\": \"UNKNOWN_VIRUS_ERROR_CODE\",\n        \"taxonomy_error_code\": \"UNKNOWN_TAXONOMY_ERROR_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"invalid_identifiers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"warning\": {\n        \"gene_warning_code\": \"UNKNOWN_GENE_WARNING_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"replaced_id\": {\n          \"requested\": \"string\",\n          \"returned\": \"string\"\n        },\n        \"unrecognized_identifier\": \"string\"\n      }\n    }\n  ],\n  \"reports\": [\n    {\n      \"description\": \"ORGANELLE_TYPE_UNKNOWN\",\n      \"genbank\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"refseq\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"organism\": {\n        \"tax_id\": 7606,\n        \"sci_name\": \"string\",\n        \"organism_name\": \"string\",\n        \"common_name\": \"string\",\n        \"lineage\": [\n          {\n            \"tax_id\": 4634,\n            \"name\": \"string\"\n          },\n          {\n            \"tax_id\": 9462,\n            \"name\": \"string\"\n          }\n        ],\n        \"strain\": \"string\",\n        \"pangolin_classification\": \"string\",\n        \"infraspecific_names\": {\n          \"breed\": \"string\",\n          \"cultivar\": \"string\",\n          \"ecotype\": \"string\",\n          \"isolate\": \"string\",\n          \"sex\": \"string\",\n          \"strain\": \"string\"\n        }\n      },\n      \"bioprojects\": [\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"biosample\": {\n        \"accession\": \"string\"\n      },\n      \"gene_counts\": {\n        \"total\": 9793,\n        \"protein_coding\": 7121,\n        \"rrna\": 2516,\n        \"trna\": 7263,\n        \"lncrna\": 5380\n      },\n      \"length\": 1287,\n      \"topology\": \"TOPOLOGY_UNKNOWN\",\n      \"gene_count\": 1774\n    },\n    {\n      \"description\": \"ORGANELLE_TYPE_UNKNOWN\",\n      \"genbank\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"refseq\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"organism\": {\n        \"tax_id\": 3133,\n        \"sci_name\": \"string\",\n        \"organism_name\": \"string\",\n        \"common_name\": \"string\",\n        \"lineage\": [\n          {\n            \"tax_id\": 477,\n            \"name\": \"string\"\n          },\n          {\n            \"tax_id\": 3818,\n            \"name\": \"string\"\n          }\n        ],\n        \"strain\": \"string\",\n        \"pangolin_classification\": \"string\",\n        \"infraspecific_names\": {\n          \"breed\": \"string\",\n          \"cultivar\": \"string\",\n          \"ecotype\": \"string\",\n          \"isolate\": \"string\",\n          \"sex\": \"string\",\n          \"strain\": \"string\"\n        }\n      },\n      \"bioprojects\": [\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"biosample\": {\n        \"accession\": \"string\"\n      },\n      \"gene_counts\": {\n        \"total\": 2321,\n        \"protein_coding\": 2809,\n        \"rrna\": 1697,\n        \"trna\": 5147,\n        \"lncrna\": 4267\n      },\n      \"length\": 4080,\n      \"topology\": \"TOPOLOGY_UNKNOWN\",\n      \"gene_count\": 6935\n    }\n  ],\n  \"total_count\": 7163,\n  \"next_page_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57912dd0-b402-44d2-811f-1bd69a79021e",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "accessions",
+                    ":accessions",
+                    "dataset_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organelle_types",
+                      "value": "ORGANELLE_TYPE_UNKNOWN"
+                    },
+                    {
+                      "key": "organelle_types",
+                      "value": "ORGANELLE_TYPE_UNKNOWN"
+                    },
+                    {
+                      "key": "first_release_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "last_release_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "sort.field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort.direction",
+                      "value": "SORT_DIRECTION_UNSPECIFIED"
+                    },
+                    {
+                      "key": "returned_content",
+                      "value": "ASSM_ACC"
+                    },
+                    {
+                      "key": "table_format",
+                      "value": "SUMMARY"
+                    },
+                    {
+                      "key": "include_tabular_header",
+                      "value": "INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "accessions",
+                      "description": "(Required) One or more organelle nucleotide accessions"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2b183f5a-b46f-4344-9f82-3109ce27f168",
+          "name": "Get an organelle data report by taxon",
+          "request": {
+            "name": "Get an organelle data report by taxon",
+            "description": {
+              "content": "Get an organelle data report  in JSON format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organelle",
+                "taxon",
+                ":taxons",
+                "dataset_report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "organelle_types",
+                  "value": "ORGANELLE_TYPE_UNKNOWN",
+                  "description": "Limit results to the specified organelle types."
+                },
+                {
+                  "disabled": false,
+                  "key": "organelle_types",
+                  "value": "ORGANELLE_TYPE_UNKNOWN",
+                  "description": "Limit results to the specified organelle types."
+                },
+                {
+                  "disabled": false,
+                  "key": "first_release_date",
+                  "value": "<dateTime>",
+                  "description": "Limit results to organelle genomes released on or after the specified date."
+                },
+                {
+                  "disabled": false,
+                  "key": "last_release_date",
+                  "value": "<dateTime>",
+                  "description": "Limit results to organelle genomes released on or before the specified date."
+                },
+                {
+                  "disabled": false,
+                  "key": "tax_exact_match",
+                  "value": "false",
+                  "description": "If true, only return assemblies with the given NCBI Taxonomy ID, or name. Otherwise, assemblies from taxonomy subtree are included, too."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort.field",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort.direction",
+                  "value": "SORT_DIRECTION_UNSPECIFIED"
+                },
+                {
+                  "disabled": false,
+                  "key": "returned_content",
+                  "value": "COMPLETE",
+                  "description": "Return complete organelle reports or nucleotide accessions only."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The maximum number of organelle assemblies to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_token",
+                  "value": "<string>",
+                  "description": "A page token is returned from an `OrganelleMetadata` call with more than `page_size` results. Use this token, along with the previous `OrganelleMetadata` parameters, to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+                },
+                {
+                  "disabled": false,
+                  "key": "table_format",
+                  "value": "ORGANELLE_TABLE_FORMAT_NO_TABLE",
+                  "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_tabular_header",
+                  "value": "INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY",
+                  "description": "Specify when to include the table header when requesting a tabular report."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>,<string>",
+                  "key": "taxons",
+                  "description": "(Required) NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb75c261-4a0e-42bd-bd69-540784163fea",
+              "name": "A successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "taxon",
+                    ":taxons",
+                    "dataset_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organelle_types",
+                      "value": "ORGANELLE_TYPE_UNKNOWN"
+                    },
+                    {
+                      "key": "organelle_types",
+                      "value": "ORGANELLE_TYPE_UNKNOWN"
+                    },
+                    {
+                      "key": "first_release_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "last_release_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "tax_exact_match",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort.field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort.direction",
+                      "value": "SORT_DIRECTION_UNSPECIFIED"
+                    },
+                    {
+                      "key": "returned_content",
+                      "value": "ASSM_ACC"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "table_format",
+                      "value": "SUMMARY"
+                    },
+                    {
+                      "key": "include_tabular_header",
+                      "value": "INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "taxons",
+                      "description": "(Required) NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"error\": {\n        \"assembly_error_code\": \"UNKNOWN_ASSEMBLY_ERROR_CODE\",\n        \"gene_error_code\": \"UNKNOWN_GENE_ERROR_CODE\",\n        \"organelle_error_code\": \"UNKNOWN_ORGANELLE_ERROR_CODE\",\n        \"virus_error_code\": \"UNKNOWN_VIRUS_ERROR_CODE\",\n        \"taxonomy_error_code\": \"UNKNOWN_TAXONOMY_ERROR_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"invalid_identifiers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"warning\": {\n        \"gene_warning_code\": \"UNKNOWN_GENE_WARNING_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"replaced_id\": {\n          \"requested\": \"string\",\n          \"returned\": \"string\"\n        },\n        \"unrecognized_identifier\": \"string\"\n      }\n    },\n    {\n      \"error\": {\n        \"assembly_error_code\": \"UNKNOWN_ASSEMBLY_ERROR_CODE\",\n        \"gene_error_code\": \"UNKNOWN_GENE_ERROR_CODE\",\n        \"organelle_error_code\": \"UNKNOWN_ORGANELLE_ERROR_CODE\",\n        \"virus_error_code\": \"UNKNOWN_VIRUS_ERROR_CODE\",\n        \"taxonomy_error_code\": \"UNKNOWN_TAXONOMY_ERROR_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"invalid_identifiers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"warning\": {\n        \"gene_warning_code\": \"UNKNOWN_GENE_WARNING_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"replaced_id\": {\n          \"requested\": \"string\",\n          \"returned\": \"string\"\n        },\n        \"unrecognized_identifier\": \"string\"\n      }\n    }\n  ],\n  \"reports\": [\n    {\n      \"description\": \"ORGANELLE_TYPE_UNKNOWN\",\n      \"genbank\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"refseq\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"organism\": {\n        \"tax_id\": 180,\n        \"sci_name\": \"string\",\n        \"organism_name\": \"string\",\n        \"common_name\": \"string\",\n        \"lineage\": [\n          {\n            \"tax_id\": 9402,\n            \"name\": \"string\"\n          },\n          {\n            \"tax_id\": 7074,\n            \"name\": \"string\"\n          }\n        ],\n        \"strain\": \"string\",\n        \"pangolin_classification\": \"string\",\n        \"infraspecific_names\": {\n          \"breed\": \"string\",\n          \"cultivar\": \"string\",\n          \"ecotype\": \"string\",\n          \"isolate\": \"string\",\n          \"sex\": \"string\",\n          \"strain\": \"string\"\n        }\n      },\n      \"bioprojects\": [\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"biosample\": {\n        \"accession\": \"string\"\n      },\n      \"gene_counts\": {\n        \"total\": 1811,\n        \"protein_coding\": 8680,\n        \"rrna\": 1896,\n        \"trna\": 6438,\n        \"lncrna\": 3080\n      },\n      \"length\": 2466,\n      \"topology\": \"TOPOLOGY_UNKNOWN\",\n      \"gene_count\": 8566\n    },\n    {\n      \"description\": \"ORGANELLE_TYPE_UNKNOWN\",\n      \"genbank\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"refseq\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"organism\": {\n        \"tax_id\": 5617,\n        \"sci_name\": \"string\",\n        \"organism_name\": \"string\",\n        \"common_name\": \"string\",\n        \"lineage\": [\n          {\n            \"tax_id\": 3252,\n            \"name\": \"string\"\n          },\n          {\n            \"tax_id\": 9283,\n            \"name\": \"string\"\n          }\n        ],\n        \"strain\": \"string\",\n        \"pangolin_classification\": \"string\",\n        \"infraspecific_names\": {\n          \"breed\": \"string\",\n          \"cultivar\": \"string\",\n          \"ecotype\": \"string\",\n          \"isolate\": \"string\",\n          \"sex\": \"string\",\n          \"strain\": \"string\"\n        }\n      },\n      \"bioprojects\": [\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"biosample\": {\n        \"accession\": \"string\"\n      },\n      \"gene_counts\": {\n        \"total\": 5012,\n        \"protein_coding\": 8709,\n        \"rrna\": 9880,\n        \"trna\": 9116,\n        \"lncrna\": 9434\n      },\n      \"length\": 7785,\n      \"topology\": \"TOPOLOGY_UNKNOWN\",\n      \"gene_count\": 308\n    }\n  ],\n  \"total_count\": 2514,\n  \"next_page_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98755788-7440-49a4-a90b-39a169671cdf",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "taxon",
+                    ":taxons",
+                    "dataset_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "organelle_types",
+                      "value": "ORGANELLE_TYPE_UNKNOWN"
+                    },
+                    {
+                      "key": "organelle_types",
+                      "value": "ORGANELLE_TYPE_UNKNOWN"
+                    },
+                    {
+                      "key": "first_release_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "last_release_date",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "tax_exact_match",
+                      "value": "false"
+                    },
+                    {
+                      "key": "sort.field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort.direction",
+                      "value": "SORT_DIRECTION_UNSPECIFIED"
+                    },
+                    {
+                      "key": "returned_content",
+                      "value": "ASSM_ACC"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_token",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "table_format",
+                      "value": "SUMMARY"
+                    },
+                    {
+                      "key": "include_tabular_header",
+                      "value": "INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "taxons",
+                      "description": "(Required) NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d26c8008-943d-43d6-b90d-f5e4939b61cf",
+          "name": "Get an organelle data report",
+          "request": {
+            "name": "Get an organelle data report",
+            "description": {
+              "content": "Get an organelle data report in JSON format.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "organelle",
+                "dataset_report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taxons\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"accessions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"organelle_types\": [\n    \"ORGANELLE_TYPE_UNKNOWN\",\n    \"ORGANELLE_TYPE_UNKNOWN\"\n  ],\n  \"first_release_date\": \"<dateTime>\",\n  \"last_release_date\": \"<dateTime>\",\n  \"tax_exact_match\": \"<boolean>\",\n  \"sort\": [\n    {\n      \"field\": \"<string>\",\n      \"direction\": \"SORT_DIRECTION_UNSPECIFIED\"\n    },\n    {\n      \"field\": \"<string>\",\n      \"direction\": \"SORT_DIRECTION_UNSPECIFIED\"\n    }\n  ],\n  \"returned_content\": \"COMPLETE\",\n  \"page_size\": \"<integer>\",\n  \"page_token\": \"<string>\",\n  \"table_format\": \"ORGANELLE_TABLE_FORMAT_NO_TABLE\",\n  \"include_tabular_header\": \"INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9e28305e-7966-4a4e-8a7a-b5d7439952fb",
+              "name": "A successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "dataset_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taxons\": [\n    \"9443\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"messages\": [\n    {\n      \"error\": {\n        \"assembly_error_code\": \"UNKNOWN_ASSEMBLY_ERROR_CODE\",\n        \"gene_error_code\": \"UNKNOWN_GENE_ERROR_CODE\",\n        \"organelle_error_code\": \"UNKNOWN_ORGANELLE_ERROR_CODE\",\n        \"virus_error_code\": \"UNKNOWN_VIRUS_ERROR_CODE\",\n        \"taxonomy_error_code\": \"UNKNOWN_TAXONOMY_ERROR_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"invalid_identifiers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"warning\": {\n        \"gene_warning_code\": \"UNKNOWN_GENE_WARNING_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"replaced_id\": {\n          \"requested\": \"string\",\n          \"returned\": \"string\"\n        },\n        \"unrecognized_identifier\": \"string\"\n      }\n    },\n    {\n      \"error\": {\n        \"assembly_error_code\": \"UNKNOWN_ASSEMBLY_ERROR_CODE\",\n        \"gene_error_code\": \"UNKNOWN_GENE_ERROR_CODE\",\n        \"organelle_error_code\": \"UNKNOWN_ORGANELLE_ERROR_CODE\",\n        \"virus_error_code\": \"UNKNOWN_VIRUS_ERROR_CODE\",\n        \"taxonomy_error_code\": \"UNKNOWN_TAXONOMY_ERROR_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"invalid_identifiers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"warning\": {\n        \"gene_warning_code\": \"UNKNOWN_GENE_WARNING_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"replaced_id\": {\n          \"requested\": \"string\",\n          \"returned\": \"string\"\n        },\n        \"unrecognized_identifier\": \"string\"\n      }\n    }\n  ],\n  \"reports\": [\n    {\n      \"description\": \"ORGANELLE_TYPE_UNKNOWN\",\n      \"genbank\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"refseq\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"organism\": {\n        \"tax_id\": 180,\n        \"sci_name\": \"string\",\n        \"organism_name\": \"string\",\n        \"common_name\": \"string\",\n        \"lineage\": [\n          {\n            \"tax_id\": 9402,\n            \"name\": \"string\"\n          },\n          {\n            \"tax_id\": 7074,\n            \"name\": \"string\"\n          }\n        ],\n        \"strain\": \"string\",\n        \"pangolin_classification\": \"string\",\n        \"infraspecific_names\": {\n          \"breed\": \"string\",\n          \"cultivar\": \"string\",\n          \"ecotype\": \"string\",\n          \"isolate\": \"string\",\n          \"sex\": \"string\",\n          \"strain\": \"string\"\n        }\n      },\n      \"bioprojects\": [\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"biosample\": {\n        \"accession\": \"string\"\n      },\n      \"gene_counts\": {\n        \"total\": 1811,\n        \"protein_coding\": 8680,\n        \"rrna\": 1896,\n        \"trna\": 6438,\n        \"lncrna\": 3080\n      },\n      \"length\": 2466,\n      \"topology\": \"TOPOLOGY_UNKNOWN\",\n      \"gene_count\": 8566\n    },\n    {\n      \"description\": \"ORGANELLE_TYPE_UNKNOWN\",\n      \"genbank\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"refseq\": {\n        \"accession\": \"string\",\n        \"submission_date\": \"string\",\n        \"submitter\": \"string\"\n      },\n      \"organism\": {\n        \"tax_id\": 5617,\n        \"sci_name\": \"string\",\n        \"organism_name\": \"string\",\n        \"common_name\": \"string\",\n        \"lineage\": [\n          {\n            \"tax_id\": 3252,\n            \"name\": \"string\"\n          },\n          {\n            \"tax_id\": 9283,\n            \"name\": \"string\"\n          }\n        ],\n        \"strain\": \"string\",\n        \"pangolin_classification\": \"string\",\n        \"infraspecific_names\": {\n          \"breed\": \"string\",\n          \"cultivar\": \"string\",\n          \"ecotype\": \"string\",\n          \"isolate\": \"string\",\n          \"sex\": \"string\",\n          \"strain\": \"string\"\n        }\n      },\n      \"bioprojects\": [\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"biosample\": {\n        \"accession\": \"string\"\n      },\n      \"gene_counts\": {\n        \"total\": 5012,\n        \"protein_coding\": 8709,\n        \"rrna\": 9880,\n        \"trna\": 9116,\n        \"lncrna\": 9434\n      },\n      \"length\": 7785,\n      \"topology\": \"TOPOLOGY_UNKNOWN\",\n      \"gene_count\": 308\n    }\n  ],\n  \"total_count\": 2514,\n  \"next_page_token\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3a4bc0d7-5b10-4036-9a9b-0b822513cf35",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "organelle",
+                    "dataset_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taxons\": [\n    \"9443\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c97e9239-0909-481d-b5c5-0724339012be",
+    "name": "NCBI Datasets BioSample Organelle API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "### NCBI Datasets is a resource that lets you easily gather data from NCBI.\nThe NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.\n",
+      "type": "text/plain"
+    }
+  }
+}

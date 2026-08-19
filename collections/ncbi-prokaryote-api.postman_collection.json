@@ -1,0 +1,448 @@
+{
+  "item": [
+    {
+      "id": "f2213330-aff3-452e-9874-8afecc8d2ea9",
+      "name": "Prokaryote",
+      "description": {
+        "content": "#### Options to download prokaryote gene data, including the associated sequence and metadata.\nThese gene services allow you to download gene and protein sequence, and metadata as a prokaryote gene data package, for prokaryotic [RefSeq non-redundant proteins](https://www.ncbi.nlm.nih.gov/refseq/about/nonredundantproteins/).\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fee3908d-19a9-4de2-9e01-b5fcf2aa61cf",
+          "name": "Get a prokaryote gene data package by RefSeq protein accession",
+          "request": {
+            "name": "Get a prokaryote gene data package by RefSeq protein accession",
+            "description": {
+              "content": "Download a prokaryote gene data package including sequence, annotation and data reports by RefSeq non-redundant protein accession.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protein",
+                "accession",
+                ":accessions",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "include_annotation_type",
+                  "value": "FASTA_UNSPECIFIED",
+                  "description": "Specify which sequence files to include in the data package."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_annotation_type",
+                  "value": "FASTA_UNSPECIFIED",
+                  "description": "Specify which sequence files to include in the data package."
+                },
+                {
+                  "disabled": false,
+                  "key": "gene_flank_config.length",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "taxon",
+                  "value": "<string>",
+                  "description": "Limit gene sequences and the genome assemblies described by the [annotation report file](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-reports/prokaryote-gene-location/) to the specified NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank."
+                },
+                {
+                  "disabled": false,
+                  "key": "filename",
+                  "value": "ncbi_dataset.zip",
+                  "description": "Output file name."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>,<string>",
+                  "key": "accessions",
+                  "description": "(Required) One or more RefSeq non-redundant protein accessions (preceded by `WP_`)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9b769313-82d4-4ebf-a074-b699fc1738d5",
+              "name": "A successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protein",
+                    "accession",
+                    ":accessions",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_annotation_type",
+                      "value": "FASTA_UNSPECIFIED"
+                    },
+                    {
+                      "key": "include_annotation_type",
+                      "value": "FASTA_UNSPECIFIED"
+                    },
+                    {
+                      "key": "gene_flank_config.length",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "taxon",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filename",
+                      "value": "ncbi_dataset.zip"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "accessions",
+                      "description": "(Required) One or more RefSeq non-redundant protein accessions (preceded by `WP_`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "78264177-818b-4a87-b19a-b12b34d45a8c",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protein",
+                    "accession",
+                    ":accessions",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "include_annotation_type",
+                      "value": "FASTA_UNSPECIFIED"
+                    },
+                    {
+                      "key": "include_annotation_type",
+                      "value": "FASTA_UNSPECIFIED"
+                    },
+                    {
+                      "key": "gene_flank_config.length",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "taxon",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filename",
+                      "value": "ncbi_dataset.zip"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "accessions",
+                      "description": "(Required) One or more RefSeq non-redundant protein accessions (preceded by `WP_`)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a63ffea-345c-42ae-967d-53a3fac00760",
+          "name": "Get a prokaryote gene data package by RefSeq protein accession",
+          "request": {
+            "name": "Get a prokaryote gene data package by RefSeq protein accession",
+            "description": {
+              "content": "Download a prokaryote gene data package including sequence, annotation and data reports by RefSeq non-redundant protein accession.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "protein",
+                "accession",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filename",
+                  "value": "ncbi_dataset.zip",
+                  "description": "Output file name."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"accessions\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"include_annotation_type\": [\n    \"FASTA_UNSPECIFIED\",\n    \"FASTA_UNSPECIFIED\"\n  ],\n  \"gene_flank_config\": {\n    \"length\": \"<integer>\"\n  },\n  \"taxon\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "61c07624-bca6-4489-9a1e-e21bf76988fe",
+              "name": "A successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protein",
+                    "accession",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filename",
+                      "value": "ncbi_dataset.zip"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accessions\": [\n    \"WP_015878339.1\",\n    \"WP_001040085.1\"\n  ],\n  \"include_annotation_type\": [\n    \"FASTA_GENE\",\n    \"FASTA_PROTEIN\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6066a1cd-1666-4115-a366-188dfc32668a",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "protein",
+                    "accession",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filename",
+                      "value": "ncbi_dataset.zip"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"accessions\": [\n    \"WP_015878339.1\",\n    \"WP_001040085.1\"\n  ],\n  \"include_annotation_type\": [\n    \"FASTA_GENE\",\n    \"FASTA_PROTEIN\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "27670735-92f5-46e9-b27b-762e1775ac52",
+    "name": "NCBI Datasets BioSample Prokaryote API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "### NCBI Datasets is a resource that lets you easily gather data from NCBI.\nThe NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.\n",
+      "type": "text/plain"
+    }
+  }
+}

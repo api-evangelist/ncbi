@@ -1,0 +1,1635 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCBI Datasets BioSample Genome API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Genome",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a download summary (preview) of a genome data package by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accessions/download_summary",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              },
+              {
+                "name": "chromosomes",
+                "value": "",
+                "type": "query",
+                "description": "Only return genomic fasta sequence for the specified chromosomes."
+              },
+              {
+                "name": "include_annotation_type",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence, annotation, and report files to include in the data package. The assembly data report is always included, and its inclusion is not affected by this parameter."
+              }
+            ]
+          },
+          "docs": "Get a download summary (preview) of a genome data package, including counts and file sizes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a download summary (preview) of a genome data package by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/download_summary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a downlaod summary (preview) of a genome data package, including counts and file sizes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a genome assembly report by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accessions/dataset_report",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              },
+              {
+                "name": "filters.reference_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to reference genome assemblies."
+              },
+              {
+                "name": "filters.assembly_source",
+                "value": "",
+                "type": "query",
+                "description": "Limit to either RefSeq (GCF_) or GenBank (GCA_) genome assemblies."
+              },
+              {
+                "name": "filters.has_annotation",
+                "value": "",
+                "type": "query",
+                "description": "Limit to annotated genome assemblies."
+              },
+              {
+                "name": "filters.exclude_paired_reports",
+                "value": "",
+                "type": "query",
+                "description": "If true, for GenBank (GCA_)/RefSeq (GCF_) pairs, returns the RefSeq copy. When no RefSeq copy exists, the GenBank assembly is returned."
+              },
+              {
+                "name": "filters.exclude_atypical",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude [atypical genome assemblies](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/data-processing/policies-annotation/genome-processing/genome_notes/#atypical-assemblies), i.e., genomes that have assembly issues or are otherwise atypical."
+              },
+              {
+                "name": "filters.assembly_version",
+                "value": "",
+                "type": "query",
+                "description": "Limit to the most recent (current) version of a genome assembly."
+              },
+              {
+                "name": "filters.assembly_level",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes at the specified [assembly level](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/glossary/#assembly-level)"
+              },
+              {
+                "name": "filters.first_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or after the specified date"
+              },
+              {
+                "name": "filters.last_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or before the specified date"
+              },
+              {
+                "name": "filters.search_text",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes that match the specified submitter name, assembly name, infraspecific name (or modifier), or organism name."
+              },
+              {
+                "name": "filters.is_metagenome_derived",
+                "value": "",
+                "type": "query",
+                "description": "Exclude or limit to metagenome-assembled genomes (MAGs)."
+              },
+              {
+                "name": "filters.is_type_material",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from type material."
+              },
+              {
+                "name": "filters.is_ictv_exemplar",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from an ICTV exemplar (only applies to virus genomes)."
+              },
+              {
+                "name": "filters.exclude_multi_isolate",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude genomes that were sequenced as part of large multi-isolate projects."
+              },
+              {
+                "name": "filters.type_material_category",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes derived from specific type material categories."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete genome assembly reports, or abbreviated reports with assembly accessions with or without paired assembly information."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of genome assembly reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              }
+            ]
+          },
+          "docs": "Get a genome assembly report by assembly accession. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a genome assembly report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/taxon/:taxons/dataset_report",
+            "params": [
+              {
+                "name": "taxons",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+              },
+              {
+                "name": "filters.reference_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to reference genome assemblies."
+              },
+              {
+                "name": "filters.assembly_source",
+                "value": "",
+                "type": "query",
+                "description": "Limit to either RefSeq (GCF_) or GenBank (GCA_) genome assemblies."
+              },
+              {
+                "name": "filters.has_annotation",
+                "value": "",
+                "type": "query",
+                "description": "Limit to annotated genome assemblies."
+              },
+              {
+                "name": "filters.exclude_paired_reports",
+                "value": "",
+                "type": "query",
+                "description": "If true, for GenBank (GCA_)/RefSeq (GCF_) pairs, returns the RefSeq copy. When no RefSeq copy exists, the GenBank assembly is returned."
+              },
+              {
+                "name": "filters.exclude_atypical",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude [atypical genome assemblies](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/data-processing/policies-annotation/genome-processing/genome_notes/#atypical-assemblies), i.e., genomes that have assembly issues or are otherwise atypical."
+              },
+              {
+                "name": "filters.assembly_version",
+                "value": "",
+                "type": "query",
+                "description": "Limit to the most recent (current) version of a genome assembly."
+              },
+              {
+                "name": "filters.assembly_level",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes at the specified [assembly level](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/glossary/#assembly-level)"
+              },
+              {
+                "name": "filters.first_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or after the specified date"
+              },
+              {
+                "name": "filters.last_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or before the specified date"
+              },
+              {
+                "name": "filters.search_text",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes that match the specified submitter name, assembly name, infraspecific name (or modifier), or organism name."
+              },
+              {
+                "name": "filters.is_metagenome_derived",
+                "value": "",
+                "type": "query",
+                "description": "Exclude or limit to metagenome-assembled genomes (MAGs)."
+              },
+              {
+                "name": "filters.is_type_material",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from type material."
+              },
+              {
+                "name": "filters.is_ictv_exemplar",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from an ICTV exemplar (only applies to virus genomes)."
+              },
+              {
+                "name": "filters.exclude_multi_isolate",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude genomes that were sequenced as part of large multi-isolate projects."
+              },
+              {
+                "name": "filters.type_material_category",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes derived from specific type material categories."
+              },
+              {
+                "name": "tax_exact_match",
+                "value": "",
+                "type": "query",
+                "description": "If true, only return assemblies matching the specified taxon, but not child taxa. For example, if querying by \"Canis lupus\", return Canis lupus but not Canis lupus familiaris genomes."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete genome assembly reports, or abbreviated reports with assembly accessions with or without paired assembly information."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of genome assembly reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              }
+            ]
+          },
+          "docs": "Get a genome assembly report by taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get genome assembly reports by BioProject accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/bioproject/:bioprojects/dataset_report",
+            "params": [
+              {
+                "name": "bioprojects",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "filters.reference_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to reference genome assemblies."
+              },
+              {
+                "name": "filters.assembly_source",
+                "value": "",
+                "type": "query",
+                "description": "Limit to either RefSeq (GCF_) or GenBank (GCA_) genome assemblies."
+              },
+              {
+                "name": "filters.has_annotation",
+                "value": "",
+                "type": "query",
+                "description": "Limit to annotated genome assemblies."
+              },
+              {
+                "name": "filters.exclude_paired_reports",
+                "value": "",
+                "type": "query",
+                "description": "If true, for GenBank (GCA_)/RefSeq (GCF_) pairs, returns the RefSeq copy. When no RefSeq copy exists, the GenBank assembly is returned."
+              },
+              {
+                "name": "filters.exclude_atypical",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude [atypical genome assemblies](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/data-processing/policies-annotation/genome-processing/genome_notes/#atypical-assemblies), i.e., genomes that have assembly issues or are otherwise atypical."
+              },
+              {
+                "name": "filters.assembly_version",
+                "value": "",
+                "type": "query",
+                "description": "Limit to the most recent (current) version of a genome assembly."
+              },
+              {
+                "name": "filters.assembly_level",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes at the specified [assembly level](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/glossary/#assembly-level)"
+              },
+              {
+                "name": "filters.first_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or after the specified date"
+              },
+              {
+                "name": "filters.last_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or before the specified date"
+              },
+              {
+                "name": "filters.search_text",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes that match the specified submitter name, assembly name, infraspecific name (or modifier), or organism name."
+              },
+              {
+                "name": "filters.is_metagenome_derived",
+                "value": "",
+                "type": "query",
+                "description": "Exclude or limit to metagenome-assembled genomes (MAGs)."
+              },
+              {
+                "name": "filters.is_type_material",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from type material."
+              },
+              {
+                "name": "filters.is_ictv_exemplar",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from an ICTV exemplar (only applies to virus genomes)."
+              },
+              {
+                "name": "filters.exclude_multi_isolate",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude genomes that were sequenced as part of large multi-isolate projects."
+              },
+              {
+                "name": "filters.type_material_category",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes derived from specific type material categories."
+              },
+              {
+                "name": "tax_exact_match",
+                "value": "",
+                "type": "query",
+                "description": "If true, only return assemblies matching the specified taxon, but not child taxa. For example, if querying by \"Canis lupus\", return Canis lupus but not Canis lupus familiaris genomes."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete genome assembly reports, or abbreviated reports with assembly accessions with or without paired assembly information."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of genome assembly reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              }
+            ]
+          },
+          "docs": "Get genome assembly reports by BioProject accession. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get genome assembly reports by BioSample accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/biosample/:biosample_ids/dataset_report",
+            "params": [
+              {
+                "name": "biosample_ids",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "filters.reference_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to reference genome assemblies."
+              },
+              {
+                "name": "filters.assembly_source",
+                "value": "",
+                "type": "query",
+                "description": "Limit to either RefSeq (GCF_) or GenBank (GCA_) genome assemblies."
+              },
+              {
+                "name": "filters.has_annotation",
+                "value": "",
+                "type": "query",
+                "description": "Limit to annotated genome assemblies."
+              },
+              {
+                "name": "filters.exclude_paired_reports",
+                "value": "",
+                "type": "query",
+                "description": "If true, for GenBank (GCA_)/RefSeq (GCF_) pairs, returns the RefSeq copy. When no RefSeq copy exists, the GenBank assembly is returned."
+              },
+              {
+                "name": "filters.exclude_atypical",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude [atypical genome assemblies](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/data-processing/policies-annotation/genome-processing/genome_notes/#atypical-assemblies), i.e., genomes that have assembly issues or are otherwise atypical."
+              },
+              {
+                "name": "filters.assembly_version",
+                "value": "",
+                "type": "query",
+                "description": "Limit to the most recent (current) version of a genome assembly."
+              },
+              {
+                "name": "filters.assembly_level",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes at the specified [assembly level](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/glossary/#assembly-level)"
+              },
+              {
+                "name": "filters.first_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or after the specified date"
+              },
+              {
+                "name": "filters.last_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or before the specified date"
+              },
+              {
+                "name": "filters.search_text",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes that match the specified submitter name, assembly name, infraspecific name (or modifier), or organism name."
+              },
+              {
+                "name": "filters.is_metagenome_derived",
+                "value": "",
+                "type": "query",
+                "description": "Exclude or limit to metagenome-assembled genomes (MAGs)."
+              },
+              {
+                "name": "filters.is_type_material",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from type material."
+              },
+              {
+                "name": "filters.is_ictv_exemplar",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from an ICTV exemplar (only applies to virus genomes)."
+              },
+              {
+                "name": "filters.exclude_multi_isolate",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude genomes that were sequenced as part of large multi-isolate projects."
+              },
+              {
+                "name": "filters.type_material_category",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes derived from specific type material categories."
+              },
+              {
+                "name": "tax_exact_match",
+                "value": "",
+                "type": "query",
+                "description": "If true, only return assemblies matching the specified taxon, but not child taxa. For example, if querying by \"Canis lupus\", return Canis lupus but not Canis lupus familiaris genomes."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete genome assembly reports, or abbreviated reports with assembly accessions with or without paired assembly information."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of genome assembly reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              }
+            ]
+          },
+          "docs": "Get genome assembly reports by BioSample accession. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a genome assembly data report by WGS accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/wgs/:wgs_accessions/dataset_report",
+            "params": [
+              {
+                "name": "wgs_accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more WGS accessions associated with a genome assembly"
+              },
+              {
+                "name": "filters.reference_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to reference genome assemblies."
+              },
+              {
+                "name": "filters.assembly_source",
+                "value": "",
+                "type": "query",
+                "description": "Limit to either RefSeq (GCF_) or GenBank (GCA_) genome assemblies."
+              },
+              {
+                "name": "filters.has_annotation",
+                "value": "",
+                "type": "query",
+                "description": "Limit to annotated genome assemblies."
+              },
+              {
+                "name": "filters.exclude_paired_reports",
+                "value": "",
+                "type": "query",
+                "description": "If true, for GenBank (GCA_)/RefSeq (GCF_) pairs, returns the RefSeq copy. When no RefSeq copy exists, the GenBank assembly is returned."
+              },
+              {
+                "name": "filters.exclude_atypical",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude [atypical genome assemblies](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/data-processing/policies-annotation/genome-processing/genome_notes/#atypical-assemblies), i.e., genomes that have assembly issues or are otherwise atypical."
+              },
+              {
+                "name": "filters.assembly_version",
+                "value": "",
+                "type": "query",
+                "description": "Limit to the most recent (current) version of a genome assembly."
+              },
+              {
+                "name": "filters.assembly_level",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes at the specified [assembly level](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/glossary/#assembly-level)"
+              },
+              {
+                "name": "filters.first_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or after the specified date"
+              },
+              {
+                "name": "filters.last_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or before the specified date"
+              },
+              {
+                "name": "filters.search_text",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes that match the specified submitter name, assembly name, infraspecific name (or modifier), or organism name."
+              },
+              {
+                "name": "filters.is_metagenome_derived",
+                "value": "",
+                "type": "query",
+                "description": "Exclude or limit to metagenome-assembled genomes (MAGs)."
+              },
+              {
+                "name": "filters.is_type_material",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from type material."
+              },
+              {
+                "name": "filters.is_ictv_exemplar",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from an ICTV exemplar (only applies to virus genomes)."
+              },
+              {
+                "name": "filters.exclude_multi_isolate",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude genomes that were sequenced as part of large multi-isolate projects."
+              },
+              {
+                "name": "filters.type_material_category",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes derived from specific type material categories."
+              },
+              {
+                "name": "tax_exact_match",
+                "value": "",
+                "type": "query",
+                "description": "If true, only return assemblies matching the specified taxon, but not child taxa. For example, if querying by \"Canis lupus\", return Canis lupus but not Canis lupus familiaris genomes."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete genome assembly reports, or abbreviated reports with assembly accessions with or without paired assembly information."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of genome assembly reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              }
+            ]
+          },
+          "docs": "Get a genome assembly data report by WGS (whole genome shotgun) accession. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get genome assembly reports by assembly name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/assembly_name/:assembly_names/dataset_report",
+            "params": [
+              {
+                "name": "assembly_names",
+                "value": "",
+                "type": "path",
+                "description": "One or more assembly names (exact match only)"
+              },
+              {
+                "name": "filters.reference_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to reference genome assemblies."
+              },
+              {
+                "name": "filters.assembly_source",
+                "value": "",
+                "type": "query",
+                "description": "Limit to either RefSeq (GCF_) or GenBank (GCA_) genome assemblies."
+              },
+              {
+                "name": "filters.has_annotation",
+                "value": "",
+                "type": "query",
+                "description": "Limit to annotated genome assemblies."
+              },
+              {
+                "name": "filters.exclude_paired_reports",
+                "value": "",
+                "type": "query",
+                "description": "If true, for GenBank (GCA_)/RefSeq (GCF_) pairs, returns the RefSeq copy. When no RefSeq copy exists, the GenBank assembly is returned."
+              },
+              {
+                "name": "filters.exclude_atypical",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude [atypical genome assemblies](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/data-processing/policies-annotation/genome-processing/genome_notes/#atypical-assemblies), i.e., genomes that have assembly issues or are otherwise atypical."
+              },
+              {
+                "name": "filters.assembly_version",
+                "value": "",
+                "type": "query",
+                "description": "Limit to the most recent (current) version of a genome assembly."
+              },
+              {
+                "name": "filters.assembly_level",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes at the specified [assembly level](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/glossary/#assembly-level)"
+              },
+              {
+                "name": "filters.first_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or after the specified date"
+              },
+              {
+                "name": "filters.last_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes released on or before the specified date"
+              },
+              {
+                "name": "filters.search_text",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes that match the specified submitter name, assembly name, infraspecific name (or modifier), or organism name."
+              },
+              {
+                "name": "filters.is_metagenome_derived",
+                "value": "",
+                "type": "query",
+                "description": "Exclude or limit to metagenome-assembled genomes (MAGs)."
+              },
+              {
+                "name": "filters.is_type_material",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from type material."
+              },
+              {
+                "name": "filters.is_ictv_exemplar",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to genomes derived from an ICTV exemplar (only applies to virus genomes)."
+              },
+              {
+                "name": "filters.exclude_multi_isolate",
+                "value": "",
+                "type": "query",
+                "description": "If true, exclude genomes that were sequenced as part of large multi-isolate projects."
+              },
+              {
+                "name": "filters.type_material_category",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes derived from specific type material categories."
+              },
+              {
+                "name": "tax_exact_match",
+                "value": "",
+                "type": "query",
+                "description": "If true, only return assemblies matching the specified taxon, but not child taxa. For example, if querying by \"Canis lupus\", return Canis lupus but not Canis lupus familiaris genomes."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete genome assembly reports, or abbreviated reports with assembly accessions with or without paired assembly information."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of genome assembly reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              }
+            ]
+          },
+          "docs": "Get genome assembly reports by assembly name (exact matches only). By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a genome assembly report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/dataset_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a genome assembly report. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a genome assembly accession for a nucleotide sequence accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/sequence_accession/:accession/sequence_assemblies",
+            "params": [
+              {
+                "name": "accession",
+                "value": "",
+                "type": "path",
+                "description": "Nucleotide sequence accession associated with a genome assembly"
+              }
+            ]
+          },
+          "docs": "Get a genome assembly accession for a nucleotide sequence accession in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a genome assembly accession for a nucleotide sequence accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/sequence_assemblies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a genome assembly accession for a nucleotide sequence accession in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a genome sequence report by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accession/sequence_reports",
+            "params": [
+              {
+                "name": "accession",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              },
+              {
+                "name": "chromosomes",
+                "value": "",
+                "type": "query",
+                "description": "Limit to sequences with the specified chromosome names"
+              },
+              {
+                "name": "role_filters",
+                "value": "",
+                "type": "query",
+                "description": "Limit to sequences with the specified \"role\", where possible roles are `assembled-molecule`, `unlocalized-scaffold`, or `unplaced-scaffold`"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "count_assembly_unplaced",
+                "value": "",
+                "type": "query",
+                "description": "Include the count of unplaced scaffold sequences"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of genome assemblies to return. Maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a genome sequence report by genome assembly accession. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a genome sequence report by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/sequence_reports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a genome sequence report by genome assembly accession. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get assembly links by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accessions/links",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              },
+              {
+                "name": "assembly_link_types",
+                "value": "",
+                "type": "query",
+                "description": "Zero or more assembly link types to retrieve. If no values are provided, all links are retrieved"
+              }
+            ]
+          },
+          "docs": "Get links to assembly resources by genome assembly accession in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get assembly links by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get links to assembly resources by genome assembly accession in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get CheckM histogram data by species taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/taxon/:species_taxon/checkm_histogram",
+            "params": [
+              {
+                "name": "species_taxon",
+                "value": "",
+                "type": "path",
+                "description": "Bacterial species taxonomy ID or taxonomic name"
+              }
+            ]
+          },
+          "docs": "Get CheckM histogram data by species taxon. This data is used for rendering CheckM histograms on bacterial genome pages."
+        },
+        {
+          "info": {
+            "name": "Get CheckM histogram data by species taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/checkm_histogram",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get CheckM histogram data by species taxon. This data is used for rendering CheckM histograms on bacterial genome pages."
+        },
+        {
+          "info": {
+            "name": "Get a genome data package by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accessions/download",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              },
+              {
+                "name": "chromosomes",
+                "value": "",
+                "type": "query",
+                "description": "Only return genomic fasta sequence for the specified chromosomes."
+              },
+              {
+                "name": "include_annotation_type",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence, annotation, and report files to include in the data package. The assembly data report is always included, and its inclusion is not affected by this parameter."
+              },
+              {
+                "name": "hydrated",
+                "value": "",
+                "type": "query",
+                "description": "Specify whether to download a hydrated (with sequence and annotation files included) or dehydrated data package. A dehydrated data package includes the assembly data report and `fetch.txt`, which includes paths to the requested data files on NCBI servers."
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ]
+          },
+          "docs": "Download a genome data package including sequence, annotation, and a detailed data report by genome assembly accession."
+        },
+        {
+          "info": {
+            "name": "Get a genome data package by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/download",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download a genome data package including sequence, annotation, and a detailed data report by genome assembly accession."
+        },
+        {
+          "info": {
+            "name": "Get a genome annotation data package by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accession/annotation_report/download",
+            "params": [
+              {
+                "name": "accession",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              },
+              {
+                "name": "annotation_ids",
+                "value": "",
+                "type": "query",
+                "description": "Limit to one or more features annotated on the genome by specifying a number corresponding to a row_id (unstable)."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "Limit to annotated features matching the given gene symbol (case-sensitive)."
+              },
+              {
+                "name": "locations",
+                "value": "",
+                "type": "query",
+                "description": "Limit to features annotated at a specific location on the genome, by specifying a chromosome name or accession and optional start-stop range."
+              },
+              {
+                "name": "gene_types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to features of a specified gene locus type."
+              },
+              {
+                "name": "search_text",
+                "value": "",
+                "type": "query",
+                "description": "Limit to features that match the specified gene symbol, gene name or protein name."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_annotation_type",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package. Options include gene (GENOME_FASTA), transcript (RNA_FASTA), and protein (PROT_FASTA) sequences."
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ]
+          },
+          "docs": "Download an annotation data package including sequence and a detailed annotation report by genome assembly accession."
+        },
+        {
+          "info": {
+            "name": "Get a genome annotation data package by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/annotation_report/download",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download an annotation data package including sequence and a detailed annotation report by genome assembly accession."
+        },
+        {
+          "info": {
+            "name": "Check the validity of a genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accessions/check",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              }
+            ]
+          },
+          "docs": "Check the validity of a genome assembly accession. Output in JSON format."
+        },
+        {
+          "info": {
+            "name": "Check the validity of a genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/check",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Check the validity of a genome assembly accession. Output in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get genome annotation reports by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accession/annotation_report",
+            "params": [
+              {
+                "name": "accession",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              },
+              {
+                "name": "annotation_ids",
+                "value": "",
+                "type": "query",
+                "description": "Limit to one or more features annotated on the genome by specifying a number corresponding to a row_id (unstable)."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "Limit to annotated features matching the given gene symbol (case-sensitive)."
+              },
+              {
+                "name": "locations",
+                "value": "",
+                "type": "query",
+                "description": "Limit to features annotated at a specific location on the genome, by specifying a chromosome name or accession and optional start-stop range."
+              },
+              {
+                "name": "gene_types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to features of a specified gene locus type."
+              },
+              {
+                "name": "search_text",
+                "value": "",
+                "type": "query",
+                "description": "Limit to features that match the specified gene symbol, gene name or protein name."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of features to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Optional pre-defined template for processing a tabular data request"
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              }
+            ]
+          },
+          "docs": "Get genome annotation reports by genome assembly accession, where each report represents a single feature annotated on the genome. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get genome annotation reports by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/annotation_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get genome annotation reports by genome assembly accession, where each report represents a single feature annotated on the genome. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get genome annotation report summary information by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accession/annotation_summary",
+            "params": [
+              {
+                "name": "accession",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get genome annotation report summary information by genome assembly accession in JSON format, including chromosome names and gene types."
+        },
+        {
+          "info": {
+            "name": "Get genome annotation report summary information by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/annotation_summary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get genome annotation report summary information by genome assembly accession in JSON format, including chromosome names and gene types."
+        },
+        {
+          "info": {
+            "name": "Get a download summary (preview) of a genome annotation data package by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accession/annotation_report/download_summary",
+            "params": [
+              {
+                "name": "accession",
+                "value": "",
+                "type": "path",
+                "description": "One or more genome assembly accessions, limited to 100"
+              },
+              {
+                "name": "annotation_ids",
+                "value": "",
+                "type": "query",
+                "description": "Limit to one or more features annotated on the genome by specifying a number corresponding to a row_id (unstable)."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "Limit to annotated features matching the given gene symbol (case-sensitive)."
+              },
+              {
+                "name": "locations",
+                "value": "",
+                "type": "query",
+                "description": "Limit to features annotated at a specific location on the genome, by specifying a chromosome name or accession and optional start-stop range."
+              },
+              {
+                "name": "gene_types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to features of a specified gene locus type."
+              },
+              {
+                "name": "search_text",
+                "value": "",
+                "type": "query",
+                "description": "Limit to features that match the specified gene symbol, gene name or protein name."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "include_annotation_type",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package. Options include gene (GENOME_FASTA), transcript (RNA_FASTA), and protein (PROT_FASTA) sequences."
+              }
+            ]
+          },
+          "docs": "Get a downlaod summary (preview) of a genome annotation data package, including counts and file sizes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a download summary (preview) of a genome annotation data package by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/annotation_report/download_summary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a download summary (preview) of a genome annotation data package, including counts and file sizes, by genome assembly accession, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a revision history for a genome assembly by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/accession/:accession/revision_history",
+            "params": [
+              {
+                "name": "accession",
+                "value": "",
+                "type": "path",
+                "description": "One genome assembly accession"
+              }
+            ]
+          },
+          "docs": "Get a revision history, or list of all versions of a genome assembly, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a revision history for a genome assembly by genome assembly accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/genome/revision_history",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a revision history, or list of all versions of a genome assembly, in JSON format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

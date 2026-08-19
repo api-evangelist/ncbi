@@ -1,0 +1,203 @@
+{
+  "item": [
+    {
+      "id": "d7964d75-6a24-491f-887c-d6be4fc00763",
+      "name": "BioSample",
+      "description": {
+        "content": "#### Options to download BioSample data.\nThis BioSample service allows you to get BioSample data as a data report.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0d069d95-72b4-4254-a5c8-01e7b97dce09",
+          "name": "Get BioSample dataset reports by accession(s)",
+          "request": {
+            "name": "Get BioSample dataset reports by accession(s)",
+            "description": {
+              "content": "Get BioSample dataset reports by accession(s). By default, in paged JSON format, but also available as tabular (accept: text/tab-separated-values) or json-lines (accept: application/x-ndjson)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "biosample",
+                "accession",
+                ":accessions",
+                "biosample_report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>,<string>",
+                  "key": "accessions",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "817b709f-0cdd-42af-adef-12d018099d58",
+              "name": "A successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "biosample",
+                    "accession",
+                    ":accessions",
+                    "biosample_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "accessions",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"reports\": [\n    {\n      \"accession\": \"string\",\n      \"last_updated\": \"string\",\n      \"publication_date\": \"string\",\n      \"submission_date\": \"string\",\n      \"sample_ids\": [\n        {\n          \"db\": \"string\",\n          \"label\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"db\": \"string\",\n          \"label\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"description\": {\n        \"title\": \"string\",\n        \"organism\": {\n          \"tax_id\": 6486,\n          \"sci_name\": \"string\",\n          \"organism_name\": \"string\",\n          \"common_name\": \"string\",\n          \"lineage\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"strain\": \"string\",\n          \"pangolin_classification\": \"string\",\n          \"infraspecific_names\": {\n            \"breed\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cultivar\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ecotype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isolate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"strain\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"comment\": \"string\"\n      },\n      \"owner\": {\n        \"name\": \"string\",\n        \"contacts\": [\n          {\n            \"lab\": \"string\"\n          },\n          {\n            \"lab\": \"string\"\n          }\n        ]\n      },\n      \"models\": [\n        \"string\",\n        \"string\"\n      ],\n      \"bioprojects\": [\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"package\": \"string\",\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"status\": {\n        \"status\": \"string\",\n        \"when\": \"string\"\n      },\n      \"age\": \"string\",\n      \"biomaterial_provider\": \"string\",\n      \"breed\": \"string\",\n      \"collected_by\": \"string\",\n      \"collection_date\": \"string\",\n      \"cultivar\": \"string\",\n      \"dev_stage\": \"string\",\n      \"ecotype\": \"string\",\n      \"geo_loc_name\": \"string\",\n      \"host\": \"string\",\n      \"host_disease\": \"string\",\n      \"identified_by\": \"string\",\n      \"ifsac_category\": \"string\",\n      \"isolate\": \"string\",\n      \"isolate_name_alias\": \"string\",\n      \"isolation_source\": \"string\",\n      \"lat_lon\": \"string\",\n      \"project_name\": \"string\",\n      \"sample_name\": \"string\",\n      \"serovar\": \"string\",\n      \"sex\": \"string\",\n      \"source_type\": \"string\",\n      \"strain\": \"string\",\n      \"sub_species\": \"string\",\n      \"tissue\": \"string\",\n      \"serotype\": \"string\"\n    },\n    {\n      \"accession\": \"string\",\n      \"last_updated\": \"string\",\n      \"publication_date\": \"string\",\n      \"submission_date\": \"string\",\n      \"sample_ids\": [\n        {\n          \"db\": \"string\",\n          \"label\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"db\": \"string\",\n          \"label\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"description\": {\n        \"title\": \"string\",\n        \"organism\": {\n          \"tax_id\": 9121,\n          \"sci_name\": \"string\",\n          \"organism_name\": \"string\",\n          \"common_name\": \"string\",\n          \"lineage\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"strain\": \"string\",\n          \"pangolin_classification\": \"string\",\n          \"infraspecific_names\": {\n            \"breed\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cultivar\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"ecotype\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"isolate\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"sex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"strain\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"comment\": \"string\"\n      },\n      \"owner\": {\n        \"name\": \"string\",\n        \"contacts\": [\n          {\n            \"lab\": \"string\"\n          },\n          {\n            \"lab\": \"string\"\n          }\n        ]\n      },\n      \"models\": [\n        \"string\",\n        \"string\"\n      ],\n      \"bioprojects\": [\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"accession\": \"string\",\n          \"title\": \"string\",\n          \"parent_accession\": \"string\",\n          \"parent_accessions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ],\n      \"package\": \"string\",\n      \"attributes\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        }\n      ],\n      \"status\": {\n        \"status\": \"string\",\n        \"when\": \"string\"\n      },\n      \"age\": \"string\",\n      \"biomaterial_provider\": \"string\",\n      \"breed\": \"string\",\n      \"collected_by\": \"string\",\n      \"collection_date\": \"string\",\n      \"cultivar\": \"string\",\n      \"dev_stage\": \"string\",\n      \"ecotype\": \"string\",\n      \"geo_loc_name\": \"string\",\n      \"host\": \"string\",\n      \"host_disease\": \"string\",\n      \"identified_by\": \"string\",\n      \"ifsac_category\": \"string\",\n      \"isolate\": \"string\",\n      \"isolate_name_alias\": \"string\",\n      \"isolation_source\": \"string\",\n      \"lat_lon\": \"string\",\n      \"project_name\": \"string\",\n      \"sample_name\": \"string\",\n      \"serovar\": \"string\",\n      \"sex\": \"string\",\n      \"source_type\": \"string\",\n      \"strain\": \"string\",\n      \"sub_species\": \"string\",\n      \"tissue\": \"string\",\n      \"serotype\": \"string\"\n    }\n  ],\n  \"total_count\": 762,\n  \"next_page_token\": \"string\",\n  \"messages\": [\n    {\n      \"error\": {\n        \"assembly_error_code\": \"UNKNOWN_ASSEMBLY_ERROR_CODE\",\n        \"gene_error_code\": \"UNKNOWN_GENE_ERROR_CODE\",\n        \"organelle_error_code\": \"UNKNOWN_ORGANELLE_ERROR_CODE\",\n        \"virus_error_code\": \"UNKNOWN_VIRUS_ERROR_CODE\",\n        \"taxonomy_error_code\": \"UNKNOWN_TAXONOMY_ERROR_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"invalid_identifiers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"warning\": {\n        \"gene_warning_code\": \"UNKNOWN_GENE_WARNING_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"replaced_id\": {\n          \"requested\": \"string\",\n          \"returned\": \"string\"\n        },\n        \"unrecognized_identifier\": \"string\"\n      }\n    },\n    {\n      \"error\": {\n        \"assembly_error_code\": \"UNKNOWN_ASSEMBLY_ERROR_CODE\",\n        \"gene_error_code\": \"UNKNOWN_GENE_ERROR_CODE\",\n        \"organelle_error_code\": \"UNKNOWN_ORGANELLE_ERROR_CODE\",\n        \"virus_error_code\": \"UNKNOWN_VIRUS_ERROR_CODE\",\n        \"taxonomy_error_code\": \"UNKNOWN_TAXONOMY_ERROR_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"invalid_identifiers\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      \"warning\": {\n        \"gene_warning_code\": \"UNKNOWN_GENE_WARNING_CODE\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"replaced_id\": {\n          \"requested\": \"string\",\n          \"returned\": \"string\"\n        },\n        \"unrecognized_identifier\": \"string\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6e2d3a60-cc62-4c7e-9120-cd757f3298e0",
+              "name": "An unexpected error response.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "biosample",
+                    "accession",
+                    ":accessions",
+                    "biosample_report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>,<string>",
+                      "key": "accessions",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/plain"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ncbi.nlm.nih.gov/datasets/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1cd53eba-8994-412c-85f4-7773eedbe7b8",
+    "name": "NCBI Datasets BioSample API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "### NCBI Datasets is a resource that lets you easily gather data from NCBI.\nThe NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1175 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCBI Datasets BioSample Virus API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Virus",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a download summary of a virus genome data package by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/:taxon/genome",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "query",
+                "description": "One or more nucleotide sequence accessions"
+              },
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+              },
+              {
+                "name": "refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to RefSeq genomes."
+              },
+              {
+                "name": "annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to annotated genomes."
+              },
+              {
+                "name": "released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes from the specified Pango lineage."
+              },
+              {
+                "name": "geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified geographic location."
+              },
+              {
+                "name": "usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "include_sequence",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "aux_report",
+                "value": "",
+                "type": "query",
+                "description": "Specify which report files to include in the data package. The virus data report is always included, and its inclusion is not affected by this parameter."
+              }
+            ]
+          },
+          "docs": "Get a download summary of a virus genome data package, including counts and file sizes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a download summary of a virus genome data package",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/genome",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a download summary of a virus genome data package, including counts and file sizes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a download summary of a SARS-CoV-2 protein data package by protein name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/sars2/protein/:proteins",
+            "params": [
+              {
+                "name": "proteins",
+                "value": "",
+                "type": "path",
+                "description": "One or more SARS-CoV-2 protein names"
+              },
+              {
+                "name": "refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to RefSeq genomes."
+              },
+              {
+                "name": "annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to annotated genomes."
+              },
+              {
+                "name": "released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes with the specified Pango lineage."
+              },
+              {
+                "name": "geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specififed geographic location."
+              },
+              {
+                "name": "usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "include_sequence",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "aux_report",
+                "value": "",
+                "type": "query",
+                "description": "Specify which report files to include in the data package. The virus data report is always included, and its inclusion is not affected by this parameter."
+              }
+            ]
+          },
+          "docs": "Get a download summary of a SARS-CoV-2 protein data package, including counts and file sizes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a download summary of a SARS-CoV-2 protein data package by protein name",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/sars2/protein",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a download summary of a SARS-CoV-2 protein data package, including counts and file sizes, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get virus genome metadata in a tabular format",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/:taxon/genome/table",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "query",
+                "description": "One or more nucleotide sequence accessions"
+              },
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+              },
+              {
+                "name": "refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to RefSeq genomes."
+              },
+              {
+                "name": "annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to annotated genomes."
+              },
+              {
+                "name": "released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes from the specified Pango lineage."
+              },
+              {
+                "name": "geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified geographic location."
+              },
+              {
+                "name": "usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report"
+              },
+              {
+                "name": "include_sequence",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "aux_report",
+                "value": "",
+                "type": "query",
+                "description": "Specify which report files to include in the data package. The virus data report is always included, and its inclusion is not affected by this parameter."
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Choose download format (tsv, csv or jsonl)"
+              }
+            ]
+          },
+          "docs": "Get virus genome metadata in tabular format for virus genomes by taxon."
+        },
+        {
+          "info": {
+            "name": "Get SARS-CoV-2 protein metadata in a tabular format by protein name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/sars2/protein/:proteins/table",
+            "params": [
+              {
+                "name": "proteins",
+                "value": "",
+                "type": "path",
+                "description": "One or more SARS-CoV-2 protein names"
+              },
+              {
+                "name": "refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to RefSeq genomes."
+              },
+              {
+                "name": "annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to annotated genomes."
+              },
+              {
+                "name": "released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes with the specified Pango lineage."
+              },
+              {
+                "name": "geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specififed geographic location."
+              },
+              {
+                "name": "usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Specify output format"
+              }
+            ]
+          },
+          "docs": "Get SARS-CoV-2 protein metadata in a tabular format by protein name."
+        },
+        {
+          "info": {
+            "name": "Get a virus data report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/:taxon/dataset_report",
+            "params": [
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+              },
+              {
+                "name": "filter.refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to RefSeq genomes."
+              },
+              {
+                "name": "filter.annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to annotated genomes."
+              },
+              {
+                "name": "filter.released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter.updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter.host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "filter.pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes from the specified Pango lineage."
+              },
+              {
+                "name": "filter.geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified geographic location."
+              },
+              {
+                "name": "filter.usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "filter.complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete virus reports or nucleotide accessions only"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of virus data reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              }
+            ]
+          },
+          "docs": "Get a virus data report by taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a virus data report by nucleotide accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/accession/:accessions/dataset_report",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more nucleotide sequence accessions"
+              },
+              {
+                "name": "filter.refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to RefSeq genomes."
+              },
+              {
+                "name": "filter.annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to annotated genomes."
+              },
+              {
+                "name": "filter.released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter.updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter.host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "filter.pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes from the specified Pango lineage."
+              },
+              {
+                "name": "filter.geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified geographic location."
+              },
+              {
+                "name": "filter.usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "filter.complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete virus reports or nucleotide accessions only"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report"
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of virus data reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              }
+            ]
+          },
+          "docs": "Get a virus data report by nucleotide accession. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a virus data report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a virus data report. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a virus annotation report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/:taxon/annotation_report",
+            "params": [
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+              },
+              {
+                "name": "filter.refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to RefSeq genomes."
+              },
+              {
+                "name": "filter.annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to annotated genomes."
+              },
+              {
+                "name": "filter.released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter.updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter.host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "filter.pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes from the specified Pango lineage."
+              },
+              {
+                "name": "filter.geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specififed geographic location."
+              },
+              {
+                "name": "filter.usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "filter.complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [virus annotation report fields](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/virus-data-reports/#virus-annotation-report-fields). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of virus data reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              }
+            ]
+          },
+          "docs": "Get virus annotation report by taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a virus annotation report by nucleotide accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/accession/:accessions/annotation_report",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more nucleotide sequence accessions"
+              },
+              {
+                "name": "filter.refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to RefSeq genomes."
+              },
+              {
+                "name": "filter.annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit to annotated genomes."
+              },
+              {
+                "name": "filter.released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter.updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter.host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "filter.pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes from the specified Pango lineage."
+              },
+              {
+                "name": "filter.geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specififed geographic location."
+              },
+              {
+                "name": "filter.usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "filter.complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [virus annotation report fields](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/virus-data-reports/#virus-annotation-report-fields). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of virus data reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              }
+            ]
+          },
+          "docs": "Get a virus annotation report by nucleotide accesion. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a virus annotation report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/annotation_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a virus annotation report. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Check the validity of a virus genome nucleotide accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/accession/:accessions/check",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "virus accessions"
+              }
+            ]
+          },
+          "docs": "Check the validity of a virus genome nucleotide accession. Output in JSON format."
+        },
+        {
+          "info": {
+            "name": "Check the validity of a virus genome nucleotide accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/check",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Check the validity of a virus genome nucleotide accession. Output in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a virus genome data package by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/:taxon/genome/download",
+            "params": [
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+              },
+              {
+                "name": "refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to RefSeq genomes."
+              },
+              {
+                "name": "annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to annotated genomes."
+              },
+              {
+                "name": "released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes from the specified Pango lineage."
+              },
+              {
+                "name": "geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified geographic location."
+              },
+              {
+                "name": "usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "include_sequence",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "aux_report",
+                "value": "",
+                "type": "query",
+                "description": "Specify which report files to include in the data package. The virus data report is always included, and its inclusion is not affected by this parameter."
+              },
+              {
+                "name": "use_psg",
+                "value": "",
+                "type": "query",
+                "description": "Experimental approach to retrieving sequence data."
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ]
+          },
+          "docs": "Download a virus genome data package including sequence, annotation, BioSample data and a detailed data report by taxon."
+        },
+        {
+          "info": {
+            "name": "Get a virus genome data package by nucleotide accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/accession/:accessions/genome/download",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more nucleotide sequence accessions"
+              },
+              {
+                "name": "taxons",
+                "value": "",
+                "type": "query",
+                "description": "NCBI Taxonomy IDs or names (common or scientific) at any taxonomic rank"
+              },
+              {
+                "name": "refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to RefSeq genomes."
+              },
+              {
+                "name": "annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to annotated genomes."
+              },
+              {
+                "name": "released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes from the specified Pango lineage."
+              },
+              {
+                "name": "geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified geographic location."
+              },
+              {
+                "name": "usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "include_sequence",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "aux_report",
+                "value": "",
+                "type": "query",
+                "description": "Specify which report files to include in the data package. The virus data report is always included, and its inclusion is not affected by this parameter."
+              },
+              {
+                "name": "use_psg",
+                "value": "",
+                "type": "query",
+                "description": "Experimental approach to retrieving sequence data."
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ]
+          },
+          "docs": "Download a virus genome data package including sequence, annotation, BioSample data and a detailed data report by nucleotide accession."
+        },
+        {
+          "info": {
+            "name": "Get a virus genome data package",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/genome/download",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download a virus genome data package including sequence, annotation, BioSample data and a detailed data report by nucleotide accession."
+        },
+        {
+          "info": {
+            "name": "Get a SARS-CoV-2 protein data package by protein name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/sars2/protein/:proteins/download",
+            "params": [
+              {
+                "name": "proteins",
+                "value": "",
+                "type": "path",
+                "description": "One or more SARS-CoV-2 protein names"
+              },
+              {
+                "name": "refseq_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to RefSeq genomes."
+              },
+              {
+                "name": "annotated_only",
+                "value": "",
+                "type": "query",
+                "description": "If true, limit results to annotated genomes."
+              },
+              {
+                "name": "released_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "updated_since",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "host",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name)."
+              },
+              {
+                "name": "pangolin_classification",
+                "value": "",
+                "type": "query",
+                "description": "Limit to SARS-CoV-2 genomes with the specified Pango lineage."
+              },
+              {
+                "name": "geo_location",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specififed geographic location."
+              },
+              {
+                "name": "usa_state",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes collected from the specified U.S. state (two-letter abbreviation)."
+              },
+              {
+                "name": "complete_only",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genomes designated as complete, as defined by the submitter."
+              },
+              {
+                "name": "include_sequence",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "aux_report",
+                "value": "",
+                "type": "query",
+                "description": "Specify which report files to include in the data package. The virus data report is always included, and its inclusion is not affected by this parameter."
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ]
+          },
+          "docs": "Download a SARS-CoV-2 protein data package including sequence, annotation, BioSample data and a detailed data report by protein name."
+        },
+        {
+          "info": {
+            "name": "Get a SARS-CoV-2 protein data package",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/virus/taxon/sars2/protein/download",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download a SARS-CoV-2 protein data package including sequence, annotation, BioSample data and a detailed data report."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

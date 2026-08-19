@@ -1,0 +1,1440 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCBI Datasets BioSample Gene API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Gene",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a gene data package by GeneID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/id/:gene_ids/download",
+            "params": [
+              {
+                "name": "gene_ids",
+                "value": "",
+                "type": "path",
+                "description": "One or more NCBI GeneIDs"
+              },
+              {
+                "name": "include_annotation_type",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "accession_filter",
+                "value": "",
+                "type": "query",
+                "description": "Limit the contents of the sequence files and tabular product report to the specified RNA and protein accessions"
+              },
+              {
+                "name": "aux_report",
+                "value": "",
+                "type": "query",
+                "description": "Specify additional report files to include in the data package. The gene data report is always included, and its inclusion is not affected by this parameter."
+              },
+              {
+                "name": "tabular_reports",
+                "value": "",
+                "type": "query",
+                "description": "Specify which tabular report files to include in the data package."
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ]
+          },
+          "docs": "Download a gene data package including sequence, annotation and data reports, as a compressed zip archive, by GeneID."
+        },
+        {
+          "info": {
+            "name": "Get a gene data package",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/download",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download a gene data package including sequence, annotation and data reports, as a compressed zip archive."
+        },
+        {
+          "info": {
+            "name": "Get gene reports by GeneID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/id/:gene_ids",
+            "params": [
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "gene_ids",
+                "value": "",
+                "type": "path",
+                "description": "One or more NCBI GeneIDs"
+              },
+              {
+                "name": "locus_tags",
+                "value": "",
+                "type": "query",
+                "description": "Gene locus tags"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "accession_filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter tabular product report to only include the selected accessions. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "tax_search_subtree",
+                "value": "",
+                "type": "query",
+                "description": "If true, include genes from taxonomic ranks below the requested taxon."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene summary by GeneID. By default, in paged JSON format, but also available as tabular (accept: text/tab-separated-values) or json-lines (accept: application/x-ndjson)"
+        },
+        {
+          "info": {
+            "name": "Get gene metadata by RefSeq Accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/accession/:accessions",
+            "params": [
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more RefSeq nucleotide or protein accessions"
+              },
+              {
+                "name": "locus_tags",
+                "value": "",
+                "type": "query",
+                "description": "Gene locus tags"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "accession_filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter tabular product report to only include the selected accessions. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "tax_search_subtree",
+                "value": "",
+                "type": "query",
+                "description": "If true, include genes from taxonomic ranks below the requested taxon."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene summary by RefSeq Accession. By default, in paged JSON format, but also available as tabular (accept: text/tab-separated-values) or json-lines (accept: application/x-ndjson)"
+        },
+        {
+          "info": {
+            "name": "Get gene metadata by gene symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/symbol/:symbols/taxon/:taxon",
+            "params": [
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "path",
+                "description": "One or more gene symbols"
+              },
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific, any taxonomic rank) for the provided gene symbol"
+              },
+              {
+                "name": "locus_tags",
+                "value": "",
+                "type": "query",
+                "description": "Gene locus tags"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "accession_filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter tabular product report to only include the selected accessions. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "tax_search_subtree",
+                "value": "",
+                "type": "query",
+                "description": "If true, include genes from taxonomic ranks below the requested taxon."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene summary by by gene symbol. By default, in paged JSON format, but also available as tabular (accept: text/tab-separated-values) or json-lines (accept: application/x-ndjson)"
+        },
+        {
+          "info": {
+            "name": "Get gene reports by taxonomic identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/taxon/:taxon",
+            "params": [
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) that the genes are annotated at"
+              },
+              {
+                "name": "locus_tags",
+                "value": "",
+                "type": "query",
+                "description": "Gene locus tags"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "accession_filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter tabular product report to only include the selected accessions. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "tax_search_subtree",
+                "value": "",
+                "type": "query",
+                "description": "If true, include genes from taxonomic ranks below the requested taxon."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene summary for a specified NCBI Taxonomy ID or name (common or scientific). By default, in paged JSON format, but also available as tabular (accept: text/tab-separated-values) or json-lines (accept: application/x-ndjson)"
+        },
+        {
+          "info": {
+            "name": "Get gene metadata as JSON",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a gene summary. By default, in paged JSON format, but also available as tabular (accept: text/tab-separated-values) or json-lines (accept: application/x-ndjson)"
+        },
+        {
+          "info": {
+            "name": "Get a gene data report by GeneID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/id/:gene_ids/dataset_report",
+            "params": [
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "gene_ids",
+                "value": "",
+                "type": "path",
+                "description": "One or more NCBI GeneIDs"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene data report by GeneID. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene data report by RefSeq nucleotide or protein accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/accession/:accessions/dataset_report",
+            "params": [
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more RefSeq nucleotide or protein accessions"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene data report by RefSeq nucleotide or protein accession. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene data report by symbol and taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/symbol/:symbols/taxon/:taxon/dataset_report",
+            "params": [
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "path",
+                "description": "One or more gene symbols"
+              },
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific, any taxonomic rank) for the provided gene symbol"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "tax_search_subtree",
+                "value": "",
+                "type": "query",
+                "description": "If true, include genes from taxonomic ranks below the requested taxon."
+              }
+            ]
+          },
+          "docs": "Get a gene data report by gene symbol and taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene data report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/taxon/:taxon/dataset_report",
+            "params": [
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) that the genes are annotated at"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "tax_search_subtree",
+                "value": "",
+                "type": "query",
+                "description": "If true, include genes from taxonomic ranks below the requested taxon."
+              }
+            ]
+          },
+          "docs": "Get a gene data report by taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene data report by locus tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/locus_tag/:locus_tags/dataset_report",
+            "params": [
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "locus_tags",
+                "value": "",
+                "type": "path",
+                "description": "Gene locus tags"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene data report by gene locus tag. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene data report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/dataset_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a gene data report. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene product report by GeneID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/id/:gene_ids/product_report",
+            "params": [
+              {
+                "name": "gene_ids",
+                "value": "",
+                "type": "path",
+                "description": "One or more NCBI GeneIDs"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "accession_filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter tabular product report to only include the selected accessions. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene product report by GeneID. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene product report by RefSeq nucleotide or protein accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/accession/:accessions/product_report",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more RefSeq nucleotide or protein accessions"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "accession_filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter tabular product report to only include the selected accessions. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "tax_search_subtree",
+                "value": "",
+                "type": "query",
+                "description": "If true, include genes from taxonomic ranks below the requested taxon."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene product report by RefSeq nucleotide or protein accession. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene product report by symbol and taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/symbol/:symbols/taxon/:taxon/product_report",
+            "params": [
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "path",
+                "description": "One or more gene symbols"
+              },
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific, any taxonomic rank) for the provided gene symbol"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "tax_search_subtree",
+                "value": "",
+                "type": "query",
+                "description": "If true, include genes from taxonomic ranks below the requested taxon."
+              }
+            ]
+          },
+          "docs": "Get a gene product report by symbol and taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene product report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/taxon/:taxon/product_report",
+            "params": [
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) that the genes are annotated at"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "tax_search_subtree",
+                "value": "",
+                "type": "query",
+                "description": "If true, include genes from taxonomic ranks below the requested taxon."
+              }
+            ]
+          },
+          "docs": "Get a gene product report by taxon. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene product report by locus tag",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/locus_tag/:locus_tags/product_report",
+            "params": [
+              {
+                "name": "locus_tags",
+                "value": "",
+                "type": "path",
+                "description": "Gene locus tags"
+              },
+              {
+                "name": "table_fields",
+                "value": "",
+                "type": "query",
+                "description": "Specify which fields to include in the tabular report. Additional fields are described here: [Create a table from the gene data reports](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/gene-data-reports/). Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes that match the specified gene symbol, name (description), alias, locus tag or protein name."
+              },
+              {
+                "name": "types",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes matching the specified gene type."
+              },
+              {
+                "name": "accession_filter",
+                "value": "",
+                "type": "query",
+                "description": "Filter tabular product report to only include the selected accessions. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a gene product report by gene locus tag. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a gene product report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/product_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a gene product report. By default, in paged JSON format, but also available in tabular (accept: text/tab-separated-values) or JSON Lines (accept: application/x-ndjson) formats."
+        },
+        {
+          "info": {
+            "name": "Get a download summary of a gene data package by GeneID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/id/:gene_ids/download_summary",
+            "params": [
+              {
+                "name": "gene_ids",
+                "value": "",
+                "type": "path",
+                "description": "One or more NCBI GeneIDs"
+              },
+              {
+                "name": "include_annotation_type",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "fasta_filter",
+                "value": "",
+                "type": "query",
+                "description": "Limit the FASTA sequences in the datasets package to these transcript and protein accessions (deprecated)"
+              },
+              {
+                "name": "accession_filter",
+                "value": "",
+                "type": "query",
+                "description": "Limit the contents of the sequence files and tabular product report to the specified RNA and protein accessions"
+              },
+              {
+                "name": "aux_report",
+                "value": "",
+                "type": "query",
+                "description": "Specify additional report files to include in the data package. The gene data report is always included, and its inclusion is not affected by this parameter."
+              },
+              {
+                "name": "tabular_reports",
+                "value": "",
+                "type": "query",
+                "description": "Specify which tabular report files to include in the data package."
+              }
+            ]
+          },
+          "docs": "Get a download summary of a gene data package, including counts and estimated package size, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a download summary of a gene data package",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/download_summary",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a download summary of a gene data package, including counts and estimated package size, in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get gene counts by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/taxon/:taxon/counts",
+            "params": [
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "Taxon for provided gene symbol"
+              }
+            ]
+          },
+          "docs": "Get gene counts by taxon in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get gene counts by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/taxon/counts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get gene counts by taxon in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a gene data report for a gene ortholog set by GeneID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/id/:gene_id/orthologs",
+            "params": [
+              {
+                "name": "gene_id",
+                "value": "",
+                "type": "path",
+                "description": "One or more NCBI GeneIDs"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete gene reports, or abbreviated reports with either GeneIDs only or GeneIDs, transcript and protein counts."
+              },
+              {
+                "name": "taxon_filter",
+                "value": "",
+                "type": "query",
+                "description": "Limit to genes from the specified NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of gene reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              }
+            ]
+          },
+          "docs": "Get a gene data report for a gene ortholog set by GeneID in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get a gene data report for a gene ortholog set by GeneID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/orthologs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a gene data report for a gene ortholog set by GeneID in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get gene links by GeneID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/id/:gene_ids/links",
+            "params": [
+              {
+                "name": "gene_ids",
+                "value": "",
+                "type": "path",
+                "description": "One or more NCBI GeneIDs, limited to 100"
+              }
+            ]
+          },
+          "docs": "Get links to available gene resources in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get gene links by GeneID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get links to available gene resources in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get gene counts per chromosome by taxon and annotation name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/gene/taxon/:taxon/annotation/:annotation_name/chromosome_summary",
+            "params": [
+              {
+                "name": "taxon",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank, with an anntoated genome"
+              },
+              {
+                "name": "annotation_name",
+                "value": "",
+                "type": "path",
+                "description": "Annotation name corresponding to the provided taxon"
+              }
+            ]
+          },
+          "docs": "Get gene counts per chromosome by taxon and annotation name in JSON format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

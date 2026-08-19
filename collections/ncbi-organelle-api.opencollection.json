@@ -1,0 +1,243 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "NCBI Datasets BioSample Organelle API",
+    "version": "v2"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "api-key",
+      "value": "{{api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organelle",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get an organelle data package by nucleotide accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/organelle/accession/:accessions/download",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "NCBI organelle assembly accessions"
+              },
+              {
+                "name": "include_annotation_type",
+                "value": "",
+                "type": "query",
+                "description": "Specify which sequence files to include in the data package."
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ]
+          },
+          "docs": "Download an organelle data package including sequence, annotation, and detailed data reports as a compressed zip archive."
+        },
+        {
+          "info": {
+            "name": "Get an organelle data package",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/organelle/download",
+            "params": [
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Output file name."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download an organelle data package including sequence, annotation, and detailed data reports as a compressed zip archive."
+        },
+        {
+          "info": {
+            "name": "Get an organelle data report by nucleotide accession",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/organelle/accessions/:accessions/dataset_report",
+            "params": [
+              {
+                "name": "accessions",
+                "value": "",
+                "type": "path",
+                "description": "One or more organelle nucleotide accessions"
+              },
+              {
+                "name": "organelle_types",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to the specified organelle types."
+              },
+              {
+                "name": "first_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to organelle genomes released on or after the specified date."
+              },
+              {
+                "name": "last_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to organelle genomes released on or before the specified date."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete organelle reports or nucleotide accessions only."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              }
+            ]
+          },
+          "docs": "Get an organelle data report in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get an organelle data report by taxon",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/organelle/taxon/:taxons/dataset_report",
+            "params": [
+              {
+                "name": "taxons",
+                "value": "",
+                "type": "path",
+                "description": "NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank"
+              },
+              {
+                "name": "organelle_types",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to the specified organelle types."
+              },
+              {
+                "name": "first_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to organelle genomes released on or after the specified date."
+              },
+              {
+                "name": "last_release_date",
+                "value": "",
+                "type": "query",
+                "description": "Limit results to organelle genomes released on or before the specified date."
+              },
+              {
+                "name": "tax_exact_match",
+                "value": "",
+                "type": "query",
+                "description": "If true, only return assemblies with the given NCBI Taxonomy ID, or name. Otherwise, assemblies from taxonomy subtree are included, too."
+              },
+              {
+                "name": "sort.field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sort.direction",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "returned_content",
+                "value": "",
+                "type": "query",
+                "description": "Return complete organelle reports or nucleotide accessions only."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of organelle assemblies to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results."
+              },
+              {
+                "name": "page_token",
+                "value": "",
+                "type": "query",
+                "description": "A page token is returned from an `OrganelleMetadata` call with more than `page_size` results. Use this token, along with the previous `OrganelleMetadata` parameters, to retrieve the next page of results. When `page_token` is empty, all results have been retrieved."
+              },
+              {
+                "name": "table_format",
+                "value": "",
+                "type": "query",
+                "description": "Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`."
+              },
+              {
+                "name": "include_tabular_header",
+                "value": "",
+                "type": "query",
+                "description": "Specify when to include the table header when requesting a tabular report."
+              }
+            ]
+          },
+          "docs": "Get an organelle data report  in JSON format."
+        },
+        {
+          "info": {
+            "name": "Get an organelle data report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ncbi.nlm.nih.gov/datasets/v2/organelle/dataset_report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get an organelle data report in JSON format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
