@@ -1,12 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NCBI Datasets BioSample Taxonomy API
+  title: NCBI Datasets Taxonomy API
   version: v2
   description: '### NCBI Datasets is a resource that lets you easily gather data from NCBI.
 
-    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.
-
-    '
+    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.'
 servers:
 - url: https://api.ncbi.nlm.nih.gov/datasets/v2
 security:
@@ -15,9 +13,7 @@ tags:
 - name: Taxonomy
   description: '#### Options to download taxonomy data.
 
-    These taxonomy services allow you to get taxonomy data as a data report or download taxonomy data as a taxonomy data package, for taxonomic nodes in NCBI Taxonomy.
-
-    '
+    These taxonomy services allow you to get taxonomy data as a data report or download taxonomy data as a taxonomy data package, for taxonomic nodes in NCBI Taxonomy.'
 paths:
   /taxonomy/taxon/{tax_ids}/download:
     get:
@@ -1017,194 +1013,44 @@ paths:
                   taxon: '9606'
 components:
   schemas:
-    v2OrganismQueryRequest:
+    v2reportsMessage:
       type: object
       properties:
-        organism_query:
-          type: string
-        taxon_query:
-          type: string
-          title: Taxonomy ID or name (common or scientific) at any taxonomic rank
-        tax_rank_filter:
-          $ref: '#/components/schemas/v2OrganismQueryRequestTaxRankFilter'
-          title: Optionally return results for taxonomic ranks above species using `higher_taxon`
-        taxon_resource_filter:
-          $ref: '#/components/schemas/v2OrganismQueryRequestTaxonResourceFilter'
-          title: Limit to taxonomy nodes with gene, genome or organelle data
-        exact_match:
-          type: boolean
-          title: If true, only return results that exactly match the provided taxonomic name
-    v2TaxonomyFilteredSubtreeResponseEdgeChildStatus:
+        error:
+          $ref: '#/components/schemas/v2reportsError'
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+    v2ImageSize:
       type: string
       enum:
       - UNSPECIFIED
-      - HAS_MORE_CHILDREN
-      - NO_VISIBLE_CHILDREN
-      - ONLY_UNSPECIFIED_CHILDREN
+      - SMALL
+      - MEDIUM
       default: UNSPECIFIED
-      title: HAS_MORE_CHILDREN means there are children of a valid rank that are not unspecified NO_VISIBLE_CHILDREN means there are no children at all, not even unspecified children ONLY_UNSPECIFIED_CHILDREN Means that there are children, but those children are all unspecified (e.g. environmental samples)
-    v2reportsWarning:
+    v2TaxonomyFilteredSubtreeResponseEdge:
       type: object
       properties:
-        gene_warning_code:
-          $ref: '#/components/schemas/v2reportsWarningGeneWarningCode'
-        reason:
-          type: string
-        message:
-          type: string
-        replaced_id:
-          $ref: '#/components/schemas/v2reportsWarningReplacedId'
-        unrecognized_identifier:
-          type: string
-    v2SciNameAndIdsSciNameAndId:
-      type: object
-      properties:
-        sci_name:
-          type: string
-          title: Scientific name
-        tax_id:
-          type: string
-          format: uint64
-          title: NCBI Taxonomy ID
-        common_name:
-          type: string
-          title: Common name
-        matched_term:
-          type: string
-          title: Matched term
+        visible_children:
+          type: array
+          items:
+            type: integer
+        children_status:
+          $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdgeChildStatus'
         rank:
           $ref: '#/components/schemas/v2reportsRankType'
-          title: Rank
-        group_name:
+        scientific_name:
           type: string
-          title: Group name (blast group)
-    v2reportsClassification:
-      type: object
-      properties:
-        superkingdom:
-          $ref: '#/components/schemas/v2reportsTaxData'
-        kingdom:
-          $ref: '#/components/schemas/v2reportsTaxData'
-        phylum:
-          $ref: '#/components/schemas/v2reportsTaxData'
-        class:
-          $ref: '#/components/schemas/v2reportsTaxData'
-        order:
-          $ref: '#/components/schemas/v2reportsTaxData'
-        family:
-          $ref: '#/components/schemas/v2reportsTaxData'
-        genus:
-          $ref: '#/components/schemas/v2reportsTaxData'
-        species:
-          $ref: '#/components/schemas/v2reportsTaxData'
-        domain:
-          $ref: '#/components/schemas/v2reportsTaxData'
-          title: 'NOTE: These are out of order'
-        realm:
-          $ref: '#/components/schemas/v2reportsTaxData'
-        acellular_root:
-          $ref: '#/components/schemas/v2reportsTaxData'
-    v2reportsTaxData:
-      type: object
-      properties:
-        name:
+        curator_common_name:
           type: string
-          title: Taxonomic name
-        id:
+        assembly_count:
           type: integer
-          title: NCBI Taxonomy identifier
-    v2reportsNameAndAuthority:
-      type: object
-      properties:
-        name:
-          type: string
-          title: This could be the scientific name, common name, synonym, etc. depending on the context.
-        authority:
-          type: string
-          title: The authority that this name was created by. The authority is typically represented by the author(s) name and the year in which it was published.
-        type_strains:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsTaxonomyTypeMaterial'
-        curator_synonym:
-          type: string
-          title: The primary synonym of the scientific name.
-        homotypic_synonyms:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsNameAndAuthority'
-        heterotypic_synonyms:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsNameAndAuthority'
-        other_synonyms:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsNameAndAuthority'
-        informal_names:
-          type: array
-          items:
-            type: string
-        basionym:
-          $ref: '#/components/schemas/v2reportsNameAndAuthority'
-          title: The originally described name, no longer in use. Attached to the type material and species description.
-        publications:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsNameAndAuthorityPublication'
-        notes:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsNameAndAuthorityNote'
-        formal:
-          type: boolean
-          title: Indicates whether the name is formal (i.e. compliant)
-    v2OrganismQueryRequestTaxRankFilter:
+    v2IncludeTabularHeader:
       type: string
       enum:
-      - species
-      - higher_taxon
-      default: species
-    v2reportsTaxonomyNamesDescriptorCitation:
-      type: object
-      properties:
-        full_citation:
-          type: string
-        short_citation:
-          type: string
-        pmid:
-          type: string
-          format: uint64
-    v2reportsErrorGeneErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_GENE_ERROR_CODE
-      - INCOMPLETE_LOOKUP_SYMBOL
-      - INVALID_TAXON_GENE_ARGUMENT
-      default: UNKNOWN_GENE_ERROR_CODE
-    v2reportsTaxonomyDataReportPage:
-      type: object
-      properties:
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsTaxonomyReportMatch'
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsMessage'
-        total_count:
-          type: integer
-          title: The total count of available taxons - deprecated because it not supported for multiple-page results.
-        next_page_token:
-          type: string
-          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
-    v2TaxonomyDatasetRequestTaxonomyReportType:
-      type: string
-      enum:
-      - TAXONOMY_SUMMARY
-      - NAMES_REPORT
-      default: TAXONOMY_SUMMARY
+      - INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
+      - INCLUDE_TABULAR_HEADER_ALWAYS
+      - INCLUDE_TABULAR_HEADER_NEVER
+      default: INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
     v2TaxonomyImageMetadataResponse:
       type: object
       properties:
@@ -1226,6 +1072,400 @@ components:
           type: string
         license_url:
           type: string
+    v2HttpBody:
+      type: object
+      properties:
+        content_type:
+          type: string
+          title: The HTTP Content-Type header value specifying the content type of the body.
+        data:
+          type: string
+          format: byte
+          title: The HTTP request/response body as raw binary.
+    v2reportsTaxonomyReportMatch:
+      type: object
+      properties:
+        taxonomy:
+          $ref: '#/components/schemas/v2reportsTaxonomyNode'
+        query:
+          type: array
+          items:
+            type: string
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+    v2reportsWarning:
+      type: object
+      properties:
+        gene_warning_code:
+          $ref: '#/components/schemas/v2reportsWarningGeneWarningCode'
+        reason:
+          type: string
+        message:
+          type: string
+        replaced_id:
+          $ref: '#/components/schemas/v2reportsWarningReplacedId'
+        unrecognized_identifier:
+          type: string
+    v2reportsCountType:
+      type: string
+      enum:
+      - COUNT_TYPE_UNSPECIFIED
+      - COUNT_TYPE_ASSEMBLY
+      - COUNT_TYPE_GENE
+      - COUNT_TYPE_tRNA
+      - COUNT_TYPE_rRNA
+      - COUNT_TYPE_snRNA
+      - COUNT_TYPE_scRNA
+      - COUNT_TYPE_snoRNA
+      - COUNT_TYPE_PROTEIN_CODING
+      - COUNT_TYPE_PSEUDO
+      - COUNT_TYPE_TRANSPOSON
+      - COUNT_TYPE_miscRNA
+      - COUNT_TYPE_ncRNA
+      - COUNT_TYPE_BIOLOGICAL_REGION
+      - COUNT_TYPE_OTHER
+      - COUNT_TYPE_ORGANELLE
+      default: COUNT_TYPE_UNSPECIFIED
+    v2reportsTaxonomyDataReportPage:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsTaxonomyReportMatch'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+        total_count:
+          type: integer
+          title: The total count of available taxons - deprecated because it not supported for multiple-page results.
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    v2TaxonomyMatch:
+      type: object
+      properties:
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsWarning'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+        query:
+          type: array
+          items:
+            type: string
+        taxonomy:
+          $ref: '#/components/schemas/v2TaxonomyNode'
+    v2TaxonomyLinksResponseGenericLink:
+      type: object
+      properties:
+        link_name:
+          type: string
+        link_url:
+          type: string
+    v2OrganismQueryRequestTaxonResourceFilter:
+      type: string
+      enum:
+      - TAXON_RESOURCE_FILTER_ALL
+      - TAXON_RESOURCE_FILTER_GENOME
+      - TAXON_RESOURCE_FILTER_GENE
+      - TAXON_RESOURCE_FILTER_ORGANELLE
+      default: TAXON_RESOURCE_FILTER_ALL
+    v2reportsNameAndAuthorityNote:
+      type: object
+      properties:
+        name:
+          type: string
+          title: Name of the notation.
+        note:
+          type: string
+          title: Note text.
+        note_classifier:
+          $ref: '#/components/schemas/v2reportsNameAndAuthorityNoteClassifier'
+          title: Note classification
+    v2reportsErrorGeneErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_ERROR_CODE
+      - INCOMPLETE_LOOKUP_SYMBOL
+      - INVALID_TAXON_GENE_ARGUMENT
+      default: UNKNOWN_GENE_ERROR_CODE
+    v2reportsTaxonomyNamesDescriptorCitation:
+      type: object
+      properties:
+        full_citation:
+          type: string
+        short_citation:
+          type: string
+        pmid:
+          type: string
+          format: uint64
+    v2TaxonomyFilteredSubtreeResponse:
+      type: object
+      properties:
+        root_nodes:
+          type: array
+          items:
+            type: integer
+        edges:
+          $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdgesEntry'
+        warnings:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsWarning'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+    v2TaxonomyMetadataResponse:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+        taxonomy_nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TaxonomyMatch'
+    v2TaxonomyFilteredSubtreeResponseEdgesEntry:
+      description: A map.
+      properties:
+        default:
+          $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdge'
+      additionalProperties:
+        $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdge'
+    v2reportsTaxData:
+      type: object
+      properties:
+        name:
+          type: string
+          title: Taxonomic name
+        id:
+          type: integer
+          title: NCBI Taxonomy identifier
+    v2SciNameAndIds:
+      type: object
+      properties:
+        sci_name_and_ids:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2SciNameAndIdsSciNameAndId'
+    v2TaxonomyFilteredSubtreeRequest:
+      type: object
+      properties:
+        taxons:
+          type: array
+          items:
+            type: string
+        specified_limit:
+          type: boolean
+          title: Limit to specified species
+        exclude_extinct:
+          type: boolean
+          title: Limit to species that are not extinct
+        levels:
+          type: integer
+          title: Number of taxonomic levels to return with a valid range of 1-5. Values above 5 will return 5 levels and if level is 0 or not specified, 1 level will be returned.
+        rank_limits:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+        include_incertae_sedis:
+          type: boolean
+          title: Include nodes with ranks not in 'rank_limits' if their names meet criteria for incertae sedis (of unknown origin).
+    v2TaxonomyMetadataRequest:
+      type: object
+      properties:
+        taxons:
+          type: array
+          items:
+            type: string
+        returned_content:
+          $ref: '#/components/schemas/v2TaxonomyMetadataRequestContentType'
+          title: Return complete taxonomy reports, Taxonomy IDs only, or reports without assembly and gene counts (metadata).
+        page_size:
+          type: integer
+          title: The maximum number of taxons to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        include_tabular_header:
+          $ref: '#/components/schemas/v2IncludeTabularHeader'
+          title: Specify when to include the table header when requesting a tabular report.
+        page_token:
+          type: string
+          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+        table_format:
+          $ref: '#/components/schemas/v2TaxonomyMetadataRequestTableFormat'
+          title: 'Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`.'
+        children:
+          type: boolean
+          title: If true, return results for child taxa.
+        ranks:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRankType'
+    v2TaxonomyMetadataRequestTableFormat:
+      type: string
+      enum:
+      - SUMMARY
+      default: SUMMARY
+      title: Optional pre-defined template for processing a tabular data request
+    v2TaxonomyFilteredSubtreeResponseEdgeChildStatus:
+      type: string
+      enum:
+      - UNSPECIFIED
+      - HAS_MORE_CHILDREN
+      - NO_VISIBLE_CHILDREN
+      - ONLY_UNSPECIFIED_CHILDREN
+      default: UNSPECIFIED
+      title: HAS_MORE_CHILDREN means there are children of a valid rank that are not unspecified NO_VISIBLE_CHILDREN means there are no children at all, not even unspecified children ONLY_UNSPECIFIED_CHILDREN Means that there are children, but those children are all unspecified (e.g. environmental samples)
+    v2reportsWarningReplacedId:
+      type: object
+      properties:
+        requested:
+          type: string
+        returned:
+          type: string
+    v2TaxonomyTaxIdsPage:
+      type: object
+      properties:
+        tax_ids:
+          type: array
+          items:
+            type: integer
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    v2reportsWarningGeneWarningCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_WARNING_CODE
+      - ACCESSION_VERSION_MISMATCH
+      - REPLACED_GENE_ID
+      - DISCONTINUED_GENE_ID
+      - UNRECOGNIZED_GENE_ID
+      - UNRECOGNIZED_GENE_SYMBOL
+      - UNRECOGNIZED_ACCESSION
+      - UNRECOGNIZED_TAX_TOKEN
+      - NO_GENE_ANNOTATION_FOUND
+      - ABOVE_SPECIES_TAXON
+      default: UNKNOWN_GENE_WARNING_CODE
+    v2reportsErrorTaxonomyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_TAXONOMY_ERROR_CODE
+      - INVALID_TAXONOMY_TAXON
+      default: UNKNOWN_TAXONOMY_ERROR_CODE
+    v2OrganismQueryRequest:
+      type: object
+      properties:
+        organism_query:
+          type: string
+        taxon_query:
+          type: string
+          title: Taxonomy ID or name (common or scientific) at any taxonomic rank
+        tax_rank_filter:
+          $ref: '#/components/schemas/v2OrganismQueryRequestTaxRankFilter'
+          title: Optionally return results for taxonomic ranks above species using `higher_taxon`
+        taxon_resource_filter:
+          $ref: '#/components/schemas/v2OrganismQueryRequestTaxonResourceFilter'
+          title: Limit to taxonomy nodes with gene, genome or organelle data
+        exact_match:
+          type: boolean
+          title: If true, only return results that exactly match the provided taxonomic name
+    v2TaxonomyNodeCountByType:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/v2reportsCountType'
+        count:
+          type: integer
+    v2TaxonomyDatasetRequestTaxonomyReportType:
+      type: string
+      enum:
+      - TAXONOMY_SUMMARY
+      - NAMES_REPORT
+      default: TAXONOMY_SUMMARY
+    v2reportsTaxonomyTypeMaterial:
+      type: object
+      properties:
+        type_strain_name:
+          type: string
+          title: The strain name of the type material.
+        type_strain_id:
+          type: string
+          title: The strain ID of the type material.
+        bio_collection_id:
+          type: string
+          title: The biocollection ID of the type material.
+        bio_collection_name:
+          type: string
+          title: The biocollection name of the type material.
+        collection_type:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsCollectionType'
+        type_class:
+          type: string
+          title: Type material classification.
+    v2TaxonomyMetadataRequestContentType:
+      type: string
+      enum:
+      - COMPLETE
+      - TAXIDS
+      - METADATA
+      default: COMPLETE
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/protobufAny'
+    v2reportsErrorAssemblyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ASSEMBLY_ERROR_CODE
+      - INVALID_BIOPROJECT_IDS
+      - NO_ASSEMBLIES_FOR_BIOPROJECTS
+      - INVALID_TAXON
+      - MISSING_SEARCH_FIELD
+      - INVALID_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
+      - INVALID_WGS_ACCESSIONS
+      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
+      default: UNKNOWN_ASSEMBLY_ERROR_CODE
+    v2reportsErrorOrganelleErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ORGANELLE_ERROR_CODE
+      - INVALID_ORGANELLE_TAXON
+      - NO_ORGANELLES_FOR_ACCESSION
+      default: UNKNOWN_ORGANELLE_ERROR_CODE
+    v2TaxonomyDatasetRequest:
+      type: object
+      properties:
+        tax_ids:
+          type: array
+          items:
+            type: integer
+        aux_reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2TaxonomyDatasetRequestTaxonomyReportType'
     v2TaxonomyRelatedIdRequest:
       type: object
       properties:
@@ -1247,44 +1487,89 @@ components:
         page_token:
           type: string
           title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
-    v2TaxonomyFilteredSubtreeResponseEdgesEntry:
-      description: A map.
-      properties:
-        default:
-          $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdge'
-      additionalProperties:
-        $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdge'
-    v2TaxonomyDatasetRequest:
+    v2reportsNameAndAuthorityPublication:
       type: object
       properties:
-        tax_ids:
-          type: array
-          items:
-            type: integer
-        aux_reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2TaxonomyDatasetRequestTaxonomyReportType'
+        name:
+          type: string
+          title: Name of the publication (article, book, etc.).
+        citation:
+          type: string
+          title: Citation to the publication.
+        pmid:
+          type: string
+          format: uint64
+    v2reportsRankType:
+      type: string
+      enum:
+      - NO_RANK
+      - SUPERKINGDOM
+      - DOMAIN
+      - REALM
+      - KINGDOM
+      - SUBKINGDOM
+      - SUPERPHYLUM
+      - SUBPHYLUM
+      - PHYLUM
+      - CLADE
+      - SUPERCLASS
+      - CLASS
+      - SUBCLASS
+      - INFRACLASS
+      - COHORT
+      - SUBCOHORT
+      - SUPERORDER
+      - ORDER
+      - SUBORDER
+      - INFRAORDER
+      - PARVORDER
+      - SUPERFAMILY
+      - FAMILY
+      - SUBFAMILY
+      - GENUS
+      - SUBGENUS
+      - SPECIES_GROUP
+      - SPECIES_SUBGROUP
+      - SPECIES
+      - SUBSPECIES
+      - TRIBE
+      - SUBTRIBE
+      - FORMA
+      - VARIETAS
+      - STRAIN
+      - SECTION
+      - SUBSECTION
+      - PATHOGROUP
+      - SUBVARIETY
+      - GENOTYPE
+      - SEROTYPE
+      - ISOLATE
+      - MORPH
+      - SERIES
+      - FORMA_SPECIALIS
+      - SEROGROUP
+      - BIOTYPE
+      - ACELLULAR_ROOT
+      - CELLULAR_ROOT
+      default: NO_RANK
+      title: Rank level
     v2TaxonomyImageMetadataRequest:
       type: object
       properties:
         taxon:
           type: string
-    v2reportsTaxonomyReportMatch:
+    v2TaxonomyLinksRequest:
       type: object
       properties:
-        taxonomy:
-          $ref: '#/components/schemas/v2reportsTaxonomyNode'
-        query:
-          type: array
-          items:
-            type: string
-        warning:
-          $ref: '#/components/schemas/v2reportsWarning'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsError'
+        taxon:
+          type: string
+    v2TaxonomyImageRequest:
+      type: object
+      properties:
+        taxon:
+          type: string
+        image_size:
+          $ref: '#/components/schemas/v2ImageSize'
     v2reportsTaxonomyNode:
       type: object
       properties:
@@ -1337,23 +1622,93 @@ components:
         extinct:
           type: boolean
           title: True if organism is extinct
-    v2TaxonomyMatch:
+    v2TaxonomyLinksResponse:
       type: object
       properties:
-        warnings:
+        tax_id:
+          type: string
+        encyclopedia_of_life:
+          type: string
+        global_biodiversity_information_facility:
+          type: string
+        inaturalist:
+          type: string
+        viralzone:
+          type: string
+        wikipedia:
+          type: string
+        generic_links:
           type: array
           items:
-            $ref: '#/components/schemas/v2reportsWarning'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsError'
-        query:
+            $ref: '#/components/schemas/v2TaxonomyLinksResponseGenericLink'
+    v2SciNameAndIdsSciNameAndId:
+      type: object
+      properties:
+        sci_name:
+          type: string
+          title: Scientific name
+        tax_id:
+          type: string
+          format: uint64
+          title: NCBI Taxonomy ID
+        common_name:
+          type: string
+          title: Common name
+        matched_term:
+          type: string
+          title: Matched term
+        rank:
+          $ref: '#/components/schemas/v2reportsRankType'
+          title: Rank
+        group_name:
+          type: string
+          title: Group name (blast group)
+    v2reportsTaxonomyNamesDescriptor:
+      type: object
+      properties:
+        tax_id:
+          type: string
+          format: uint64
+          title: NCBI Taxonomy identifier
+        rank:
+          $ref: '#/components/schemas/v2reportsRankType'
+          title: The taxonomic rank of the taxonomic node.
+        current_scientific_name:
+          $ref: '#/components/schemas/v2reportsNameAndAuthority'
+          title: The currently accepted name chosen out of all synonyms for the taxonomic node.
+        group_name:
+          type: string
+          title: Group name for the species.
+        curator_common_name:
+          type: string
+          title: The canonical common name.
+        other_common_names:
           type: array
           items:
             type: string
-        taxonomy:
-          $ref: '#/components/schemas/v2TaxonomyNode'
+        general_notes:
+          type: array
+          items:
+            type: string
+        links_from_type:
+          type: string
+          title: TBD
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsTaxonomyNamesDescriptorCitation'
+        current_scientific_name_is_formal:
+          type: boolean
+          title: Specify if the current scientific name is considered 'formal' or not.
+    v2reportsNameAndAuthorityNoteClassifier:
+      type: string
+      enum:
+      - no_authority_classifier
+      - effective_name
+      - nomen_approbbatum
+      - ictv_accepted
+      default: no_authority_classifier
+      title: Class of authority  If the authority has any special classification, such as having been effectively and validly published or having been included in an approved list.
     v2reportsTaxonomyNodeCountByType:
       type: object
       properties:
@@ -1361,44 +1716,23 @@ components:
           $ref: '#/components/schemas/v2reportsCountType'
         count:
           type: integer
-    v2HttpBody:
+    v2reportsTaxonomyNamesReportMatch:
       type: object
       properties:
-        content_type:
-          type: string
-          title: The HTTP Content-Type header value specifying the content type of the body.
-        data:
-          type: string
-          format: byte
-          title: The HTTP request/response body as raw binary.
-    v2ImageSize:
-      type: string
-      enum:
-      - UNSPECIFIED
-      - SMALL
-      - MEDIUM
-      default: UNSPECIFIED
-    v2reportsErrorAssemblyErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_ASSEMBLY_ERROR_CODE
-      - INVALID_BIOPROJECT_IDS
-      - NO_ASSEMBLIES_FOR_BIOPROJECTS
-      - INVALID_TAXON
-      - MISSING_SEARCH_FIELD
-      - INVALID_BIOSAMPLE_IDS
-      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
-      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
-      - INVALID_WGS_ACCESSIONS
-      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
-      default: UNKNOWN_ASSEMBLY_ERROR_CODE
-    v2TaxonomyLinksResponseGenericLink:
-      type: object
-      properties:
-        link_name:
-          type: string
-        link_url:
-          type: string
+        taxonomy:
+          $ref: '#/components/schemas/v2reportsTaxonomyNamesDescriptor'
+          title: Detailed taxonomic information related to the requested node.
+        query:
+          type: array
+          items:
+            type: string
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+          title: Warnings associated with this request.  Any warning associated with this request.  This is represented by a Warning object which is separately documented.
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
     v2reportsTaxonomyNamesDataReportPage:
       type: object
       properties:
@@ -1416,92 +1750,6 @@ components:
         next_page_token:
           type: string
           title: A page token.  A token that can be used in a future request as `page_token` to retrieve the next page. If this field is emtpy then there are no subsequent pages available.
-    v2TaxonomyMetadataRequest:
-      type: object
-      properties:
-        taxons:
-          type: array
-          items:
-            type: string
-        returned_content:
-          $ref: '#/components/schemas/v2TaxonomyMetadataRequestContentType'
-          title: Return complete taxonomy reports, Taxonomy IDs only, or reports without assembly and gene counts (metadata).
-        page_size:
-          type: integer
-          title: The maximum number of taxons to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
-        include_tabular_header:
-          $ref: '#/components/schemas/v2IncludeTabularHeader'
-          title: Specify when to include the table header when requesting a tabular report.
-        page_token:
-          type: string
-          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
-        table_format:
-          $ref: '#/components/schemas/v2TaxonomyMetadataRequestTableFormat'
-          title: 'Specify a predefined set of fields for the tabular report using built-in templates. Use of this parameter requires the HTTP header, `accept: text/tab-separated-values`.'
-        children:
-          type: boolean
-          title: If true, return results for child taxa.
-        ranks:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsRankType'
-    v2reportsErrorVirusErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_VIRUS_ERROR_CODE
-      default: UNKNOWN_VIRUS_ERROR_CODE
-    v2TaxonomyMetadataRequestContentType:
-      type: string
-      enum:
-      - COMPLETE
-      - TAXIDS
-      - METADATA
-      default: COMPLETE
-    v2IncludeTabularHeader:
-      type: string
-      enum:
-      - INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
-      - INCLUDE_TABULAR_HEADER_ALWAYS
-      - INCLUDE_TABULAR_HEADER_NEVER
-      default: INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
-    v2reportsErrorTaxonomyErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_TAXONOMY_ERROR_CODE
-      - INVALID_TAXONOMY_TAXON
-      default: UNKNOWN_TAXONOMY_ERROR_CODE
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/protobufAny'
-    v2OrganismQueryRequestTaxonResourceFilter:
-      type: string
-      enum:
-      - TAXON_RESOURCE_FILTER_ALL
-      - TAXON_RESOURCE_FILTER_GENOME
-      - TAXON_RESOURCE_FILTER_GENE
-      - TAXON_RESOURCE_FILTER_ORGANELLE
-      default: TAXON_RESOURCE_FILTER_ALL
-    v2reportsNameAndAuthorityNote:
-      type: object
-      properties:
-        name:
-          type: string
-          title: Name of the notation.
-        note:
-          type: string
-          title: Note text.
-        note_classifier:
-          $ref: '#/components/schemas/v2reportsNameAndAuthorityNoteClassifier'
-          title: Note classification
     v2reportsError:
       type: object
       properties:
@@ -1523,105 +1771,27 @@ components:
           type: array
           items:
             type: string
-    v2TaxonomyFilteredSubtreeResponse:
+    v2OrganismQueryRequestTaxRankFilter:
+      type: string
+      enum:
+      - species
+      - higher_taxon
+      default: species
+    v2reportsCollectionType:
+      type: string
+      enum:
+      - no_collection_type
+      - collection_culture_collection
+      - specimen_voucher
+      default: no_collection_type
+    protobufAny:
       type: object
       properties:
-        root_nodes:
-          type: array
-          items:
-            type: integer
-        edges:
-          $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdgesEntry'
-        warnings:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsWarning'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsError'
-    v2TaxonomyLinksResponse:
-      type: object
-      properties:
-        tax_id:
+        type_url:
           type: string
-        encyclopedia_of_life:
+        value:
           type: string
-        global_biodiversity_information_facility:
-          type: string
-        inaturalist:
-          type: string
-        viralzone:
-          type: string
-        wikipedia:
-          type: string
-        generic_links:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2TaxonomyLinksResponseGenericLink'
-    v2reportsTaxonomyNamesReportMatch:
-      type: object
-      properties:
-        taxonomy:
-          $ref: '#/components/schemas/v2reportsTaxonomyNamesDescriptor'
-          title: Detailed taxonomic information related to the requested node.
-        query:
-          type: array
-          items:
-            type: string
-        warning:
-          $ref: '#/components/schemas/v2reportsWarning'
-          title: Warnings associated with this request.  Any warning associated with this request.  This is represented by a Warning object which is separately documented.
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsError'
-    v2TaxonomyImageRequest:
-      type: object
-      properties:
-        taxon:
-          type: string
-        image_size:
-          $ref: '#/components/schemas/v2ImageSize'
-    v2TaxonomyFilteredSubtreeResponseEdge:
-      type: object
-      properties:
-        visible_children:
-          type: array
-          items:
-            type: integer
-        children_status:
-          $ref: '#/components/schemas/v2TaxonomyFilteredSubtreeResponseEdgeChildStatus'
-        rank:
-          $ref: '#/components/schemas/v2reportsRankType'
-        scientific_name:
-          type: string
-        curator_common_name:
-          type: string
-        assembly_count:
-          type: integer
-    v2reportsTaxonomyTypeMaterial:
-      type: object
-      properties:
-        type_strain_name:
-          type: string
-          title: The strain name of the type material.
-        type_strain_id:
-          type: string
-          title: The strain ID of the type material.
-        bio_collection_id:
-          type: string
-          title: The biocollection ID of the type material.
-        bio_collection_name:
-          type: string
-          title: The biocollection name of the type material.
-        collection_type:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsCollectionType'
-        type_class:
-          type: string
-          title: Type material classification.
+          format: byte
     v2TaxonomyNode:
       type: object
       properties:
@@ -1679,257 +1849,83 @@ components:
         genomic_moltype:
           type: string
           title: genomic molecule type (dsDNA, ssDNA, ssDNA(-), ssRNA)
-    v2TaxonomyMetadataResponse:
-      type: object
-      properties:
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsMessage'
-        taxonomy_nodes:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2TaxonomyMatch'
-    v2reportsRankType:
-      type: string
-      enum:
-      - NO_RANK
-      - SUPERKINGDOM
-      - DOMAIN
-      - REALM
-      - KINGDOM
-      - SUBKINGDOM
-      - SUPERPHYLUM
-      - SUBPHYLUM
-      - PHYLUM
-      - CLADE
-      - SUPERCLASS
-      - CLASS
-      - SUBCLASS
-      - INFRACLASS
-      - COHORT
-      - SUBCOHORT
-      - SUPERORDER
-      - ORDER
-      - SUBORDER
-      - INFRAORDER
-      - PARVORDER
-      - SUPERFAMILY
-      - FAMILY
-      - SUBFAMILY
-      - GENUS
-      - SUBGENUS
-      - SPECIES_GROUP
-      - SPECIES_SUBGROUP
-      - SPECIES
-      - SUBSPECIES
-      - TRIBE
-      - SUBTRIBE
-      - FORMA
-      - VARIETAS
-      - STRAIN
-      - SECTION
-      - SUBSECTION
-      - PATHOGROUP
-      - SUBVARIETY
-      - GENOTYPE
-      - SEROTYPE
-      - ISOLATE
-      - MORPH
-      - SERIES
-      - FORMA_SPECIALIS
-      - SEROGROUP
-      - BIOTYPE
-      - ACELLULAR_ROOT
-      - CELLULAR_ROOT
-      default: NO_RANK
-      title: Rank level
-    v2TaxonomyMetadataRequestTableFormat:
-      type: string
-      enum:
-      - SUMMARY
-      default: SUMMARY
-      title: Optional pre-defined template for processing a tabular data request
-    v2SciNameAndIds:
-      type: object
-      properties:
-        sci_name_and_ids:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2SciNameAndIdsSciNameAndId'
-    v2reportsMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/v2reportsError'
-        warning:
-          $ref: '#/components/schemas/v2reportsWarning'
-    v2reportsTaxonomyNamesDescriptor:
-      type: object
-      properties:
-        tax_id:
-          type: string
-          format: uint64
-          title: NCBI Taxonomy identifier
-        rank:
-          $ref: '#/components/schemas/v2reportsRankType'
-          title: The taxonomic rank of the taxonomic node.
-        current_scientific_name:
-          $ref: '#/components/schemas/v2reportsNameAndAuthority'
-          title: The currently accepted name chosen out of all synonyms for the taxonomic node.
-        group_name:
-          type: string
-          title: Group name for the species.
-        curator_common_name:
-          type: string
-          title: The canonical common name.
-        other_common_names:
-          type: array
-          items:
-            type: string
-        general_notes:
-          type: array
-          items:
-            type: string
-        links_from_type:
-          type: string
-          title: TBD
-        citations:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsTaxonomyNamesDescriptorCitation'
-        current_scientific_name_is_formal:
-          type: boolean
-          title: Specify if the current scientific name is considered 'formal' or not.
-    v2reportsWarningGeneWarningCode:
-      type: string
-      enum:
-      - UNKNOWN_GENE_WARNING_CODE
-      - ACCESSION_VERSION_MISMATCH
-      - REPLACED_GENE_ID
-      - DISCONTINUED_GENE_ID
-      - UNRECOGNIZED_GENE_ID
-      - UNRECOGNIZED_GENE_SYMBOL
-      - UNRECOGNIZED_ACCESSION
-      - UNRECOGNIZED_TAX_TOKEN
-      - NO_GENE_ANNOTATION_FOUND
-      - ABOVE_SPECIES_TAXON
-      default: UNKNOWN_GENE_WARNING_CODE
-    v2TaxonomyNodeCountByType:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/v2reportsCountType'
-        count:
-          type: integer
-    v2reportsErrorOrganelleErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_ORGANELLE_ERROR_CODE
-      - INVALID_ORGANELLE_TAXON
-      - NO_ORGANELLES_FOR_ACCESSION
-      default: UNKNOWN_ORGANELLE_ERROR_CODE
-    v2reportsNameAndAuthorityNoteClassifier:
-      type: string
-      enum:
-      - no_authority_classifier
-      - effective_name
-      - nomen_approbbatum
-      - ictv_accepted
-      default: no_authority_classifier
-      title: Class of authority  If the authority has any special classification, such as having been effectively and validly published or having been included in an approved list.
-    v2TaxonomyTaxIdsPage:
-      type: object
-      properties:
-        tax_ids:
-          type: array
-          items:
-            type: integer
-        next_page_token:
-          type: string
-          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
-    v2reportsCollectionType:
-      type: string
-      enum:
-      - no_collection_type
-      - collection_culture_collection
-      - specimen_voucher
-      default: no_collection_type
-    v2TaxonomyFilteredSubtreeRequest:
-      type: object
-      properties:
-        taxons:
-          type: array
-          items:
-            type: string
-        specified_limit:
-          type: boolean
-          title: Limit to specified species
-        exclude_extinct:
-          type: boolean
-          title: Limit to species that are not extinct
-        levels:
-          type: integer
-          title: Number of taxonomic levels to return with a valid range of 1-5. Values above 5 will return 5 levels and if level is 0 or not specified, 1 level will be returned.
-        rank_limits:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsRankType'
-        include_incertae_sedis:
-          type: boolean
-          title: Include nodes with ranks not in 'rank_limits' if their names meet criteria for incertae sedis (of unknown origin).
-    v2reportsCountType:
-      type: string
-      enum:
-      - COUNT_TYPE_UNSPECIFIED
-      - COUNT_TYPE_ASSEMBLY
-      - COUNT_TYPE_GENE
-      - COUNT_TYPE_tRNA
-      - COUNT_TYPE_rRNA
-      - COUNT_TYPE_snRNA
-      - COUNT_TYPE_scRNA
-      - COUNT_TYPE_snoRNA
-      - COUNT_TYPE_PROTEIN_CODING
-      - COUNT_TYPE_PSEUDO
-      - COUNT_TYPE_TRANSPOSON
-      - COUNT_TYPE_miscRNA
-      - COUNT_TYPE_ncRNA
-      - COUNT_TYPE_BIOLOGICAL_REGION
-      - COUNT_TYPE_OTHER
-      - COUNT_TYPE_ORGANELLE
-      default: COUNT_TYPE_UNSPECIFIED
-    v2reportsNameAndAuthorityPublication:
+    v2reportsNameAndAuthority:
       type: object
       properties:
         name:
           type: string
-          title: Name of the publication (article, book, etc.).
-        citation:
+          title: This could be the scientific name, common name, synonym, etc. depending on the context.
+        authority:
           type: string
-          title: Citation to the publication.
-        pmid:
+          title: The authority that this name was created by. The authority is typically represented by the author(s) name and the year in which it was published.
+        type_strains:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsTaxonomyTypeMaterial'
+        curator_synonym:
           type: string
-          format: uint64
-    v2TaxonomyLinksRequest:
+          title: The primary synonym of the scientific name.
+        homotypic_synonyms:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthority'
+        heterotypic_synonyms:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthority'
+        other_synonyms:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthority'
+        informal_names:
+          type: array
+          items:
+            type: string
+        basionym:
+          $ref: '#/components/schemas/v2reportsNameAndAuthority'
+          title: The originally described name, no longer in use. Attached to the type material and species description.
+        publications:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthorityPublication'
+        notes:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsNameAndAuthorityNote'
+        formal:
+          type: boolean
+          title: Indicates whether the name is formal (i.e. compliant)
+    v2reportsClassification:
       type: object
       properties:
-        taxon:
-          type: string
-    protobufAny:
-      type: object
-      properties:
-        type_url:
-          type: string
-        value:
-          type: string
-          format: byte
-    v2reportsWarningReplacedId:
-      type: object
-      properties:
-        requested:
-          type: string
-        returned:
-          type: string
+        superkingdom:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        kingdom:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        phylum:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        class:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        order:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        family:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        genus:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        species:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        domain:
+          $ref: '#/components/schemas/v2reportsTaxData'
+          title: 'NOTE: These are out of order'
+        realm:
+          $ref: '#/components/schemas/v2reportsTaxData'
+        acellular_root:
+          $ref: '#/components/schemas/v2reportsTaxData'
+    v2reportsErrorVirusErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_VIRUS_ERROR_CODE
+      default: UNKNOWN_VIRUS_ERROR_CODE
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

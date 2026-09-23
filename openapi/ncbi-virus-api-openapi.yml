@@ -1,12 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NCBI Datasets BioSample Virus API
+  title: NCBI Datasets Virus API
   version: v2
   description: '### NCBI Datasets is a resource that lets you easily gather data from NCBI.
 
-    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.
-
-    '
+    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.'
 servers:
 - url: https://api.ncbi.nlm.nih.gov/datasets/v2
 security:
@@ -15,7 +13,7 @@ tags:
 - name: Virus
   description: '#### Options to download virus genome data, including the associated sequence and metadata.
 
-    These virus services allow you to get virus genome metadata as a data report or download genome and protein sequence, and metadata, as a virus data package, for virus GenBank genomes. '
+    These virus services allow you to get virus genome metadata as a data report or download genome and protein sequence, and metadata, as a virus data package, for virus GenBank genomes.'
 paths:
   /virus/taxon/{taxon}/genome:
     get:
@@ -2391,6 +2389,20 @@ paths:
           default: ncbi_dataset.zip
 components:
   schemas:
+    v2reportsMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/v2reportsError'
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+    v2reportsOrientation:
+      type: string
+      enum:
+      - none
+      - plus
+      - minus
+      default: none
     v2reportsInfraspecificNames:
       type: object
       properties:
@@ -2423,162 +2435,6 @@ components:
         range:
           $ref: '#/components/schemas/v2reportsRange'
           title: range on the protein
-    v2reportsVirusDataReportPage:
-      type: object
-      properties:
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsVirusAssembly'
-        total_count:
-          type: integer
-          title: The total count of available assemblies (ignoring the page_size parameter).
-        next_page_token:
-          type: string
-          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
-    v2reportsPurposeOfSampling:
-      type: string
-      enum:
-      - PURPOSE_OF_SAMPLING_UNKNOWN
-      - PURPOSE_OF_SAMPLING_BASELINE_SURVEILLANCE
-      default: PURPOSE_OF_SAMPLING_UNKNOWN
-    v2DownloadSummaryDehydrated:
-      type: object
-      properties:
-        estimated_file_size_mb:
-          type: integer
-        url:
-          type: string
-        cli_download_command_line:
-          type: string
-        cli_rehydrate_command_line:
-          type: string
-    v2reportsWarning:
-      type: object
-      properties:
-        gene_warning_code:
-          $ref: '#/components/schemas/v2reportsWarningGeneWarningCode'
-        reason:
-          type: string
-        message:
-          type: string
-        replaced_id:
-          $ref: '#/components/schemas/v2reportsWarningReplacedId'
-        unrecognized_identifier:
-          type: string
-    v2reportsOrientation:
-      type: string
-      enum:
-      - none
-      - plus
-      - minus
-      default: none
-    v2reportsVirusAssemblyCollectionLocation:
-      type: object
-      properties:
-        geographic_location:
-          type: string
-          title: Country of virus specimen collection
-        geographic_region:
-          type: string
-          title: Region of virus specimen collection
-        usa_state:
-          type: string
-          title: Two letter abbreviation of the state of the virus specifime collection (if United States)
-    v2reportsWarningReplacedId:
-      type: object
-      properties:
-        requested:
-          type: string
-        returned:
-          type: string
-    v2DownloadSummaryFileSummary:
-      type: object
-      properties:
-        file_count:
-          type: integer
-        size_mb:
-          type: number
-          format: float
-    v2VirusAvailability:
-      type: object
-      properties:
-        valid_accessions:
-          type: array
-          items:
-            type: string
-        invalid_accessions:
-          type: array
-          items:
-            type: string
-        message:
-          type: string
-    v2reportsErrorGeneErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_GENE_ERROR_CODE
-      - INCOMPLETE_LOOKUP_SYMBOL
-      - INVALID_TAXON_GENE_ARGUMENT
-      default: UNKNOWN_GENE_ERROR_CODE
-    v2reportsVirusAssemblySubmitterInfo:
-      type: object
-      properties:
-        names:
-          type: array
-          items:
-            type: string
-        affiliation:
-          type: string
-          title: The submitter's organization and/or institution
-        country:
-          type: string
-          title: The country representing the submitter's affilation
-    v2reportsOrganism:
-      type: object
-      properties:
-        tax_id:
-          type: integer
-          title: NCBI Taxonomy identifier
-        sci_name:
-          type: string
-          title: Scientific name
-        organism_name:
-          type: string
-          title: Scientific name
-        common_name:
-          type: string
-          title: Common name
-        lineage:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsLineageOrganism'
-        strain:
-          type: string
-        pangolin_classification:
-          type: string
-        infraspecific_names:
-          $ref: '#/components/schemas/v2reportsInfraspecificNames'
-    v2TableFormat:
-      type: string
-      enum:
-      - tsv
-      - csv
-      - jsonl
-      default: tsv
-    v2reportsVirusGene:
-      type: object
-      properties:
-        name:
-          type: string
-        gene_id:
-          type: integer
-        nucleotide:
-          $ref: '#/components/schemas/v2reportsSeqRangeSetFasta'
-          title: The interval on the genomic nucleotide record of the CDS feature.
-        cds:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsVirusPeptide'
     v2DownloadSummaryAvailableFiles:
       type: object
       properties:
@@ -2600,6 +2456,32 @@ components:
           $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
         annotation_report:
           $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+    v2VirusAvailability:
+      type: object
+      properties:
+        valid_accessions:
+          type: array
+          items:
+            type: string
+        invalid_accessions:
+          type: array
+          items:
+            type: string
+        message:
+          type: string
+    v2reportsWarning:
+      type: object
+      properties:
+        gene_warning_code:
+          $ref: '#/components/schemas/v2reportsWarningGeneWarningCode'
+        reason:
+          type: string
+        message:
+          type: string
+        replaced_id:
+          $ref: '#/components/schemas/v2reportsWarningReplacedId'
+        unrecognized_identifier:
+          type: string
     v2VirusDatasetRequest:
       type: object
       properties:
@@ -2659,73 +2541,6 @@ components:
         use_psg:
           type: boolean
           title: Experimental approach to retrieving sequence data.
-    v2reportsVirusAssemblyCompleteness:
-      type: string
-      enum:
-      - UNKNOWN
-      - COMPLETE
-      - PARTIAL
-      default: UNKNOWN
-    v2VirusDatasetReportType:
-      type: string
-      enum:
-      - DATASET_REPORT
-      - ANNOTATION
-      - BIOSAMPLE_REPORT
-      default: DATASET_REPORT
-    v2DownloadSummary:
-      type: object
-      properties:
-        record_count:
-          type: integer
-          title: The number of records for the requested filter.
-        assembly_count:
-          type: integer
-          title: For backwards compatability with old VirusDatasetSummary
-        resource_updated_on:
-          type: string
-          format: date-time
-          title: The latest date on which the resource was updated.
-        hydrated:
-          $ref: '#/components/schemas/v2DownloadSummaryHydrated'
-        dehydrated:
-          $ref: '#/components/schemas/v2DownloadSummaryDehydrated'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsError'
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsMessage'
-        available_files:
-          $ref: '#/components/schemas/v2DownloadSummaryAvailableFiles'
-    v2VirusDataReportRequestContentType:
-      type: string
-      enum:
-      - COMPLETE
-      - ACCESSIONS_ONLY
-      default: COMPLETE
-      title: Specify a specific group of values to be returned, currently either all fields or accessions only
-    v2reportsErrorAssemblyErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_ASSEMBLY_ERROR_CODE
-      - INVALID_BIOPROJECT_IDS
-      - NO_ASSEMBLIES_FOR_BIOPROJECTS
-      - INVALID_TAXON
-      - MISSING_SEARCH_FIELD
-      - INVALID_BIOSAMPLE_IDS
-      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
-      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
-      - INVALID_WGS_ACCESSIONS
-      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
-      default: UNKNOWN_ASSEMBLY_ERROR_CODE
-    v2TabularOutput:
-      type: object
-      properties:
-        data:
-          type: string
     v2ViralSequenceType:
       type: string
       enum:
@@ -2734,168 +2549,6 @@ components:
       - PROTEIN
       - NONE
       default: GENOME
-    v2reportsRange:
-      type: object
-      properties:
-        begin:
-          type: string
-          format: uint64
-          title: Sequence start position
-        end:
-          type: string
-          format: uint64
-          title: Sequence stop position
-        orientation:
-          $ref: '#/components/schemas/v2reportsOrientation'
-          title: Direction relative to the genome
-        order:
-          type: integer
-          title: The position of this sequence in a group of sequences
-        ribosomal_slippage:
-          type: integer
-          title: When ribosomal slippage is desired, fill out slippage amount between this and previous range.
-    v2reportsErrorVirusErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_VIRUS_ERROR_CODE
-      default: UNKNOWN_VIRUS_ERROR_CODE
-    v2Sars2ProteinDatasetRequest:
-      type: object
-      properties:
-        proteins:
-          type: array
-          items:
-            type: string
-        refseq_only:
-          type: boolean
-          title: If true, limit results to RefSeq genomes.
-        annotated_only:
-          type: boolean
-          title: If true, limit results to annotated genomes.
-        released_since:
-          type: string
-          format: date-time
-        updated_since:
-          type: string
-          format: date-time
-        host:
-          type: string
-          title: Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name).
-        pangolin_classification:
-          type: string
-          title: Limit to SARS-CoV-2 genomes with the specified Pango lineage.
-        geo_location:
-          type: string
-          title: Limit to genomes collected from the specififed geographic location.
-        usa_state:
-          type: string
-          title: Limit to genomes collected from the specified U.S. state (two-letter abbreviation).
-        complete_only:
-          type: boolean
-          title: Limit to genomes designated as complete, as defined by the submitter.
-        table_fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2VirusTableField'
-        include_sequence:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2ViralSequenceType'
-        aux_report:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2VirusDatasetReportType'
-        format:
-          $ref: '#/components/schemas/v2TableFormat'
-          title: Specify output format
-    v2reportsErrorTaxonomyErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_TAXONOMY_ERROR_CODE
-      - INVALID_TAXONOMY_TAXON
-      default: UNKNOWN_TAXONOMY_ERROR_CODE
-    v2reportsVirusPeptideUniProtId:
-      type: object
-      properties:
-        id:
-          type: string
-          title: UniProt ID
-        name:
-          type: string
-          title: UniProt name
-    v2reportsVirusPeptideViralPeptideCompleteness:
-      type: string
-      enum:
-      - UNKNOWN
-      - COMPLETE
-      - PARTIAL
-      default: UNKNOWN
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/protobufAny'
-    v2reportsError:
-      type: object
-      properties:
-        assembly_error_code:
-          $ref: '#/components/schemas/v2reportsErrorAssemblyErrorCode'
-        gene_error_code:
-          $ref: '#/components/schemas/v2reportsErrorGeneErrorCode'
-        organelle_error_code:
-          $ref: '#/components/schemas/v2reportsErrorOrganelleErrorCode'
-        virus_error_code:
-          $ref: '#/components/schemas/v2reportsErrorVirusErrorCode'
-        taxonomy_error_code:
-          $ref: '#/components/schemas/v2reportsErrorTaxonomyErrorCode'
-        reason:
-          type: string
-        message:
-          type: string
-        invalid_identifiers:
-          type: array
-          items:
-            type: string
-    v2VirusDataReportRequest:
-      type: object
-      properties:
-        filter:
-          $ref: '#/components/schemas/v2VirusDatasetFilter'
-          title: All the supported filters for virus requests
-        returned_content:
-          $ref: '#/components/schemas/v2VirusDataReportRequestContentType'
-          title: Return complete virus reports or nucleotide accessions only
-        table_fields:
-          type: array
-          items:
-            type: string
-        table_format:
-          type: string
-          title: Optional pre-defined template for processing a tabular data request
-        page_size:
-          type: integer
-          title: The maximum number of virus data reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
-        page_token:
-          type: string
-          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
-    v2reportsVirusAnnotationReport:
-      type: object
-      properties:
-        accession:
-          type: string
-        isolate_name:
-          type: string
-        genes:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsVirusGene'
     v2reportsVirusAssembly:
       type: object
       properties:
@@ -2979,6 +2632,261 @@ components:
         segment:
           type: string
           title: The virus segment
+    v2reportsIsolate:
+      type: object
+      properties:
+        name:
+          type: string
+          title: BioSample harmonized attribute names https://www.ncbi.nlm.nih.gov/biosample/docs/attributes/
+        source:
+          type: string
+          title: Source material from which the viral specimen was isolated
+        collection_date:
+          type: string
+          title: The collection date for the sample from which the viral nucleotide sequence was derived
+    v2reportsVirusAssemblySubmitterInfo:
+      type: object
+      properties:
+        names:
+          type: array
+          items:
+            type: string
+        affiliation:
+          type: string
+          title: The submitter's organization and/or institution
+        country:
+          type: string
+          title: The country representing the submitter's affilation
+    v2reportsRange:
+      type: object
+      properties:
+        begin:
+          type: string
+          format: uint64
+          title: Sequence start position
+        end:
+          type: string
+          format: uint64
+          title: Sequence stop position
+        orientation:
+          $ref: '#/components/schemas/v2reportsOrientation'
+          title: Direction relative to the genome
+        order:
+          type: integer
+          title: The position of this sequence in a group of sequences
+        ribosomal_slippage:
+          type: integer
+          title: When ribosomal slippage is desired, fill out slippage amount between this and previous range.
+    v2reportsVirusPeptideUniProtId:
+      type: object
+      properties:
+        id:
+          type: string
+          title: UniProt ID
+        name:
+          type: string
+          title: UniProt name
+    v2VirusTableField:
+      type: string
+      enum:
+      - unspecified
+      - nucleotide_accession
+      - species_tax_id
+      - species_name
+      - genus
+      - family
+      - nucleotide_length
+      - isolate_name
+      - sequence_type
+      - nuc_completeness
+      - geo_location
+      - us_state
+      - host_name
+      - host_tax_id
+      - collection_date
+      - bioproject
+      - biosample
+      - polyprotein_name
+      - protein_name
+      - protein_accession
+      - protein_synonym
+      - cds_span
+      default: unspecified
+    v2VirusDataReportRequest:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2VirusDatasetFilter'
+          title: All the supported filters for virus requests
+        returned_content:
+          $ref: '#/components/schemas/v2VirusDataReportRequestContentType'
+          title: Return complete virus reports or nucleotide accessions only
+        table_fields:
+          type: array
+          items:
+            type: string
+        table_format:
+          type: string
+          title: Optional pre-defined template for processing a tabular data request
+        page_size:
+          type: integer
+          title: The maximum number of virus data reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        page_token:
+          type: string
+          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+    v2reportsLineageOrganism:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        name:
+          type: string
+          title: Scientific name
+    v2reportsErrorGeneErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_ERROR_CODE
+      - INCOMPLETE_LOOKUP_SYMBOL
+      - INVALID_TAXON_GENE_ARGUMENT
+      default: UNKNOWN_GENE_ERROR_CODE
+    v2reportsOrganism:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        sci_name:
+          type: string
+          title: Scientific name
+        organism_name:
+          type: string
+          title: Scientific name
+        common_name:
+          type: string
+          title: Common name
+        lineage:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsLineageOrganism'
+        strain:
+          type: string
+        pangolin_classification:
+          type: string
+        infraspecific_names:
+          $ref: '#/components/schemas/v2reportsInfraspecificNames'
+    v2TableFormat:
+      type: string
+      enum:
+      - tsv
+      - csv
+      - jsonl
+      default: tsv
+    v2reportsVirusAssemblyCompleteness:
+      type: string
+      enum:
+      - UNKNOWN
+      - COMPLETE
+      - PARTIAL
+      default: UNKNOWN
+    v2VirusDataReportRequestContentType:
+      type: string
+      enum:
+      - COMPLETE
+      - ACCESSIONS_ONLY
+      default: COMPLETE
+      title: Specify a specific group of values to be returned, currently either all fields or accessions only
+    v2reportsSeqRangeSetFasta:
+      type: object
+      properties:
+        seq_id:
+          type: string
+          title: Seq_id may include location info in addition to a sequence accession
+        accession_version:
+          type: string
+          title: Accession and version of the viral nucleotide sequence
+        title:
+          type: string
+        sequence_hash:
+          type: string
+          title: Unique identifier for identical sequences
+        range:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsRange'
+    v2Sars2ProteinDatasetRequest:
+      type: object
+      properties:
+        proteins:
+          type: array
+          items:
+            type: string
+        refseq_only:
+          type: boolean
+          title: If true, limit results to RefSeq genomes.
+        annotated_only:
+          type: boolean
+          title: If true, limit results to annotated genomes.
+        released_since:
+          type: string
+          format: date-time
+        updated_since:
+          type: string
+          format: date-time
+        host:
+          type: string
+          title: Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name).
+        pangolin_classification:
+          type: string
+          title: Limit to SARS-CoV-2 genomes with the specified Pango lineage.
+        geo_location:
+          type: string
+          title: Limit to genomes collected from the specififed geographic location.
+        usa_state:
+          type: string
+          title: Limit to genomes collected from the specified U.S. state (two-letter abbreviation).
+        complete_only:
+          type: boolean
+          title: Limit to genomes designated as complete, as defined by the submitter.
+        table_fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2VirusTableField'
+        include_sequence:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2ViralSequenceType'
+        aux_report:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2VirusDatasetReportType'
+        format:
+          $ref: '#/components/schemas/v2TableFormat'
+          title: Specify output format
+    v2DownloadSummaryDehydrated:
+      type: object
+      properties:
+        estimated_file_size_mb:
+          type: integer
+        url:
+          type: string
+        cli_download_command_line:
+          type: string
+        cli_rehydrate_command_line:
+          type: string
+    v2reportsVirusDataReportPage:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsVirusAssembly'
+        total_count:
+          type: integer
+          title: The total count of available assemblies (ignoring the page_size parameter).
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
     v2reportsVirusPeptide:
       type: object
       properties:
@@ -3016,104 +2924,20 @@ components:
         protein_completeness:
           $ref: '#/components/schemas/v2reportsVirusPeptideViralPeptideCompleteness'
           title: Protein completeness
-    v2DownloadSummaryHydrated:
+    v2reportsWarningReplacedId:
       type: object
       properties:
-        estimated_file_size_mb:
-          type: integer
-        url:
+        requested:
           type: string
-        cli_download_command_line:
+        returned:
           type: string
-    v2VirusAnnotationFilter:
-      type: object
-      properties:
-        accessions:
-          type: array
-          items:
-            type: string
-        taxon:
-          type: string
-          title: NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank
-        taxons:
-          type: array
-          items:
-            type: string
-        refseq_only:
-          type: boolean
-          title: If true, limit to RefSeq genomes.
-        annotated_only:
-          type: boolean
-          title: If true, limit to annotated genomes.
-        released_since:
-          type: string
-          format: date-time
-        updated_since:
-          type: string
-          format: date-time
-        host:
-          type: string
-          title: Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name).
-        pangolin_classification:
-          type: string
-          title: Limit to SARS-CoV-2 genomes from the specified Pango lineage.
-        geo_location:
-          type: string
-          title: Limit to genomes collected from the specififed geographic location.
-        usa_state:
-          type: string
-          title: Limit to genomes collected from the specified U.S. state (two-letter abbreviation).
-        complete_only:
-          type: boolean
-          title: Limit to genomes designated as complete, as defined by the submitter.
-    v2reportsIsolate:
-      type: object
-      properties:
-        name:
-          type: string
-          title: BioSample harmonized attribute names https://www.ncbi.nlm.nih.gov/biosample/docs/attributes/
-        source:
-          type: string
-          title: Source material from which the viral specimen was isolated
-        collection_date:
-          type: string
-          title: The collection date for the sample from which the viral nucleotide sequence was derived
-    v2reportsLineageOrganism:
-      type: object
-      properties:
-        tax_id:
-          type: integer
-          title: NCBI Taxonomy identifier
-        name:
-          type: string
-          title: Scientific name
-    v2reportsVirusAnnotationReportPage:
-      type: object
-      properties:
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsVirusAnnotationReport'
-        total_count:
-          type: integer
-          title: The total count of available assemblies (ignoring the page_size parameter).
-        next_page_token:
-          type: string
-          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
-    v2reportsMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/v2reportsError'
-        warning:
-          $ref: '#/components/schemas/v2reportsWarning'
-    v2VirusAvailabilityRequest:
-      type: object
-      properties:
-        accessions:
-          type: array
-          items:
-            type: string
+    v2VirusDatasetReportType:
+      type: string
+      enum:
+      - DATASET_REPORT
+      - ANNOTATION
+      - BIOSAMPLE_REPORT
+      default: DATASET_REPORT
     v2reportsWarningGeneWarningCode:
       type: string
       enum:
@@ -3128,6 +2952,75 @@ components:
       - NO_GENE_ANNOTATION_FOUND
       - ABOVE_SPECIES_TAXON
       default: UNKNOWN_GENE_WARNING_CODE
+    v2reportsErrorTaxonomyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_TAXONOMY_ERROR_CODE
+      - INVALID_TAXONOMY_TAXON
+      default: UNKNOWN_TAXONOMY_ERROR_CODE
+    v2reportsVirusGene:
+      type: object
+      properties:
+        name:
+          type: string
+        gene_id:
+          type: integer
+        nucleotide:
+          $ref: '#/components/schemas/v2reportsSeqRangeSetFasta'
+          title: The interval on the genomic nucleotide record of the CDS feature.
+        cds:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsVirusPeptide'
+    v2VirusAnnotationReportRequest:
+      type: object
+      properties:
+        filter:
+          $ref: '#/components/schemas/v2VirusAnnotationFilter'
+        table_fields:
+          type: array
+          items:
+            type: string
+        table_format:
+          type: string
+          title: Optional pre-defined template for processing a tabular data request
+        page_size:
+          type: integer
+          title: The maximum number of virus data reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        page_token:
+          type: string
+          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/protobufAny'
+    v2TabularOutput:
+      type: object
+      properties:
+        data:
+          type: string
+    v2reportsErrorAssemblyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ASSEMBLY_ERROR_CODE
+      - INVALID_BIOPROJECT_IDS
+      - NO_ASSEMBLIES_FOR_BIOPROJECTS
+      - INVALID_TAXON
+      - MISSING_SEARCH_FIELD
+      - INVALID_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
+      - INVALID_WGS_ACCESSIONS
+      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
+      default: UNKNOWN_ASSEMBLY_ERROR_CODE
     v2reportsErrorOrganelleErrorCode:
       type: string
       enum:
@@ -3135,50 +3028,113 @@ components:
       - INVALID_ORGANELLE_TAXON
       - NO_ORGANELLES_FOR_ACCESSION
       default: UNKNOWN_ORGANELLE_ERROR_CODE
-    v2VirusTableField:
-      type: string
-      enum:
-      - unspecified
-      - nucleotide_accession
-      - species_tax_id
-      - species_name
-      - genus
-      - family
-      - nucleotide_length
-      - isolate_name
-      - sequence_type
-      - nuc_completeness
-      - geo_location
-      - us_state
-      - host_name
-      - host_tax_id
-      - collection_date
-      - bioproject
-      - biosample
-      - polyprotein_name
-      - protein_name
-      - protein_accession
-      - protein_synonym
-      - cds_span
-      default: unspecified
-    v2reportsSeqRangeSetFasta:
+    v2reportsVirusAnnotationReport:
       type: object
       properties:
-        seq_id:
+        accession:
           type: string
-          title: Seq_id may include location info in addition to a sequence accession
-        accession_version:
+        isolate_name:
           type: string
-          title: Accession and version of the viral nucleotide sequence
-        title:
-          type: string
-        sequence_hash:
-          type: string
-          title: Unique identifier for identical sequences
-        range:
+        genes:
           type: array
           items:
-            $ref: '#/components/schemas/v2reportsRange'
+            $ref: '#/components/schemas/v2reportsVirusGene'
+    v2DownloadSummaryHydrated:
+      type: object
+      properties:
+        estimated_file_size_mb:
+          type: integer
+        url:
+          type: string
+        cli_download_command_line:
+          type: string
+    v2reportsPurposeOfSampling:
+      type: string
+      enum:
+      - PURPOSE_OF_SAMPLING_UNKNOWN
+      - PURPOSE_OF_SAMPLING_BASELINE_SURVEILLANCE
+      default: PURPOSE_OF_SAMPLING_UNKNOWN
+    v2DownloadSummaryFileSummary:
+      type: object
+      properties:
+        file_count:
+          type: integer
+        size_mb:
+          type: number
+          format: float
+    v2DownloadSummary:
+      type: object
+      properties:
+        record_count:
+          type: integer
+          title: The number of records for the requested filter.
+        assembly_count:
+          type: integer
+          title: For backwards compatability with old VirusDatasetSummary
+        resource_updated_on:
+          type: string
+          format: date-time
+          title: The latest date on which the resource was updated.
+        hydrated:
+          $ref: '#/components/schemas/v2DownloadSummaryHydrated'
+        dehydrated:
+          $ref: '#/components/schemas/v2DownloadSummaryDehydrated'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+        available_files:
+          $ref: '#/components/schemas/v2DownloadSummaryAvailableFiles'
+    v2reportsVirusAssemblyCollectionLocation:
+      type: object
+      properties:
+        geographic_location:
+          type: string
+          title: Country of virus specimen collection
+        geographic_region:
+          type: string
+          title: Region of virus specimen collection
+        usa_state:
+          type: string
+          title: Two letter abbreviation of the state of the virus specifime collection (if United States)
+    v2reportsVirusAnnotationReportPage:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsVirusAnnotationReport'
+        total_count:
+          type: integer
+          title: The total count of available assemblies (ignoring the page_size parameter).
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    v2reportsError:
+      type: object
+      properties:
+        assembly_error_code:
+          $ref: '#/components/schemas/v2reportsErrorAssemblyErrorCode'
+        gene_error_code:
+          $ref: '#/components/schemas/v2reportsErrorGeneErrorCode'
+        organelle_error_code:
+          $ref: '#/components/schemas/v2reportsErrorOrganelleErrorCode'
+        virus_error_code:
+          $ref: '#/components/schemas/v2reportsErrorVirusErrorCode'
+        taxonomy_error_code:
+          $ref: '#/components/schemas/v2reportsErrorTaxonomyErrorCode'
+        reason:
+          type: string
+        message:
+          type: string
+        invalid_identifiers:
+          type: array
+          items:
+            type: string
     protobufAny:
       type: object
       properties:
@@ -3187,6 +3143,13 @@ components:
         value:
           type: string
           format: byte
+    v2VirusAvailabilityRequest:
+      type: object
+      properties:
+        accessions:
+          type: array
+          items:
+            type: string
     v2VirusDatasetFilter:
       type: object
       properties:
@@ -3228,24 +3191,59 @@ components:
         complete_only:
           type: boolean
           title: Limit to genomes designated as complete, as defined by the submitter.
-    v2VirusAnnotationReportRequest:
+    v2VirusAnnotationFilter:
       type: object
       properties:
-        filter:
-          $ref: '#/components/schemas/v2VirusAnnotationFilter'
-        table_fields:
+        accessions:
           type: array
           items:
             type: string
-        table_format:
+        taxon:
           type: string
-          title: Optional pre-defined template for processing a tabular data request
-        page_size:
-          type: integer
-          title: The maximum number of virus data reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
-        page_token:
+          title: NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank
+        taxons:
+          type: array
+          items:
+            type: string
+        refseq_only:
+          type: boolean
+          title: If true, limit to RefSeq genomes.
+        annotated_only:
+          type: boolean
+          title: If true, limit to annotated genomes.
+        released_since:
           type: string
-          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+          format: date-time
+        updated_since:
+          type: string
+          format: date-time
+        host:
+          type: string
+          title: Limit to genomes isolated from the specified host species (NCBI Taxonomy ID, common or scientific name).
+        pangolin_classification:
+          type: string
+          title: Limit to SARS-CoV-2 genomes from the specified Pango lineage.
+        geo_location:
+          type: string
+          title: Limit to genomes collected from the specififed geographic location.
+        usa_state:
+          type: string
+          title: Limit to genomes collected from the specified U.S. state (two-letter abbreviation).
+        complete_only:
+          type: boolean
+          title: Limit to genomes designated as complete, as defined by the submitter.
+    v2reportsVirusPeptideViralPeptideCompleteness:
+      type: string
+      enum:
+      - UNKNOWN
+      - COMPLETE
+      - PARTIAL
+      default: UNKNOWN
+    v2reportsErrorVirusErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_VIRUS_ERROR_CODE
+      default: UNKNOWN_VIRUS_ERROR_CODE
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

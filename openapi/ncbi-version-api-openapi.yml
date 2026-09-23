@@ -1,12 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NCBI Datasets BioSample Version API
+  title: NCBI Datasets Version API
   version: v2
   description: '### NCBI Datasets is a resource that lets you easily gather data from NCBI.
 
-    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.
-
-    '
+    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.'
 servers:
 - url: https://api.ncbi.nlm.nih.gov/datasets/v2
 security:
@@ -15,7 +13,7 @@ tags:
 - name: Version
   description: '#### Retrieve the current version of all NCBI Datasets services.
 
-    NCBI Datasets services follow the [Semantic Versioning 2.0.0 Schema](https://semver.org/spec/v2.0.0.html). '
+    NCBI Datasets services follow the Semantic Versioning 2.0.0 Schema.'
 paths:
   /version:
     get:
@@ -39,17 +37,6 @@ paths:
                 $ref: '#/components/schemas/v2VersionReply'
 components:
   schemas:
-    v2VersionReply:
-      type: object
-      properties:
-        version:
-          type: string
-        major_ver:
-          type: integer
-        minor_ver:
-          type: integer
-        patch_ver:
-          type: integer
     protobufAny:
       type: object
       properties:
@@ -70,6 +57,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/protobufAny'
+    v2VersionReply:
+      type: object
+      properties:
+        version:
+          type: string
+        major_ver:
+          type: integer
+        minor_ver:
+          type: integer
+        patch_ver:
+          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

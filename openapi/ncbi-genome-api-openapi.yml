@@ -1,12 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NCBI Datasets BioSample Genome API
+  title: NCBI Datasets Genome API
   version: v2
   description: '### NCBI Datasets is a resource that lets you easily gather data from NCBI.
 
-    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.
-
-    '
+    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.'
 servers:
 - url: https://api.ncbi.nlm.nih.gov/datasets/v2
 security:
@@ -15,13 +13,11 @@ tags:
 - name: Genome
   description: '#### Options to download assembled genome data, including the associated sequence, annotation and metadata.
 
-    These genome services allow you to get genome metadata as a data report or download genome, transcript and protein sequence, annotation and metadata as a genome data package, for assembled genomes.
-
-    '
+    These genome services allow you to get genome metadata as a data report or download genome, transcript and protein sequence, annotation and metadata as a genome data package, for assembled genomes.'
 paths:
   /genome/accession/{accessions}/download_summary:
     get:
-      summary: Get a download summary (preview) of a genome data package by genome assembly accession
+      summary: Get a download summary (preview) of a genome data package by genome assembly…
       description: Get a download summary (preview) of a genome data package, including counts and file sizes, in JSON format.
       tags:
       - Genome
@@ -97,7 +93,7 @@ paths:
             summary: Include genomic and protein sequences, a gff3 annotation file, and the sequence report
   /genome/download_summary:
     post:
-      summary: Get a download summary (preview) of a genome data package by genome assembly accession
+      summary: Get a download summary (preview) of a genome data package by genome assembly…
       description: Get a downlaod summary (preview) of a genome data package, including counts and file sizes, in JSON format.
       tags:
       - Genome
@@ -3077,7 +3073,7 @@ paths:
                   accession: GCF_000001635.27
   /genome/accession/{accession}/annotation_report/download_summary:
     get:
-      summary: Get a download summary (preview) of a genome annotation data package by genome assembly accession
+      summary: Get a download summary (preview) of a genome annotation data package by genome…
       description: Get a downlaod summary (preview) of a genome annotation data package, including counts and file sizes, in JSON format.
       tags:
       - Genome
@@ -3189,7 +3185,7 @@ paths:
             $ref: '#/components/schemas/v2GenomeAnnotationRequestAnnotationType'
   /genome/annotation_report/download_summary:
     post:
-      summary: Get a download summary (preview) of a genome annotation data package by genome assembly accession
+      summary: Get a download summary (preview) of a genome annotation data package by genome…
       description: Get a download summary (preview) of a genome annotation data package, including counts and file sizes, by genome assembly accession, in JSON format.
       tags:
       - Genome
@@ -3282,47 +3278,81 @@ paths:
                   accession: GCF_000001405.40
 components:
   schemas:
-    v2reportsInfraspecificNames:
+    v2AssemblyDatasetRequestResolution:
+      type: string
+      enum:
+      - FULLY_HYDRATED
+      - DATA_REPORT_ONLY
+      default: FULLY_HYDRATED
+    v2reportsFeatureCounts:
       type: object
       properties:
-        breed:
-          type: string
-          title: A homogenous group of animals within a domesticated species
-        cultivar:
-          type: string
-          title: A variety of plant within a species produced and maintained by cultivation
-        ecotype:
-          type: string
-          title: A population or subspecies occupying a distinct habitat
-        isolate:
-          type: string
-          title: The individual isolate from which the sequences in the genome assembly were derived
-        sex:
-          type: string
-          title: Physical sex of sampled organism
-        strain:
-          type: string
-          title: A genetic variant, subtype or culture within a species
-    v2DownloadSummaryDehydrated:
+        gene_counts:
+          $ref: '#/components/schemas/v2reportsGeneCounts'
+          title: Counts of gene types
+    v2reportsAverageNucleotideIdentityTaxonomyCheckStatus:
+      type: string
+      enum:
+      - TAXONOMY_CHECK_STATUS_UNKNOWN
+      - OK
+      - Failed
+      - Inconclusive
+      default: TAXONOMY_CHECK_STATUS_UNKNOWN
+    v2reportsProtein:
       type: object
       properties:
-        estimated_file_size_mb:
+        accession_version:
+          type: string
+          title: RefSeq protein accession with version
+        name:
+          type: string
+          title: Protein name
+        length:
           type: integer
-        url:
+          title: Protein length in amino acids
+        isoform_name:
           type: string
-        cli_download_command_line:
+          title: Protein isoform name
+        ensembl_protein:
           type: string
-        cli_rehydrate_command_line:
-          type: string
-    v2AssemblyCheckMHistogramReply:
-      type: object
-      properties:
-        species_taxid:
-          type: integer
-        histogram_intervals:
+          title: Ensembl protein accession with version
+        mature_peptides:
           type: array
           items:
-            $ref: '#/components/schemas/v2AssemblyCheckMHistogramReplyHistogramInterval'
+            $ref: '#/components/schemas/v2reportsMaturePeptide'
+    v2AssemblyLinksReplyAssemblyLink:
+      type: object
+      properties:
+        accession:
+          type: string
+          title: The matching assembly accession
+        assembly_link_type:
+          $ref: '#/components/schemas/v2AssemblyLinksReplyAssemblyLinkType'
+          title: The type of link
+        resource_link:
+          type: string
+          title: A link to the resource
+        linked_identifiers:
+          type: array
+          items:
+            type: string
+    v2reportsGenomeAnnotationReportPage:
+      type: object
+      properties:
+        reports:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsGenomeAnnotationReportMatch'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+        total_count:
+          type: integer
+          title: The total count of available genes (ignoring the page_size parameter).
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
     v2reportsWarning:
       type: object
       properties:
@@ -3336,86 +3366,17 @@ components:
           $ref: '#/components/schemas/v2reportsWarningReplacedId'
         unrecognized_identifier:
           type: string
-    v2reportsAverageNucleotideIdentityTaxonomyCheckStatus:
-      type: string
-      enum:
-      - TAXONOMY_CHECK_STATUS_UNKNOWN
-      - OK
-      - Failed
-      - Inconclusive
-      default: TAXONOMY_CHECK_STATUS_UNKNOWN
-    v2reportsAnnotationInfo:
+    v2AssemblyLinksRequest:
       type: object
       properties:
-        name:
-          type: string
-          title: Annotation name
-        provider:
-          type: string
-          title: Source of the annotation
-        release_date:
-          type: string
-          title: Annotation release date
-        report_url:
-          type: string
-          title: Annotation report web address
-        stats:
-          $ref: '#/components/schemas/v2reportsFeatureCounts'
-        busco:
-          $ref: '#/components/schemas/v2reportsBuscoStat'
-        method:
-          type: string
-          title: Software tools used to calculate annotation
-        pipeline:
-          type: string
-          title: NCBI annotation pipeline used to calculate annotation
-        software_version:
-          type: string
-          title: NCBI annotation pipeline software version
-        status:
-          type: string
-          title: Type of annotation
-        release_version:
-          type: string
-    v2GenomeAnnotationTableSummaryReply:
-      type: object
-      properties:
-        accession:
-          type: string
-          title: Assembly from which available values are taken
-        chromosomes:
+        accessions:
           type: array
           items:
             type: string
-        gene_types:
+        assembly_link_types:
           type: array
           items:
-            type: string
-        empty_columns:
-          type: array
-          items:
-            type: string
-    v2DownloadSummaryAvailableFiles:
-      type: object
-      properties:
-        all_genomic_fasta:
-          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
-        genome_gff:
-          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
-        genome_gbff:
-          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
-        rna_fasta:
-          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
-        prot_fasta:
-          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
-        genome_gtf:
-          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
-        cds_fasta:
-          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
-        sequence_report:
-          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
-        annotation_report:
-          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+            $ref: '#/components/schemas/v2AssemblyLinksReplyAssemblyLinkType'
     v2reportsRange:
       type: object
       properties:
@@ -3436,39 +3397,104 @@ components:
         ribosomal_slippage:
           type: integer
           title: When ribosomal slippage is desired, fill out slippage amount between this and previous range.
-    v2reportsAssemblyRevision:
+    v2reportsANIMatch:
       type: object
       properties:
-        genbank_accession:
+        assembly:
           type: string
-        refseq_accession:
+          title: Accession of the submitted organism best match type-strain assembly or best match type-strain assembly
+        organism_name:
           type: string
-        assembly_name:
+          title: Taxonomic name of the submitted organism or best match type-strain organism
+        category:
+          $ref: '#/components/schemas/v2reportsANITypeCategory'
+          title: Type category
+        ani:
+          type: number
+          format: float
+          title: Percent average nucleotide identity
+        assembly_coverage:
+          type: number
+          format: float
+          title: Percent coverage of the query assembly by the submitted organism or best match type assembly
+        type_assembly_coverage:
+          type: number
+          format: float
+          title: Percent coverage of the submitted organism or best match type assembly by the query assembly
+    v2reportsLineageOrganism:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        name:
           type: string
-        assembly_level:
-          $ref: '#/components/schemas/v2reportsAssemblyLevel'
-        release_date:
+          title: Scientific name
+    v2reportsOrganism:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        sci_name:
           type: string
-        submission_date:
+          title: Scientific name
+        organism_name:
           type: string
-        sequencing_technology:
+          title: Scientific name
+        common_name:
           type: string
-        identical:
-          type: boolean
-          title: Are the RefSeq and GenBank revisions identical?
-    v2IncludeTabularHeader:
-      type: string
-      enum:
-      - INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
-      - INCLUDE_TABULAR_HEADER_ALWAYS
-      - INCLUDE_TABULAR_HEADER_NEVER
-      default: INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
+          title: Common name
+        lineage:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsLineageOrganism'
+        strain:
+          type: string
+        pangolin_classification:
+          type: string
+        infraspecific_names:
+          $ref: '#/components/schemas/v2reportsInfraspecificNames'
+    v2GenomeAnnotationTableSummaryReply:
+      type: object
+      properties:
+        accession:
+          type: string
+          title: Assembly from which available values are taken
+        chromosomes:
+          type: array
+          items:
+            type: string
+        gene_types:
+          type: array
+          items:
+            type: string
+        empty_columns:
+          type: array
+          items:
+            type: string
+    v2reportsMaturePeptide:
+      type: object
+      properties:
+        accession_version:
+          type: string
+        name:
+          type: string
+        length:
+          type: integer
     v2reportsErrorTaxonomyErrorCode:
       type: string
       enum:
       - UNKNOWN_TAXONOMY_ERROR_CODE
       - INVALID_TAXONOMY_TAXON
       default: UNKNOWN_TAXONOMY_ERROR_CODE
+    v2reportsSourceDatabase:
+      type: string
+      enum:
+      - SOURCE_DATABASE_UNSPECIFIED
+      - SOURCE_DATABASE_GENBANK
+      - SOURCE_DATABASE_REFSEQ
+      default: SOURCE_DATABASE_UNSPECIFIED
     rpcStatus:
       type: object
       properties:
@@ -3481,31 +3507,588 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/protobufAny'
-    v2reportsGenomicLocation:
+    v2AssemblyAccessions:
       type: object
       properties:
-        genomic_accession_version:
+        accessions:
+          type: array
+          items:
+            type: string
+    v2reportsErrorOrganelleErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ORGANELLE_ERROR_CODE
+      - INVALID_ORGANELLE_TAXON
+      - NO_ORGANELLES_FOR_ACCESSION
+      default: UNKNOWN_ORGANELLE_ERROR_CODE
+    v2reportsPairedAssembly:
+      type: object
+      properties:
+        accession:
           type: string
-        sequence_name:
+          title: The GenColl assembly accession of the GenBank or RefSeq assembly paired with this one
+        status:
+          $ref: '#/components/schemas/v2reportsAssemblyStatus'
+          title: GenColl Assembly status from paired record
+        annotation_name:
           type: string
-        genomic_range:
-          $ref: '#/components/schemas/v2reportsRange'
-        exons:
+          title: Annotation name from paired record
+        only_genbank:
+          type: string
+          title: Sequences that are only included in the GenBank assembly
+        only_refseq:
+          type: string
+          title: Sequences that are only included in the RefSeq assembly
+        changed:
+          type: string
+          title: Sequences present on both the GenBank and the RefSeq assemblies that have been changed, e.g., contaminated sequence in the GenBank assembly has been replaced with a gap
+        manual_diff:
+          type: string
+          title: Manually curated description of differences between the GenBank and RefSeq assemblies
+        refseq_genbank_are_different:
+          type: boolean
+          title: boolean indication on whether there are any differences between the GenBank and RefSeq assemblies
+        differences:
+          type: string
+          title: Concatenation of all differences between the GenBank and RefSeq assemblies, including manually curated description and other fields
+    v2reportsSeqRangeSet:
+      type: object
+      properties:
+        accession_version:
+          type: string
+          title: NCBI Accession.version of the sequence
+        range:
           type: array
           items:
             $ref: '#/components/schemas/v2reportsRange'
-    v2reportsWGSInfo:
+    v2reportsBioSampleContact:
       type: object
       properties:
-        wgs_project_accession:
+        lab:
           type: string
-          title: WGS project accession
-        master_wgs_url:
+          title: Submitter lab name.
+    v2reportsBioProject:
+      type: object
+      properties:
+        accession:
           type: string
-          title: WGS project Nucleotide web address
-        wgs_contigs_url:
+          title: BioProject accession
+        title:
           type: string
-          title: WGS project Sequence set browser web address
+          title: Title of the BioProject provided by the submitter
+        parent_accession:
+          type: string
+        parent_accessions:
+          type: array
+          items:
+            type: string
+    v2reportsRnaType:
+      type: string
+      enum:
+      - rna_UNKNOWN
+      - premsg
+      - tmRna
+      default: rna_UNKNOWN
+    protobufAny:
+      type: object
+      properties:
+        type_url:
+          type: string
+        value:
+          type: string
+          format: byte
+    v2reportsMessage:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/v2reportsError'
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+    v2SortField:
+      type: object
+      properties:
+        field:
+          type: string
+        direction:
+          $ref: '#/components/schemas/v2SortDirection'
+    v2AssemblyCheckMHistogramReply:
+      type: object
+      properties:
+        species_taxid:
+          type: integer
+        histogram_intervals:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2AssemblyCheckMHistogramReplyHistogramInterval'
+    v2AssemblyLinksReplyAssemblyLinkType:
+      type: string
+      enum:
+      - DEFAULT
+      - GDV_LINK
+      - FTP_LINK
+      - ASSEMBLY_PUBMED
+      - BLAST_LINK
+      - ASSEMBLY_NUCCORE_REFSEQ
+      - ASSEMBLY_NUCCORE_GENBANK
+      - CGV_LINK
+      default: DEFAULT
+      title: Types of assembly links that may be returned
+    v2reportsTranscriptTranscriptType:
+      type: string
+      enum:
+      - UNKNOWN
+      - PROTEIN_CODING
+      - NON_CODING
+      - PROTEIN_CODING_MODEL
+      - NON_CODING_MODEL
+      default: UNKNOWN
+    v2AnnotationForAssemblyType:
+      type: string
+      enum:
+      - DEFAULT
+      - GENOME_GFF
+      - GENOME_GBFF
+      - RNA_FASTA
+      - PROT_FASTA
+      - GENOME_GTF
+      - CDS_FASTA
+      - GENOME_FASTA
+      - SEQUENCE_REPORT
+      default: DEFAULT
+    v2reportsGeneCounts:
+      type: object
+      properties:
+        total:
+          type: integer
+          title: Total number of annotated genes
+        protein_coding:
+          type: integer
+          title: Count of annotated genes that encode a protein
+        non_coding:
+          type: integer
+          title: Count of transcribed non-coding genes (e.g. lncRNAs, miRNAs, rRNAs, etc...) excludes transcribed pseudogenes
+        pseudogene:
+          type: integer
+          title: Count of transcribed and non-transcribed pseudogenes
+        other:
+          type: integer
+          title: Count of genic region GeneIDs and non-genic regulatory GeneIDs
+    v2reportsAverageNucleotideIdentity:
+      type: object
+      properties:
+        taxonomy_check_status:
+          $ref: '#/components/schemas/v2reportsAverageNucleotideIdentityTaxonomyCheckStatus'
+          title: Indicates whether the ANI result is consistent with the submitted organism
+        match_status:
+          $ref: '#/components/schemas/v2reportsAverageNucleotideIdentityMatchStatus'
+          title: Indicates the specific type of ANI result that supports the Taxonomy check status
+        submitted_organism:
+          type: string
+          title: Taxonomic name of the query assembly
+        submitted_species:
+          type: string
+          title: Species name of the query assembly
+        category:
+          $ref: '#/components/schemas/v2reportsANITypeCategory'
+          title: Category of type or validated assembly
+        submitted_ani_match:
+          $ref: '#/components/schemas/v2reportsANIMatch'
+        best_ani_match:
+          $ref: '#/components/schemas/v2reportsANIMatch'
+        comment:
+          type: string
+          title: Additional information about the ANI result
+    v2reportsErrorGeneErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_ERROR_CODE
+      - INCOMPLETE_LOOKUP_SYMBOL
+      - INVALID_TAXON_GENE_ARGUMENT
+      default: UNKNOWN_GENE_ERROR_CODE
+    v2GenomeAnnotationRequestAnnotationType:
+      type: string
+      enum:
+      - DEFAULT
+      - GENOME_FASTA
+      - RNA_FASTA
+      - PROT_FASTA
+      default: DEFAULT
+    v2reportsAverageNucleotideIdentityMatchStatus:
+      type: string
+      enum:
+      - BEST_MATCH_STATUS_UNKNOWN
+      - approved_mismatch
+      - below_threshold_match
+      - below_threshold_mismatch
+      - best_match_status
+      - derived_species_match
+      - genus_match
+      - low_coverage
+      - mismatch
+      - status_na
+      - species_match
+      - subspecies_match
+      - synonym_match
+      - lineage_match
+      - below_threshold_lineage_match
+      default: BEST_MATCH_STATUS_UNKNOWN
+    v2reportsCheckM:
+      type: object
+      properties:
+        checkm_marker_set:
+          type: string
+          title: What taxonomic group is used as the basis for comparison with this assembly with regards to checkM values
+        checkm_species_tax_id:
+          type: integer
+          title: The species-level taxid for this assemblies checkM dataset
+        checkm_marker_set_rank:
+          type: string
+          title: CheckM taxonomic rank of checkm_marker_set
+        checkm_version:
+          type: string
+          title: CheckM software version
+        completeness:
+          type: number
+          format: float
+          title: What percent complete is this assembly
+        contamination:
+          type: number
+          format: float
+          title: What is the contamination percentage for this assembly
+        completeness_percentile:
+          type: number
+          format: float
+          title: The percent of assemblies under the taxonomic grouping 'checkm_marker_set' that this assembly is as-or-more complete than.
+    v2DownloadSummaryDehydrated:
+      type: object
+      properties:
+        estimated_file_size_mb:
+          type: integer
+        url:
+          type: string
+        cli_download_command_line:
+          type: string
+        cli_rehydrate_command_line:
+          type: string
+    v2reportsAssemblyStatus:
+      type: string
+      enum:
+      - ASSEMBLY_STATUS_UNKNOWN
+      - current
+      - previous
+      - suppressed
+      - retired
+      default: ASSEMBLY_STATUS_UNKNOWN
+    v2reportsGenomicRegionGenomicRegionType:
+      type: string
+      enum:
+      - UNKNOWN
+      - REFSEQ_GENE
+      - PSEUDOGENE
+      - BIOLOGICAL_REGION
+      - OTHER
+      default: UNKNOWN
+    v2reportsAdditionalSubmitter:
+      type: object
+      properties:
+        genbank_accession:
+          type: string
+          title: genbank accession of extra sequence
+        refseq_accession:
+          type: string
+          title: genbank accession of extra sequence
+        chr_name:
+          type: string
+          title: chromosome name
+        molecule_type:
+          type: string
+          title: molecule type
+        submitter:
+          type: string
+          title: Name of submitter
+        bioproject_accession:
+          type: string
+          title: Bioproject accession
+    v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory:
+      type: string
+      enum:
+      - NONE
+      - TYPE_MATERIAL
+      - TYPE_MATERIAL_CLADE
+      - TYPE_MATERIAL_NEOTYPE
+      - TYPE_MATERIAL_REFTYPE
+      - PATHOVAR_TYPE
+      - TYPE_MATERIAL_SYN
+      default: NONE
+    v2DownloadSummaryHydrated:
+      type: object
+      properties:
+        estimated_file_size_mb:
+          type: integer
+        url:
+          type: string
+        cli_download_command_line:
+          type: string
+    v2AssemblyDatasetDescriptorsFilter:
+      type: object
+      properties:
+        reference_only:
+          type: boolean
+          title: If true, limit to reference genome assemblies.
+        assembly_source:
+          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblySource'
+          title: Limit to either RefSeq (GCF_) or GenBank (GCA_) genome assemblies.
+        has_annotation:
+          type: boolean
+          title: Limit to annotated genome assemblies.
+        exclude_paired_reports:
+          type: boolean
+          title: If true, for GenBank (GCA_)/RefSeq (GCF_) pairs, returns the RefSeq copy. When no RefSeq copy exists, the GenBank assembly is returned.
+        exclude_atypical:
+          type: boolean
+          title: If true, exclude [atypical genome assemblies](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/data-processing/policies-annotation/genome-processing/genome_notes/#atypical-assemblies), i.e., genomes that have assembly issues or are otherwise atypical.
+        assembly_version:
+          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblyVersion'
+          title: Limit to the most recent (current) version of a genome assembly.
+        assembly_level:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsAssemblyLevel'
+        first_release_date:
+          type: string
+          format: date-time
+          title: Limit to genomes released on or after the specified date
+        last_release_date:
+          type: string
+          format: date-time
+          title: Limit to genomes released on or before the specified date
+        search_text:
+          type: array
+          items:
+            type: string
+        is_metagenome_derived:
+          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter'
+          title: Exclude or limit to metagenome-assembled genomes (MAGs).
+        is_type_material:
+          type: boolean
+          title: If true, limit to genomes derived from type material.
+        is_ictv_exemplar:
+          type: boolean
+          title: If true, limit to genomes derived from an ICTV exemplar (only applies to virus genomes).
+        exclude_multi_isolate:
+          type: boolean
+          title: If true, exclude genomes that were sequenced as part of large multi-isolate projects.
+        type_material_category:
+          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory'
+          title: Limit to genomes derived from specific type material categories.
+    v2reportsBioSampleId:
+      type: object
+      properties:
+        db:
+          type: string
+        label:
+          type: string
+        value:
+          type: string
+    v2reportsLinkedAssembly:
+      type: object
+      properties:
+        linked_assembly:
+          type: string
+          title: The linked assembly accession
+        assembly_type:
+          $ref: '#/components/schemas/v2reportsLinkedAssemblyType'
+          title: The linked assembly type
+    v2reportsTranscript:
+      type: object
+      properties:
+        accession_version:
+          type: string
+          title: RefSeq transcript accession with version
+        name:
+          type: string
+          title: RefSeq transcript name
+        length:
+          type: integer
+          title: RefSeq transcript length in nucleotides
+        cds:
+          $ref: '#/components/schemas/v2reportsSeqRangeSet'
+        genomic_locations:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsGenomicLocation'
+        ensembl_transcript:
+          type: string
+          title: Ensembl transcript accession with version
+        protein:
+          $ref: '#/components/schemas/v2reportsProtein'
+        type:
+          $ref: '#/components/schemas/v2reportsTranscriptTranscriptType'
+          title: Indicates transcript protein-coding potential and whether it was computationally predicted
+        select_category:
+          $ref: '#/components/schemas/v2reportsTranscriptSelectCategory'
+    v2reportsTypeMaterial:
+      type: object
+      properties:
+        type_label:
+          type: string
+        type_display_text:
+          type: string
+    v2AssemblyLinksReply:
+      type: object
+      properties:
+        assembly_links:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2AssemblyLinksReplyAssemblyLink'
+    v2reportsError:
+      type: object
+      properties:
+        assembly_error_code:
+          $ref: '#/components/schemas/v2reportsErrorAssemblyErrorCode'
+        gene_error_code:
+          $ref: '#/components/schemas/v2reportsErrorGeneErrorCode'
+        organelle_error_code:
+          $ref: '#/components/schemas/v2reportsErrorOrganelleErrorCode'
+        virus_error_code:
+          $ref: '#/components/schemas/v2reportsErrorVirusErrorCode'
+        taxonomy_error_code:
+          $ref: '#/components/schemas/v2reportsErrorTaxonomyErrorCode'
+        reason:
+          type: string
+        message:
+          type: string
+        invalid_identifiers:
+          type: array
+          items:
+            type: string
+    v2AssemblyDatasetReportsRequest:
+      type: object
+      properties:
+        taxons:
+          type: array
+          items:
+            type: string
+        bioprojects:
+          type: array
+          items:
+            type: string
+        biosample_ids:
+          type: array
+          items:
+            type: string
+        assembly_names:
+          type: array
+          items:
+            type: string
+        wgs_accessions:
+          type: array
+          items:
+            type: string
+        accessions:
+          type: array
+          items:
+            type: string
+        filters:
+          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilter'
+        tax_exact_match:
+          type: boolean
+          title: If true, only return assemblies matching the specified taxon, but not child taxa. For example, if querying by "Canis lupus", return Canis lupus but not Canis lupus familiaris genomes.
+        chromosomes:
+          type: array
+          items:
+            type: string
+        table_fields:
+          type: array
+          items:
+            type: string
+        returned_content:
+          $ref: '#/components/schemas/v2AssemblyDatasetReportsRequestContentType'
+          title: Return complete genome assembly reports, or abbreviated reports with assembly accessions with or without paired assembly information.
+        page_size:
+          type: integer
+          title: The maximum number of genome assembly reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
+        page_token:
+          type: string
+          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
+        sort:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2SortField'
+        include_tabular_header:
+          $ref: '#/components/schemas/v2IncludeTabularHeader'
+          title: Specify when to include the table header when requesting a tabular report.
+        table_format:
+          type: string
+          title: Optional pre-defined template for processing a tabular data request
+    v2reportsErrorVirusErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_VIRUS_ERROR_CODE
+      default: UNKNOWN_VIRUS_ERROR_CODE
+    v2reportsAssemblyStats:
+      type: object
+      properties:
+        total_number_of_chromosomes:
+          type: integer
+          title: Count of nuclear chromosomes, organelles and plasmids in a submitted genome assembly
+        total_sequence_length:
+          type: string
+          format: uint64
+          title: Total sequence length of the nuclear genome including unplaced and unlocalized sequences
+        total_ungapped_length:
+          type: string
+          format: uint64
+          title: Total length of all top-level sequences ignoring gaps. Any stretch of 10 or more Ns in a sequence is treated like a gap
+        number_of_contigs:
+          type: integer
+          title: Total number of sequence contigs in the assembly. Any stretch of 10 or more Ns in a sequence is treated as a gap between two contigs in a scaffold when counting contigs and calculating contig N50 & L50 values
+        contig_n50:
+          type: integer
+          title: Length such that sequence contigs of this length or longer include half the bases of the assembly
+        contig_l50:
+          type: integer
+          title: Number of sequence contigs that are longer than, or equal to, the N50 length and therefore include half the bases of the assembly
+        number_of_scaffolds:
+          type: integer
+          title: Number of scaffolds including placed, unlocalized, unplaced, alternate loci and patch scaffolds
+        scaffold_n50:
+          type: integer
+          title: Length such that scaffolds of this length or longer include half the bases of the assembly
+        scaffold_l50:
+          type: integer
+          title: Number of scaffolds that are longer than, or equal to, the N50 length and therefore include half the bases of the assembly
+        gaps_between_scaffolds_count:
+          type: integer
+          title: Number of unspanned gaps between scaffolds
+        number_of_component_sequences:
+          type: integer
+          title: Total number of component WGS or clone sequences in the assembly
+        atgc_count:
+          type: string
+          format: uint64
+          title: The number of AT and GC base-pairs in the assembly
+        gc_count:
+          type: string
+          format: uint64
+          title: The number of GC base-pairs in the assembly
+        gc_percent:
+          type: number
+          format: float
+          title: The percentage of GC base-pairs in the assembly
+        genome_coverage:
+          type: string
+          title: Genome assembly coverage
+        number_of_organelles:
+          type: integer
+          title: number of organelles
+    v2reportsBioProjectLineage:
+      type: object
+      properties:
+        bioprojects:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsBioProject'
     v2reportsBioSampleDescriptor:
       type: object
       properties:
@@ -3619,15 +4202,27 @@ components:
         serotype:
           type: string
           title: Taxonomic name below subspecies. Same as serovar
-    v2reportsGenomicRegion:
+    v2DownloadSummaryAvailableFiles:
       type: object
       properties:
-        gene_range:
-          $ref: '#/components/schemas/v2reportsSeqRangeSet'
-          title: The range of this Gene record on this genomic region.
-        type:
-          $ref: '#/components/schemas/v2reportsGenomicRegionGenomicRegionType'
-          title: Type of genomic region
+        all_genomic_fasta:
+          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+        genome_gff:
+          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+        genome_gbff:
+          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+        rna_fasta:
+          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+        prot_fasta:
+          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+        genome_gtf:
+          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+        cds_fasta:
+          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+        sequence_report:
+          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
+        annotation_report:
+          $ref: '#/components/schemas/v2DownloadSummaryFileSummary'
     v2reportsAssemblyDataReportPage:
       type: object
       properties:
@@ -3647,62 +4242,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/v2reportsMessage'
-    v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory:
-      type: string
-      enum:
-      - NONE
-      - TYPE_MATERIAL
-      - TYPE_MATERIAL_CLADE
-      - TYPE_MATERIAL_NEOTYPE
-      - TYPE_MATERIAL_REFTYPE
-      - PATHOVAR_TYPE
-      - TYPE_MATERIAL_SYN
-      default: NONE
-    v2AssemblyDatasetAvailability:
-      type: object
-      properties:
-        valid_assemblies:
-          type: array
-          items:
-            type: string
-        invalid_assemblies:
-          type: array
-          items:
-            type: string
-        reason:
-          type: string
-    v2reportsANITypeCategory:
-      type: string
-      enum:
-      - ANI_CATEGORY_UNKNOWN
-      - claderef
-      - category_na
-      - neotype
-      - no_type
-      - pathovar
-      - reftype
-      - suspected_type
-      - synonym
-      - type
-      default: ANI_CATEGORY_UNKNOWN
-    v2AssemblyRevisionHistory:
-      type: object
-      properties:
-        assembly_revisions:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsAssemblyRevision'
-        total_count:
-          type: integer
-    v2reportsLinkedAssembly:
-      type: object
-      properties:
-        linked_assembly:
-          type: string
-          title: The linked assembly accession
-        assembly_type:
-          $ref: '#/components/schemas/v2reportsLinkedAssemblyType'
-          title: The linked assembly type
     v2GenomeAnnotationRequest:
       type: object
       properties:
@@ -3753,207 +4292,98 @@ components:
         page_token:
           type: string
           title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
-    v2reportsMessage:
+    v2reportsANITypeCategory:
+      type: string
+      enum:
+      - ANI_CATEGORY_UNKNOWN
+      - claderef
+      - category_na
+      - neotype
+      - no_type
+      - pathovar
+      - reftype
+      - suspected_type
+      - synonym
+      - type
+      default: ANI_CATEGORY_UNKNOWN
+    v2GenomeAnnotationRequestGenomeAnnotationTableFormat:
+      type: string
+      enum:
+      - NO_TABLE
+      - SUMMARY
+      - PRODUCT
+      default: NO_TABLE
+    v2reportsAtypicalInfo:
       type: object
       properties:
-        error:
-          $ref: '#/components/schemas/v2reportsError'
-        warning:
-          $ref: '#/components/schemas/v2reportsWarning'
-    v2reportsPairedAssembly:
-      type: object
-      properties:
-        accession:
-          type: string
-          title: The GenColl assembly accession of the GenBank or RefSeq assembly paired with this one
-        status:
-          $ref: '#/components/schemas/v2reportsAssemblyStatus'
-          title: GenColl Assembly status from paired record
-        annotation_name:
-          type: string
-          title: Annotation name from paired record
-        only_genbank:
-          type: string
-          title: Sequences that are only included in the GenBank assembly
-        only_refseq:
-          type: string
-          title: Sequences that are only included in the RefSeq assembly
-        changed:
-          type: string
-          title: Sequences present on both the GenBank and the RefSeq assemblies that have been changed, e.g., contaminated sequence in the GenBank assembly has been replaced with a gap
-        manual_diff:
-          type: string
-          title: Manually curated description of differences between the GenBank and RefSeq assemblies
-        refseq_genbank_are_different:
+        is_atypical:
           type: boolean
-          title: boolean indication on whether there are any differences between the GenBank and RefSeq assemblies
-        differences:
-          type: string
-          title: Concatenation of all differences between the GenBank and RefSeq assemblies, including manually curated description and other fields
-    v2AssemblyDatasetDescriptorsFilterAssemblySource:
+          title: If true there are assembly issues or the assembly is in some way non-standard
+        warnings:
+          type: array
+          items:
+            type: string
+    v2AssemblyRevisionHistory:
+      type: object
+      properties:
+        assembly_revisions:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsAssemblyRevision'
+        total_count:
+          type: integer
+    v2SortDirection:
       type: string
       enum:
-      - all
-      - refseq
-      - genbank
-      default: all
-    v2AssemblyAccessions:
-      type: object
-      properties:
-        accessions:
-          type: array
-          items:
-            type: string
-    v2reportsTypeMaterial:
-      type: object
-      properties:
-        type_label:
-          type: string
-        type_display_text:
-          type: string
-    v2reportsANIMatch:
-      type: object
-      properties:
-        assembly:
-          type: string
-          title: Accession of the submitted organism best match type-strain assembly or best match type-strain assembly
-        organism_name:
-          type: string
-          title: Taxonomic name of the submitted organism or best match type-strain organism
-        category:
-          $ref: '#/components/schemas/v2reportsANITypeCategory'
-          title: Type category
-        ani:
-          type: number
-          format: float
-          title: Percent average nucleotide identity
-        assembly_coverage:
-          type: number
-          format: float
-          title: Percent coverage of the query assembly by the submitted organism or best match type assembly
-        type_assembly_coverage:
-          type: number
-          format: float
-          title: Percent coverage of the submitted organism or best match type assembly by the query assembly
-    v2reportsOrientation:
+      - SORT_DIRECTION_UNSPECIFIED
+      - SORT_DIRECTION_ASCENDING
+      - SORT_DIRECTION_DESCENDING
+      default: SORT_DIRECTION_UNSPECIFIED
+    v2reportsTranscriptSelectCategory:
       type: string
       enum:
-      - none
-      - plus
-      - minus
-      default: none
-    v2reportsAverageNucleotideIdentityMatchStatus:
-      type: string
-      enum:
-      - BEST_MATCH_STATUS_UNKNOWN
-      - approved_mismatch
-      - below_threshold_match
-      - below_threshold_mismatch
-      - best_match_status
-      - derived_species_match
-      - genus_match
-      - low_coverage
-      - mismatch
-      - status_na
-      - species_match
-      - subspecies_match
-      - synonym_match
-      - lineage_match
-      - below_threshold_lineage_match
-      default: BEST_MATCH_STATUS_UNKNOWN
-    v2reportsGeneCounts:
+      - SELECT_UNKNOWN
+      - REFSEQ_SELECT
+      - MANE_SELECT
+      - MANE_PLUS_CLINICAL
+      default: SELECT_UNKNOWN
+    v2reportsBioSampleDescription:
       type: object
       properties:
-        total:
-          type: integer
-          title: Total number of annotated genes
-        protein_coding:
-          type: integer
-          title: Count of annotated genes that encode a protein
-        non_coding:
-          type: integer
-          title: Count of transcribed non-coding genes (e.g. lncRNAs, miRNAs, rRNAs, etc...) excludes transcribed pseudogenes
-        pseudogene:
-          type: integer
-          title: Count of transcribed and non-transcribed pseudogenes
-        other:
-          type: integer
-          title: Count of genic region GeneIDs and non-genic regulatory GeneIDs
-    v2AssemblyLinksReplyAssemblyLink:
+        title:
+          type: string
+        organism:
+          $ref: '#/components/schemas/v2reportsOrganism'
+        comment:
+          type: string
+    v2SequenceReportPage:
       type: object
       properties:
-        accession:
-          type: string
-          title: The matching assembly accession
-        assembly_link_type:
-          $ref: '#/components/schemas/v2AssemblyLinksReplyAssemblyLinkType'
-          title: The type of link
-        resource_link:
-          type: string
-          title: A link to the resource
-        linked_identifiers:
+        reports:
           type: array
           items:
-            type: string
-    v2AssemblyDatasetReportsRequest:
+            $ref: '#/components/schemas/v2reportsSequenceInfo'
+        total_count:
+          type: integer
+          title: The total count of available datasets (ignoring the cutoff parameter). Only provided for the first page of results (when `page_token` is empty in the request).
+        next_page_token:
+          type: string
+          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+    v2AssemblyCheckMHistogramReplyHistogramInterval:
       type: object
       properties:
-        taxons:
-          type: array
-          items:
-            type: string
-        bioprojects:
-          type: array
-          items:
-            type: string
-        biosample_ids:
-          type: array
-          items:
-            type: string
-        assembly_names:
-          type: array
-          items:
-            type: string
-        wgs_accessions:
-          type: array
-          items:
-            type: string
-        accessions:
-          type: array
-          items:
-            type: string
-        filters:
-          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilter'
-        tax_exact_match:
-          type: boolean
-          title: If true, only return assemblies matching the specified taxon, but not child taxa. For example, if querying by "Canis lupus", return Canis lupus but not Canis lupus familiaris genomes.
-        chromosomes:
-          type: array
-          items:
-            type: string
-        table_fields:
-          type: array
-          items:
-            type: string
-        returned_content:
-          $ref: '#/components/schemas/v2AssemblyDatasetReportsRequestContentType'
-          title: Return complete genome assembly reports, or abbreviated reports with assembly accessions with or without paired assembly information.
-        page_size:
-          type: integer
-          title: The maximum number of genome assembly reports to return. Default is 20 and maximum is 1000. If the number of results exceeds the page size, `page_token` can be used to retrieve the remaining results.
-        page_token:
-          type: string
-          title: A page token is returned when the results count exceeds `page size`. Use this token along with previous request parameters to retrieve the next page of results. When `page_token` is empty, all results have been retrieved.
-        sort:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2SortField'
-        include_tabular_header:
-          $ref: '#/components/schemas/v2IncludeTabularHeader'
-          title: Specify when to include the table header when requesting a tabular report.
-        table_format:
-          type: string
-          title: Optional pre-defined template for processing a tabular data request
+        start_pos:
+          type: number
+          format: float
+          title: Starting position for this interval
+        stop_pos:
+          type: number
+          format: float
+          title: ending position for this interval
+        count:
+          type: number
+          format: float
+          title: number of elements in this interval
     v2reportsGeneType:
       type: string
       enum:
@@ -3972,96 +4402,6 @@ components:
       - OTHER
       default: UNKNOWN
       title: 'NB: GeneType values match Entrez Gene'
-    v2DownloadSummary:
-      type: object
-      properties:
-        record_count:
-          type: integer
-          title: The number of records for the requested filter.
-        assembly_count:
-          type: integer
-          title: For backwards compatability with old VirusDatasetSummary
-        resource_updated_on:
-          type: string
-          format: date-time
-          title: The latest date on which the resource was updated.
-        hydrated:
-          $ref: '#/components/schemas/v2DownloadSummaryHydrated'
-        dehydrated:
-          $ref: '#/components/schemas/v2DownloadSummaryDehydrated'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsError'
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsMessage'
-        available_files:
-          $ref: '#/components/schemas/v2DownloadSummaryAvailableFiles'
-    v2reportsRnaType:
-      type: string
-      enum:
-      - rna_UNKNOWN
-      - premsg
-      - tmRna
-      default: rna_UNKNOWN
-    v2reportsAssemblyStatus:
-      type: string
-      enum:
-      - ASSEMBLY_STATUS_UNKNOWN
-      - current
-      - previous
-      - suppressed
-      - retired
-      default: ASSEMBLY_STATUS_UNKNOWN
-    v2reportsGenomeAnnotationReportMatch:
-      type: object
-      properties:
-        annotation:
-          $ref: '#/components/schemas/v2reportsGenomeAnnotation'
-        query:
-          type: array
-          items:
-            type: string
-        warning:
-          $ref: '#/components/schemas/v2reportsWarning'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsError'
-        row_id:
-          type: string
-    v2reportsAtypicalInfo:
-      type: object
-      properties:
-        is_atypical:
-          type: boolean
-          title: If true there are assembly issues or the assembly is in some way non-standard
-        warnings:
-          type: array
-          items:
-            type: string
-    v2AssemblyLinksReply:
-      type: object
-      properties:
-        assembly_links:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2AssemblyLinksReplyAssemblyLink'
-    v2AssemblyLinksReplyAssemblyLinkType:
-      type: string
-      enum:
-      - DEFAULT
-      - GDV_LINK
-      - FTP_LINK
-      - ASSEMBLY_PUBMED
-      - BLAST_LINK
-      - ASSEMBLY_NUCCORE_REFSEQ
-      - ASSEMBLY_NUCCORE_GENBANK
-      - CGV_LINK
-      default: DEFAULT
-      title: Types of assembly links that may be returned
     v2AssemblyDatasetDescriptorsFilterAssemblyVersion:
       type: string
       enum:
@@ -4069,191 +4409,6 @@ components:
       - all_assemblies
       default: current
       title: The assembly status - current (latest), or all assemblies, which adds replaced and suppressed
-    v2reportsSeqRangeSet:
-      type: object
-      properties:
-        accession_version:
-          type: string
-          title: NCBI Accession.version of the sequence
-        range:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsRange'
-    v2reportsCheckM:
-      type: object
-      properties:
-        checkm_marker_set:
-          type: string
-          title: What taxonomic group is used as the basis for comparison with this assembly with regards to checkM values
-        checkm_species_tax_id:
-          type: integer
-          title: The species-level taxid for this assemblies checkM dataset
-        checkm_marker_set_rank:
-          type: string
-          title: CheckM taxonomic rank of checkm_marker_set
-        checkm_version:
-          type: string
-          title: CheckM software version
-        completeness:
-          type: number
-          format: float
-          title: What percent complete is this assembly
-        contamination:
-          type: number
-          format: float
-          title: What is the contamination percentage for this assembly
-        completeness_percentile:
-          type: number
-          format: float
-          title: The percent of assemblies under the taxonomic grouping 'checkm_marker_set' that this assembly is as-or-more complete than.
-    v2AssemblyDatasetDescriptorsFilter:
-      type: object
-      properties:
-        reference_only:
-          type: boolean
-          title: If true, limit to reference genome assemblies.
-        assembly_source:
-          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblySource'
-          title: Limit to either RefSeq (GCF_) or GenBank (GCA_) genome assemblies.
-        has_annotation:
-          type: boolean
-          title: Limit to annotated genome assemblies.
-        exclude_paired_reports:
-          type: boolean
-          title: If true, for GenBank (GCA_)/RefSeq (GCF_) pairs, returns the RefSeq copy. When no RefSeq copy exists, the GenBank assembly is returned.
-        exclude_atypical:
-          type: boolean
-          title: If true, exclude [atypical genome assemblies](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/data-processing/policies-annotation/genome-processing/genome_notes/#atypical-assemblies), i.e., genomes that have assembly issues or are otherwise atypical.
-        assembly_version:
-          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilterAssemblyVersion'
-          title: Limit to the most recent (current) version of a genome assembly.
-        assembly_level:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsAssemblyLevel'
-        first_release_date:
-          type: string
-          format: date-time
-          title: Limit to genomes released on or after the specified date
-        last_release_date:
-          type: string
-          format: date-time
-          title: Limit to genomes released on or before the specified date
-        search_text:
-          type: array
-          items:
-            type: string
-        is_metagenome_derived:
-          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter'
-          title: Exclude or limit to metagenome-assembled genomes (MAGs).
-        is_type_material:
-          type: boolean
-          title: If true, limit to genomes derived from type material.
-        is_ictv_exemplar:
-          type: boolean
-          title: If true, limit to genomes derived from an ICTV exemplar (only applies to virus genomes).
-        exclude_multi_isolate:
-          type: boolean
-          title: If true, exclude genomes that were sequenced as part of large multi-isolate projects.
-        type_material_category:
-          $ref: '#/components/schemas/v2AssemblyDatasetDescriptorsFilterTypeMaterialCategory'
-          title: Limit to genomes derived from specific type material categories.
-    v2reportsBioSampleContact:
-      type: object
-      properties:
-        lab:
-          type: string
-          title: Submitter lab name.
-    v2reportsGenomeAnnotation:
-      type: object
-      properties:
-        gene_id:
-          type: string
-          format: uint64
-          title: NCBI GeneID
-        symbol:
-          type: string
-          title: Gene symbol
-        description:
-          type: string
-          title: Gene name
-        name:
-          type: string
-        tax_id:
-          type: string
-          format: uint64
-          title: NCBI Taxonomy ID for the organism
-        taxname:
-          type: string
-          title: Taxonomic name of the organism
-        common_name:
-          type: string
-          title: Common name of the organism
-        type:
-          $ref: '#/components/schemas/v2reportsGeneType'
-          title: Deprecated
-        gene_type:
-          type: string
-          title: Gene locus type
-        rna_type:
-          $ref: '#/components/schemas/v2reportsRnaType'
-        orientation:
-          $ref: '#/components/schemas/v2reportsOrientation'
-        locus_tag:
-          type: string
-        reference_standards:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsGenomicRegion'
-        genomic_regions:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsGenomicRegion'
-        transcripts:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsTranscript'
-        proteins:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsProtein'
-        chromosomes:
-          type: array
-          items:
-            type: string
-        swiss_prot_accessions:
-          type: array
-          items:
-            type: string
-        ensembl_gene_ids:
-          type: array
-          items:
-            type: string
-        omim_ids:
-          type: array
-          items:
-            type: string
-        synonyms:
-          type: array
-          items:
-            type: string
-        annotations:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsAnnotation'
-    v2AnnotationForAssemblyType:
-      type: string
-      enum:
-      - DEFAULT
-      - GENOME_GFF
-      - GENOME_GBFF
-      - RNA_FASTA
-      - PROT_FASTA
-      - GENOME_GTF
-      - CDS_FASTA
-      - GENOME_FASTA
-      - SEQUENCE_REPORT
-      default: DEFAULT
     v2reportsAssemblyInfo:
       type: object
       properties:
@@ -4334,14 +4489,20 @@ components:
           title: The reason for the assembly is suppressed, for suppressed assemblies
         diploid_role:
           $ref: '#/components/schemas/v2reportsLinkedAssemblyType'
-    v2GenomeAnnotationRequestAnnotationType:
+    v2reportsErrorAssemblyErrorCode:
       type: string
       enum:
-      - DEFAULT
-      - GENOME_FASTA
-      - RNA_FASTA
-      - PROT_FASTA
-      default: DEFAULT
+      - UNKNOWN_ASSEMBLY_ERROR_CODE
+      - INVALID_BIOPROJECT_IDS
+      - NO_ASSEMBLIES_FOR_BIOPROJECTS
+      - INVALID_TAXON
+      - MISSING_SEARCH_FIELD
+      - INVALID_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
+      - INVALID_WGS_ACCESSIONS
+      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
+      default: UNKNOWN_ASSEMBLY_ERROR_CODE
     v2AssemblySequenceReportsRequest:
       type: object
       properties:
@@ -4374,84 +4535,248 @@ components:
         table_format:
           type: string
           title: Optional pre-defined template for processing a tabular data request
-    v2reportsAssemblyLevel:
+    v2reportsLinkedAssemblyType:
       type: string
       enum:
-      - chromosome
-      - scaffold
-      - contig
-      - complete_genome
-      default: chromosome
-      title: 'The level of the genome assembly: Chromosome, Scaffold, Contig or Complete Genome'
-    v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter:
-      type: string
-      enum:
-      - METAGENOME_DERIVED_UNSET
-      - metagenome_derived_only
-      - metagenome_derived_exclude
-      default: METAGENOME_DERIVED_UNSET
-    v2AssemblyDatasetRequestResolution:
-      type: string
-      enum:
-      - FULLY_HYDRATED
-      - DATA_REPORT_ONLY
-      default: FULLY_HYDRATED
-    v2reportsAssemblyStats:
+      - LINKED_ASSEMBLY_TYPE_UNKNOWN
+      - alternate_pseudohaplotype_of_diploid
+      - principal_pseudohaplotype_of_diploid
+      - maternal_haplotype_of_diploid
+      - paternal_haplotype_of_diploid
+      - haplotype_1
+      - haplotype_2
+      - haplotype_3
+      - haplotype_4
+      - haploid
+      default: LINKED_ASSEMBLY_TYPE_UNKNOWN
+    v2reportsBuscoStat:
       type: object
       properties:
-        total_number_of_chromosomes:
-          type: integer
-          title: Count of nuclear chromosomes, organelles and plasmids in a submitted genome assembly
-        total_sequence_length:
+        busco_lineage:
           type: string
-          format: uint64
-          title: Total sequence length of the nuclear genome including unplaced and unlocalized sequences
-        total_ungapped_length:
+          title: BUSCO Lineage
+        busco_ver:
           type: string
-          format: uint64
-          title: Total length of all top-level sequences ignoring gaps. Any stretch of 10 or more Ns in a sequence is treated like a gap
-        number_of_contigs:
-          type: integer
-          title: Total number of sequence contigs in the assembly. Any stretch of 10 or more Ns in a sequence is treated as a gap between two contigs in a scaffold when counting contigs and calculating contig N50 & L50 values
-        contig_n50:
-          type: integer
-          title: Length such that sequence contigs of this length or longer include half the bases of the assembly
-        contig_l50:
-          type: integer
-          title: Number of sequence contigs that are longer than, or equal to, the N50 length and therefore include half the bases of the assembly
-        number_of_scaffolds:
-          type: integer
-          title: Number of scaffolds including placed, unlocalized, unplaced, alternate loci and patch scaffolds
-        scaffold_n50:
-          type: integer
-          title: Length such that scaffolds of this length or longer include half the bases of the assembly
-        scaffold_l50:
-          type: integer
-          title: Number of scaffolds that are longer than, or equal to, the N50 length and therefore include half the bases of the assembly
-        gaps_between_scaffolds_count:
-          type: integer
-          title: Number of unspanned gaps between scaffolds
-        number_of_component_sequences:
-          type: integer
-          title: Total number of component WGS or clone sequences in the assembly
-        atgc_count:
-          type: string
-          format: uint64
-          title: The number of AT and GC base-pairs in the assembly
-        gc_count:
-          type: string
-          format: uint64
-          title: The number of GC base-pairs in the assembly
-        gc_percent:
+          title: BUSCO Version
+        complete:
           type: number
           format: float
-          title: The percentage of GC base-pairs in the assembly
-        genome_coverage:
+          title: 'BUSCO score: Complete'
+        single_copy:
+          type: number
+          format: float
+          title: 'BUSCO score: Single Copy'
+        duplicated:
+          type: number
+          format: float
+          title: 'BUSCO score: Duplicated'
+        fragmented:
+          type: number
+          format: float
+          title: 'BUSCO score: Fragmented'
+        missing:
+          type: number
+          format: float
+          title: 'BUSCO score: Missing'
+        total_count:
           type: string
-          title: Genome assembly coverage
-        number_of_organelles:
-          type: integer
-          title: number of organelles
+          format: uint64
+          title: 'BUSCO score: Total Count'
+    v2reportsContentType:
+      type: string
+      enum:
+      - COMPLETE
+      - ASSM_ACC
+      - PAIRED_ACC
+      default: COMPLETE
+    v2AssemblyDatasetRequest:
+      type: object
+      properties:
+        accessions:
+          type: array
+          items:
+            type: string
+        chromosomes:
+          type: array
+          items:
+            type: string
+        include_annotation_type:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2AnnotationForAssemblyType'
+        hydrated:
+          $ref: '#/components/schemas/v2AssemblyDatasetRequestResolution'
+          title: Specify whether to download a hydrated (with sequence and annotation files included) or dehydrated data package. A dehydrated data package includes the assembly data report and `fetch.txt`, which includes paths to the requested data files on NCBI servers.
+        include_tsv:
+          type: boolean
+          title: Set to true to include a TSV representation of the data-report.
+    v2AssemblyDatasetAvailability:
+      type: object
+      properties:
+        valid_assemblies:
+          type: array
+          items:
+            type: string
+        invalid_assemblies:
+          type: array
+          items:
+            type: string
+        reason:
+          type: string
+    v2reportsGenomeAnnotationReportMatch:
+      type: object
+      properties:
+        annotation:
+          $ref: '#/components/schemas/v2reportsGenomeAnnotation'
+        query:
+          type: array
+          items:
+            type: string
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+        row_id:
+          type: string
+    v2reportsGenomeAnnotation:
+      type: object
+      properties:
+        gene_id:
+          type: string
+          format: uint64
+          title: NCBI GeneID
+        symbol:
+          type: string
+          title: Gene symbol
+        description:
+          type: string
+          title: Gene name
+        name:
+          type: string
+        tax_id:
+          type: string
+          format: uint64
+          title: NCBI Taxonomy ID for the organism
+        taxname:
+          type: string
+          title: Taxonomic name of the organism
+        common_name:
+          type: string
+          title: Common name of the organism
+        type:
+          $ref: '#/components/schemas/v2reportsGeneType'
+          title: Deprecated
+        gene_type:
+          type: string
+          title: Gene locus type
+        rna_type:
+          $ref: '#/components/schemas/v2reportsRnaType'
+        orientation:
+          $ref: '#/components/schemas/v2reportsOrientation'
+        locus_tag:
+          type: string
+        reference_standards:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsGenomicRegion'
+        genomic_regions:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsGenomicRegion'
+        transcripts:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsTranscript'
+        proteins:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsProtein'
+        chromosomes:
+          type: array
+          items:
+            type: string
+        swiss_prot_accessions:
+          type: array
+          items:
+            type: string
+        ensembl_gene_ids:
+          type: array
+          items:
+            type: string
+        omim_ids:
+          type: array
+          items:
+            type: string
+        synonyms:
+          type: array
+          items:
+            type: string
+        annotations:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsAnnotation'
+    v2reportsOrientation:
+      type: string
+      enum:
+      - none
+      - plus
+      - minus
+      default: none
+    v2reportsInfraspecificNames:
+      type: object
+      properties:
+        breed:
+          type: string
+          title: A homogenous group of animals within a domesticated species
+        cultivar:
+          type: string
+          title: A variety of plant within a species produced and maintained by cultivation
+        ecotype:
+          type: string
+          title: A population or subspecies occupying a distinct habitat
+        isolate:
+          type: string
+          title: The individual isolate from which the sequences in the genome assembly were derived
+        sex:
+          type: string
+          title: Physical sex of sampled organism
+        strain:
+          type: string
+          title: A genetic variant, subtype or culture within a species
+    v2AssemblyCheckMHistogramRequest:
+      type: object
+      properties:
+        species_taxon:
+          type: string
+          title: Bacterial species taxonomy ID or taxonomic name
+    v2reportsWGSInfo:
+      type: object
+      properties:
+        wgs_project_accession:
+          type: string
+          title: WGS project accession
+        master_wgs_url:
+          type: string
+          title: WGS project Nucleotide web address
+        wgs_contigs_url:
+          type: string
+          title: WGS project Sequence set browser web address
+    v2AssemblyDatasetReportsRequestContentType:
+      type: string
+      enum:
+      - COMPLETE
+      - ASSM_ACC
+      - PAIRED_ACC
+      default: COMPLETE
+    v2IncludeTabularHeader:
+      type: string
+      enum:
+      - INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
+      - INCLUDE_TABULAR_HEADER_ALWAYS
+      - INCLUDE_TABULAR_HEADER_NEVER
+      default: INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
     v2reportsBioSampleOwner:
       type: object
       properties:
@@ -4461,76 +4786,121 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/v2reportsBioSampleContact'
-    v2SortField:
+    v2reportsGenomicRegion:
       type: object
       properties:
-        field:
-          type: string
-        direction:
-          $ref: '#/components/schemas/v2SortDirection'
-    v2reportsBioSampleDescription:
+        gene_range:
+          $ref: '#/components/schemas/v2reportsSeqRangeSet'
+          title: The range of this Gene record on this genomic region.
+        type:
+          $ref: '#/components/schemas/v2reportsGenomicRegionGenomicRegionType'
+          title: Type of genomic region
+    v2reportsAssemblyRevision:
       type: object
       properties:
-        title:
+        genbank_accession:
           type: string
-        organism:
-          $ref: '#/components/schemas/v2reportsOrganism'
-        comment:
+        refseq_accession:
           type: string
-    v2reportsErrorVirusErrorCode:
+        assembly_name:
+          type: string
+        assembly_level:
+          $ref: '#/components/schemas/v2reportsAssemblyLevel'
+        release_date:
+          type: string
+        submission_date:
+          type: string
+        sequencing_technology:
+          type: string
+        identical:
+          type: boolean
+          title: Are the RefSeq and GenBank revisions identical?
+    v2SequenceAccessionRequest:
+      type: object
+      properties:
+        accession:
+          type: string
+          title: Nucleotide sequence accession associated with a genome assembly
+    v2reportsWarningReplacedId:
+      type: object
+      properties:
+        requested:
+          type: string
+        returned:
+          type: string
+    v2reportsWarningGeneWarningCode:
       type: string
       enum:
-      - UNKNOWN_VIRUS_ERROR_CODE
-      default: UNKNOWN_VIRUS_ERROR_CODE
-    v2AssemblyCheckMHistogramRequest:
-      type: object
-      properties:
-        species_taxon:
-          type: string
-          title: Bacterial species taxonomy ID or taxonomic name
-    v2reportsError:
-      type: object
-      properties:
-        assembly_error_code:
-          $ref: '#/components/schemas/v2reportsErrorAssemblyErrorCode'
-        gene_error_code:
-          $ref: '#/components/schemas/v2reportsErrorGeneErrorCode'
-        organelle_error_code:
-          $ref: '#/components/schemas/v2reportsErrorOrganelleErrorCode'
-        virus_error_code:
-          $ref: '#/components/schemas/v2reportsErrorVirusErrorCode'
-        taxonomy_error_code:
-          $ref: '#/components/schemas/v2reportsErrorTaxonomyErrorCode'
-        reason:
-          type: string
-        message:
-          type: string
-        invalid_identifiers:
-          type: array
-          items:
-            type: string
-    v2reportsGenomicRegionGenomicRegionType:
+      - UNKNOWN_GENE_WARNING_CODE
+      - ACCESSION_VERSION_MISMATCH
+      - REPLACED_GENE_ID
+      - DISCONTINUED_GENE_ID
+      - UNRECOGNIZED_GENE_ID
+      - UNRECOGNIZED_GENE_SYMBOL
+      - UNRECOGNIZED_ACCESSION
+      - UNRECOGNIZED_TAX_TOKEN
+      - NO_GENE_ANNOTATION_FOUND
+      - ABOVE_SPECIES_TAXON
+      default: UNKNOWN_GENE_WARNING_CODE
+    v2AssemblyDatasetDescriptorsFilterMetagenomeDerivedFilter:
       type: string
       enum:
-      - UNKNOWN
-      - REFSEQ_GENE
-      - PSEUDOGENE
-      - BIOLOGICAL_REGION
-      - OTHER
-      default: UNKNOWN
-    v2SequenceReportPage:
+      - METAGENOME_DERIVED_UNSET
+      - metagenome_derived_only
+      - metagenome_derived_exclude
+      default: METAGENOME_DERIVED_UNSET
+    v2AssemblyRevisionHistoryRequest:
       type: object
       properties:
-        reports:
+        accession:
+          type: string
+          title: One genome assembly accession
+    v2reportsGenomicLocation:
+      type: object
+      properties:
+        genomic_accession_version:
+          type: string
+        sequence_name:
+          type: string
+        genomic_range:
+          $ref: '#/components/schemas/v2reportsRange'
+        exons:
           type: array
           items:
-            $ref: '#/components/schemas/v2reportsSequenceInfo'
-        total_count:
-          type: integer
-          title: The total count of available datasets (ignoring the cutoff parameter). Only provided for the first page of results (when `page_token` is empty in the request).
-        next_page_token:
+            $ref: '#/components/schemas/v2reportsRange'
+    v2reportsAnnotationInfo:
+      type: object
+      properties:
+        name:
           type: string
-          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+          title: Annotation name
+        provider:
+          type: string
+          title: Source of the annotation
+        release_date:
+          type: string
+          title: Annotation release date
+        report_url:
+          type: string
+          title: Annotation report web address
+        stats:
+          $ref: '#/components/schemas/v2reportsFeatureCounts'
+        busco:
+          $ref: '#/components/schemas/v2reportsBuscoStat'
+        method:
+          type: string
+          title: Software tools used to calculate annotation
+        pipeline:
+          type: string
+          title: NCBI annotation pipeline used to calculate annotation
+        software_version:
+          type: string
+          title: NCBI annotation pipeline software version
+        status:
+          type: string
+          title: Type of annotation
+        release_version:
+          type: string
     v2reportsSequenceInfo:
       type: object
       properties:
@@ -4580,61 +4950,64 @@ components:
         sequence_name:
           type: string
           title: The sequence name
-    v2GenomeAnnotationRequestGenomeAnnotationTableFormat:
-      type: string
-      enum:
-      - NO_TABLE
-      - SUMMARY
-      - PRODUCT
-      default: NO_TABLE
-    v2reportsMaturePeptide:
+    v2DownloadSummaryFileSummary:
       type: object
       properties:
-        accession_version:
-          type: string
-        name:
-          type: string
-        length:
+        file_count:
           type: integer
-    v2DownloadSummaryHydrated:
+        size_mb:
+          type: number
+          format: float
+    v2DownloadSummary:
       type: object
       properties:
-        estimated_file_size_mb:
+        record_count:
           type: integer
-        url:
+          title: The number of records for the requested filter.
+        assembly_count:
+          type: integer
+          title: For backwards compatability with old VirusDatasetSummary
+        resource_updated_on:
           type: string
-        cli_download_command_line:
-          type: string
-    v2AssemblyDatasetRequest:
-      type: object
-      properties:
-        accessions:
-          type: array
-          items:
-            type: string
-        chromosomes:
-          type: array
-          items:
-            type: string
-        include_annotation_type:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2AnnotationForAssemblyType'
+          format: date-time
+          title: The latest date on which the resource was updated.
         hydrated:
-          $ref: '#/components/schemas/v2AssemblyDatasetRequestResolution'
-          title: Specify whether to download a hydrated (with sequence and annotation files included) or dehydrated data package. A dehydrated data package includes the assembly data report and `fetch.txt`, which includes paths to the requested data files on NCBI servers.
-        include_tsv:
-          type: boolean
-          title: Set to true to include a TSV representation of the data-report.
-    v2reportsLineageOrganism:
+          $ref: '#/components/schemas/v2DownloadSummaryHydrated'
+        dehydrated:
+          $ref: '#/components/schemas/v2DownloadSummaryDehydrated'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsError'
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsMessage'
+        available_files:
+          $ref: '#/components/schemas/v2DownloadSummaryAvailableFiles'
+    v2reportsOrganelleInfo:
       type: object
       properties:
-        tax_id:
-          type: integer
-          title: NCBI Taxonomy identifier
-        name:
+        assembly_name:
           type: string
-          title: Scientific name
+          title: Name of associated nuclear assembly
+        infraspecific_name:
+          type: string
+          title: The strain, breed, cultivar or ecotype of the organism from which the sequences in the assembly were derived
+        bioproject:
+          type: array
+          items:
+            type: string
+        description:
+          type: string
+          title: Long description of the organelle genome
+        total_seq_length:
+          type: string
+          format: uint64
+          title: Sequence length of the organelle genome
+        submitter:
+          type: string
+          title: Name of submitter
     v2reportsAnnotation:
       type: object
       properties:
@@ -4654,42 +5027,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/v2reportsGenomicLocation'
-    v2reportsWarningGeneWarningCode:
+    v2AssemblyDatasetDescriptorsFilterAssemblySource:
       type: string
       enum:
-      - UNKNOWN_GENE_WARNING_CODE
-      - ACCESSION_VERSION_MISMATCH
-      - REPLACED_GENE_ID
-      - DISCONTINUED_GENE_ID
-      - UNRECOGNIZED_GENE_ID
-      - UNRECOGNIZED_GENE_SYMBOL
-      - UNRECOGNIZED_ACCESSION
-      - UNRECOGNIZED_TAX_TOKEN
-      - NO_GENE_ANNOTATION_FOUND
-      - ABOVE_SPECIES_TAXON
-      default: UNKNOWN_GENE_WARNING_CODE
-    v2reportsContentType:
-      type: string
-      enum:
-      - COMPLETE
-      - ASSM_ACC
-      - PAIRED_ACC
-      default: COMPLETE
-    v2reportsBioProject:
-      type: object
-      properties:
-        accession:
-          type: string
-          title: BioProject accession
-        title:
-          type: string
-          title: Title of the BioProject provided by the submitter
-        parent_accession:
-          type: string
-        parent_accessions:
-          type: array
-          items:
-            type: string
+      - all
+      - refseq
+      - genbank
+      default: all
     v2reportsAssemblyDataReport:
       type: object
       properties:
@@ -4734,51 +5078,15 @@ components:
           title: Metadata on the completeness and contamination of this assembly
         average_nucleotide_identity:
           $ref: '#/components/schemas/v2reportsAverageNucleotideIdentity'
-    v2SequenceAccessionRequest:
-      type: object
-      properties:
-        accession:
-          type: string
-          title: Nucleotide sequence accession associated with a genome assembly
-    v2reportsAverageNucleotideIdentity:
-      type: object
-      properties:
-        taxonomy_check_status:
-          $ref: '#/components/schemas/v2reportsAverageNucleotideIdentityTaxonomyCheckStatus'
-          title: Indicates whether the ANI result is consistent with the submitted organism
-        match_status:
-          $ref: '#/components/schemas/v2reportsAverageNucleotideIdentityMatchStatus'
-          title: Indicates the specific type of ANI result that supports the Taxonomy check status
-        submitted_organism:
-          type: string
-          title: Taxonomic name of the query assembly
-        submitted_species:
-          type: string
-          title: Species name of the query assembly
-        category:
-          $ref: '#/components/schemas/v2reportsANITypeCategory'
-          title: Category of type or validated assembly
-        submitted_ani_match:
-          $ref: '#/components/schemas/v2reportsANIMatch'
-        best_ani_match:
-          $ref: '#/components/schemas/v2reportsANIMatch'
-        comment:
-          type: string
-          title: Additional information about the ANI result
-    v2reportsBioProjectLineage:
-      type: object
-      properties:
-        bioprojects:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsBioProject'
-    v2reportsWarningReplacedId:
-      type: object
-      properties:
-        requested:
-          type: string
-        returned:
-          type: string
+    v2reportsAssemblyLevel:
+      type: string
+      enum:
+      - chromosome
+      - scaffold
+      - contig
+      - complete_genome
+      default: chromosome
+      title: 'The level of the genome assembly: Chromosome, Scaffold, Contig or Complete Genome'
     v2reportsBioSampleStatus:
       type: object
       properties:
@@ -4786,178 +5094,6 @@ components:
           type: string
         when:
           type: string
-    v2reportsAdditionalSubmitter:
-      type: object
-      properties:
-        genbank_accession:
-          type: string
-          title: genbank accession of extra sequence
-        refseq_accession:
-          type: string
-          title: genbank accession of extra sequence
-        chr_name:
-          type: string
-          title: chromosome name
-        molecule_type:
-          type: string
-          title: molecule type
-        submitter:
-          type: string
-          title: Name of submitter
-        bioproject_accession:
-          type: string
-          title: Bioproject accession
-    v2AssemblyLinksRequest:
-      type: object
-      properties:
-        accessions:
-          type: array
-          items:
-            type: string
-        assembly_link_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2AssemblyLinksReplyAssemblyLinkType'
-    v2reportsTranscript:
-      type: object
-      properties:
-        accession_version:
-          type: string
-          title: RefSeq transcript accession with version
-        name:
-          type: string
-          title: RefSeq transcript name
-        length:
-          type: integer
-          title: RefSeq transcript length in nucleotides
-        cds:
-          $ref: '#/components/schemas/v2reportsSeqRangeSet'
-        genomic_locations:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsGenomicLocation'
-        ensembl_transcript:
-          type: string
-          title: Ensembl transcript accession with version
-        protein:
-          $ref: '#/components/schemas/v2reportsProtein'
-        type:
-          $ref: '#/components/schemas/v2reportsTranscriptTranscriptType'
-          title: Indicates transcript protein-coding potential and whether it was computationally predicted
-        select_category:
-          $ref: '#/components/schemas/v2reportsTranscriptSelectCategory'
-    v2reportsBioSampleId:
-      type: object
-      properties:
-        db:
-          type: string
-        label:
-          type: string
-        value:
-          type: string
-    v2reportsTranscriptTranscriptType:
-      type: string
-      enum:
-      - UNKNOWN
-      - PROTEIN_CODING
-      - NON_CODING
-      - PROTEIN_CODING_MODEL
-      - NON_CODING_MODEL
-      default: UNKNOWN
-    v2reportsBuscoStat:
-      type: object
-      properties:
-        busco_lineage:
-          type: string
-          title: BUSCO Lineage
-        busco_ver:
-          type: string
-          title: BUSCO Version
-        complete:
-          type: number
-          format: float
-          title: 'BUSCO score: Complete'
-        single_copy:
-          type: number
-          format: float
-          title: 'BUSCO score: Single Copy'
-        duplicated:
-          type: number
-          format: float
-          title: 'BUSCO score: Duplicated'
-        fragmented:
-          type: number
-          format: float
-          title: 'BUSCO score: Fragmented'
-        missing:
-          type: number
-          format: float
-          title: 'BUSCO score: Missing'
-        total_count:
-          type: string
-          format: uint64
-          title: 'BUSCO score: Total Count'
-    v2DownloadSummaryFileSummary:
-      type: object
-      properties:
-        file_count:
-          type: integer
-        size_mb:
-          type: number
-          format: float
-    v2reportsErrorGeneErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_GENE_ERROR_CODE
-      - INCOMPLETE_LOOKUP_SYMBOL
-      - INVALID_TAXON_GENE_ARGUMENT
-      default: UNKNOWN_GENE_ERROR_CODE
-    v2reportsFeatureCounts:
-      type: object
-      properties:
-        gene_counts:
-          $ref: '#/components/schemas/v2reportsGeneCounts'
-          title: Counts of gene types
-    v2reportsOrganism:
-      type: object
-      properties:
-        tax_id:
-          type: integer
-          title: NCBI Taxonomy identifier
-        sci_name:
-          type: string
-          title: Scientific name
-        organism_name:
-          type: string
-          title: Scientific name
-        common_name:
-          type: string
-          title: Common name
-        lineage:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsLineageOrganism'
-        strain:
-          type: string
-        pangolin_classification:
-          type: string
-        infraspecific_names:
-          $ref: '#/components/schemas/v2reportsInfraspecificNames'
-    v2AssemblyCheckMHistogramReplyHistogramInterval:
-      type: object
-      properties:
-        start_pos:
-          type: number
-          format: float
-          title: Starting position for this interval
-        stop_pos:
-          type: number
-          format: float
-          title: ending position for this interval
-        count:
-          type: number
-          format: float
-          title: number of elements in this interval
     v2reportsBioSampleAttribute:
       type: object
       properties:
@@ -4965,146 +5101,6 @@ components:
           type: string
         value:
           type: string
-    v2reportsOrganelleInfo:
-      type: object
-      properties:
-        assembly_name:
-          type: string
-          title: Name of associated nuclear assembly
-        infraspecific_name:
-          type: string
-          title: The strain, breed, cultivar or ecotype of the organism from which the sequences in the assembly were derived
-        bioproject:
-          type: array
-          items:
-            type: string
-        description:
-          type: string
-          title: Long description of the organelle genome
-        total_seq_length:
-          type: string
-          format: uint64
-          title: Sequence length of the organelle genome
-        submitter:
-          type: string
-          title: Name of submitter
-    v2reportsErrorAssemblyErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_ASSEMBLY_ERROR_CODE
-      - INVALID_BIOPROJECT_IDS
-      - NO_ASSEMBLIES_FOR_BIOPROJECTS
-      - INVALID_TAXON
-      - MISSING_SEARCH_FIELD
-      - INVALID_BIOSAMPLE_IDS
-      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
-      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
-      - INVALID_WGS_ACCESSIONS
-      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
-      default: UNKNOWN_ASSEMBLY_ERROR_CODE
-    v2reportsLinkedAssemblyType:
-      type: string
-      enum:
-      - LINKED_ASSEMBLY_TYPE_UNKNOWN
-      - alternate_pseudohaplotype_of_diploid
-      - principal_pseudohaplotype_of_diploid
-      - maternal_haplotype_of_diploid
-      - paternal_haplotype_of_diploid
-      - haplotype_1
-      - haplotype_2
-      - haplotype_3
-      - haplotype_4
-      - haploid
-      default: LINKED_ASSEMBLY_TYPE_UNKNOWN
-    v2reportsTranscriptSelectCategory:
-      type: string
-      enum:
-      - SELECT_UNKNOWN
-      - REFSEQ_SELECT
-      - MANE_SELECT
-      - MANE_PLUS_CLINICAL
-      default: SELECT_UNKNOWN
-    v2AssemblyRevisionHistoryRequest:
-      type: object
-      properties:
-        accession:
-          type: string
-          title: One genome assembly accession
-    v2reportsGenomeAnnotationReportPage:
-      type: object
-      properties:
-        reports:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsGenomeAnnotationReportMatch'
-        messages:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsMessage'
-        total_count:
-          type: integer
-          title: The total count of available genes (ignoring the page_size parameter).
-        next_page_token:
-          type: string
-          title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
-    v2AssemblyDatasetReportsRequestContentType:
-      type: string
-      enum:
-      - COMPLETE
-      - ASSM_ACC
-      - PAIRED_ACC
-      default: COMPLETE
-    v2reportsSourceDatabase:
-      type: string
-      enum:
-      - SOURCE_DATABASE_UNSPECIFIED
-      - SOURCE_DATABASE_GENBANK
-      - SOURCE_DATABASE_REFSEQ
-      default: SOURCE_DATABASE_UNSPECIFIED
-    v2reportsErrorOrganelleErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_ORGANELLE_ERROR_CODE
-      - INVALID_ORGANELLE_TAXON
-      - NO_ORGANELLES_FOR_ACCESSION
-      default: UNKNOWN_ORGANELLE_ERROR_CODE
-    v2reportsProtein:
-      type: object
-      properties:
-        accession_version:
-          type: string
-          title: RefSeq protein accession with version
-        name:
-          type: string
-          title: Protein name
-        length:
-          type: integer
-          title: Protein length in amino acids
-        isoform_name:
-          type: string
-          title: Protein isoform name
-        ensembl_protein:
-          type: string
-          title: Ensembl protein accession with version
-        mature_peptides:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsMaturePeptide'
-    v2SortDirection:
-      type: string
-      enum:
-      - SORT_DIRECTION_UNSPECIFIED
-      - SORT_DIRECTION_ASCENDING
-      - SORT_DIRECTION_DESCENDING
-      default: SORT_DIRECTION_UNSPECIFIED
-    protobufAny:
-      type: object
-      properties:
-        type_url:
-          type: string
-        value:
-          type: string
-          format: byte
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

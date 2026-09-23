@@ -1,12 +1,10 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: NCBI Datasets BioSample Prokaryote API
+  title: NCBI Datasets Prokaryote API
   version: v2
   description: '### NCBI Datasets is a resource that lets you easily gather data from NCBI.
 
-    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.
-
-    '
+    The NCBI Datasets version 2 API is updated often to add new features, fix bugs, and enhance usability.'
 servers:
 - url: https://api.ncbi.nlm.nih.gov/datasets/v2
 security:
@@ -15,9 +13,7 @@ tags:
 - name: Prokaryote
   description: '#### Options to download prokaryote gene data, including the associated sequence and metadata.
 
-    These gene services allow you to download gene and protein sequence, and metadata as a prokaryote gene data package, for prokaryotic [RefSeq non-redundant proteins](https://www.ncbi.nlm.nih.gov/refseq/about/nonredundantproteins/).
-
-    '
+    These gene services allow you to download gene and protein sequence, and metadata as a prokaryote gene data package, for prokaryotic RefSeq non-redundant proteins.'
 paths:
   /protein/accession/{accessions}/download:
     get:
@@ -140,11 +136,6 @@ paths:
           default: ncbi_dataset.zip
 components:
   schemas:
-    v2ProkaryoteGeneRequestGeneFlankConfig:
-      type: object
-      properties:
-        length:
-          type: integer
     rpcStatus:
       type: object
       properties:
@@ -157,6 +148,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/protobufAny'
+    protobufAny:
+      type: object
+      properties:
+        type_url:
+          type: string
+        value:
+          type: string
+          format: byte
     v2Fasta:
       type: string
       enum:
@@ -169,6 +168,11 @@ components:
       - FASTA_5P_UTR
       - FASTA_3P_UTR
       default: FASTA_UNSPECIFIED
+    v2ProkaryoteGeneRequestGeneFlankConfig:
+      type: object
+      properties:
+        length:
+          type: integer
     v2ProkaryoteGeneRequest:
       type: object
       properties:
@@ -185,14 +189,6 @@ components:
         taxon:
           type: string
           title: Limit gene sequences and the genome assemblies described by the [annotation report file](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-reports/prokaryote-gene-location/) to the specified NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank.
-    protobufAny:
-      type: object
-      properties:
-        type_url:
-          type: string
-        value:
-          type: string
-          format: byte
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
