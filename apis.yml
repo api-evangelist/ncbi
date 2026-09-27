@@ -11,15 +11,19 @@ description: >
 url: https://www.ncbi.nlm.nih.gov/home/develop/api/
 deliveryModel:
   model: saas
-  open_source: false
+  license_evidence:
+    not_product:
+    - ncbi/datasets
+  open_source: unknown
   commercial: true
   callable_host: true
   label: Hosted service · you call their endpoint
-  confidence: high
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-not-product
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: free
@@ -45,6 +49,8 @@ tags:
   - Taxonomy
   - Chemistry
   - Open Access
+  - Research Data
+  - OAI-PMH
 created: "2026-06-13"
 modified: "2026-06-13"
 specificationVersion: '0.23'
@@ -79,30 +85,6 @@ apis:
   contact:
   - FN: NCBI E-utilities Support
     email: vog.hin.mln.ibcn@seitilitue
-    url: https://support.nlm.nih.gov/support/create-case/
-- name: NCBI BLAST URL API
-  description: >
-    The BLAST (Basic Local Alignment Search Tool) URL API allows developers to submit nucleotide and protein
-    sequence homology searches via HTTPS, poll for job status, and retrieve results in multiple formats
-    including XML, JSON, and tabular output. Jobs can be processed at NCBI or at cloud service providers.
-    No API key is required, though responsible use guidelines apply.
-  image: https://www.ncbi.nlm.nih.gov/favicon.ico
-  humanURL: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
-  baseURL: https://blast.ncbi.nlm.nih.gov/blast/Blast.cgi
-  tags:
-  - BLAST
-  - Sequence Alignment
-  - Homology
-  - Genomics
-  properties:
-  - type: Documentation
-    url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
-  - type: RateLimits
-    url: https://kinlane.github.io/ncbi/rate-limits/blast.yml
-  - type: Plans
-    url: https://kinlane.github.io/ncbi/plans/blast.yml
-  contact:
-  - FN: NCBI BLAST Support
     url: https://support.nlm.nih.gov/support/create-case/
 - name: PubChem PUG REST API
   description: >
@@ -362,9 +344,174 @@ apis:
     url: https://kinlane.github.io/ncbi/rate-limits/datasets.yml
   - type: Plans
     url: https://kinlane.github.io/ncbi/plans/datasets.yml
+- aid: ncbi:ncbi-blast-api
+  name: National Center for Biotechnology Information (NCBI) BLAST API
+  description: BLAST sequence search submission and retrieval
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - BLAST
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-blast-api-openapi.yml
+  - type: Documentation
+    url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/blast.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/blast.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  - type: Portal
+    url: https://www.ncbi.nlm.nih.gov/home/develop/api/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-national-library-of-medicine/refs/heads/main/rules/ncbi-e-utilities-rules.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/
+  - type: SwaggerUI
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: Repository
+    url: https://github.com/ncbi/datasets
+  - type: Documentation
+    url: https://clinicaltrials.gov/data-api/api
+  - type: Portal
+    url: https://clinicaltrials.gov/data-api/api#introduction
+- aid: ncbi:ncbi-fetch-api
+  name: National Center for Biotechnology Information (NCBI) Fetch API
+  description: Retrieve records from Entrez databases
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Fetch
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-fetch-api-openapi.yml
+  - type: Documentation
+    url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/blast.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/blast.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  - type: Portal
+    url: https://www.ncbi.nlm.nih.gov/home/develop/api/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-national-library-of-medicine/refs/heads/main/rules/ncbi-e-utilities-rules.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/
+  - type: SwaggerUI
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: Repository
+    url: https://github.com/ncbi/datasets
+  - type: Documentation
+    url: https://clinicaltrials.gov/data-api/api
+  - type: Portal
+    url: https://clinicaltrials.gov/data-api/api#introduction
+- aid: ncbi:ncbi-info-api
+  name: National Center for Biotechnology Information (NCBI) Info API
+  description: Database information and statistics
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Info
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-info-api-openapi.yml
+  - type: Documentation
+    url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/blast.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/blast.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  - type: Portal
+    url: https://www.ncbi.nlm.nih.gov/home/develop/api/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-national-library-of-medicine/refs/heads/main/rules/ncbi-e-utilities-rules.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/
+  - type: SwaggerUI
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: Repository
+    url: https://github.com/ncbi/datasets
+  - type: Documentation
+    url: https://clinicaltrials.gov/data-api/api
+  - type: Portal
+    url: https://clinicaltrials.gov/data-api/api#introduction
+- aid: ncbi:ncbi-link-api
+  name: National Center for Biotechnology Information (NCBI) Link API
+  description: Find linked records across databases
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Link
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-link-api-openapi.yml
+  - type: Documentation
+    url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/blast.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/blast.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  - type: Portal
+    url: https://www.ncbi.nlm.nih.gov/home/develop/api/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-national-library-of-medicine/refs/heads/main/rules/ncbi-e-utilities-rules.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/
+  - type: SwaggerUI
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: Repository
+    url: https://github.com/ncbi/datasets
+  - type: Documentation
+    url: https://clinicaltrials.gov/data-api/api
+  - type: Portal
+    url: https://clinicaltrials.gov/data-api/api#introduction
+- aid: ncbi:ncbi-search-api
+  name: National Center for Biotechnology Information (NCBI) Search API
+  description: Search Entrez databases
+  humanURL: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  baseURL: https://eutils.ncbi.nlm.nih.gov/entrez/eutils/
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/ncbi-search-api-openapi.yml
+  - type: Documentation
+    url: https://blast.ncbi.nlm.nih.gov/doc/blast-help/developerinfo.html
+  - type: RateLimits
+    url: https://kinlane.github.io/ncbi/rate-limits/blast.yml
+  - type: Plans
+    url: https://kinlane.github.io/ncbi/plans/blast.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/books/NBK25497/
+  - type: Portal
+    url: https://www.ncbi.nlm.nih.gov/home/develop/api/
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/united-states-national-library-of-medicine/refs/heads/main/rules/ncbi-e-utilities-rules.yml
+  - type: Documentation
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/
+  - type: SwaggerUI
+    url: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/api/rest-api/
+  - type: Repository
+    url: https://github.com/ncbi/datasets
+  - type: Documentation
+    url: https://clinicaltrials.gov/data-api/api
+  - type: Portal
+    url: https://clinicaltrials.gov/data-api/api#introduction
 common:
   - type: Website
-    url: https://www.nih.gov/
+    url: https://www.ncbi.nlm.nih.gov/
   - type: AgenticAccess
     url: agentic-access/ncbi-agentic-access.yml
   - type: DomainSecurity
@@ -393,3 +540,4 @@ common:
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
+x-parent: united-states-national-library-of-medicine

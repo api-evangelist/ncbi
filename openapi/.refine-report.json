@@ -1,7 +1,12 @@
 {
   "provider": "ncbi",
   "sources": [
-    "_original/ncbi-datasets-api.yaml"
+    "_original/ncbi-datasets-api.yaml",
+    "ncbi-blast-url-api-openapi.yml",
+    "ncbi-e-utilities-fetch-api-openapi.yml",
+    "ncbi-e-utilities-info-api-openapi.yml",
+    "ncbi-e-utilities-link-api-openapi.yml",
+    "ncbi-e-utilities-search-api-openapi.yml"
   ],
   "outputs": [
     "ncbi-biosample-api-openapi.yml",
@@ -11,15 +16,29 @@
     "ncbi-prokaryote-api-openapi.yml",
     "ncbi-taxonomy-api-openapi.yml",
     "ncbi-version-api-openapi.yml",
-    "ncbi-virus-api-openapi.yml"
+    "ncbi-virus-api-openapi.yml",
+    "ncbi-blast-api-openapi.yml",
+    "ncbi-fetch-api-openapi.yml",
+    "ncbi-info-api-openapi.yml",
+    "ncbi-link-api-openapi.yml",
+    "ncbi-search-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 5 superseded output(s) from the previous generation"
+  ],
   "errors": [],
-  "warnings": [],
+  "warnings": [
+    "ncbi-blast-url-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /Blast.cgi get, /Blast.cgi put); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "ncbi-e-utilities-fetch-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /efetch.fcgi get, /esummary.fcgi get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "ncbi-e-utilities-info-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /einfo.fcgi get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "ncbi-e-utilities-link-api-openapi.yml: previously refined output kept for 1 operation(s) no archived document covers (e.g. /elink.fcgi get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth.",
+    "ncbi-e-utilities-search-api-openapi.yml: previously refined output kept for 2 operation(s) no archived document covers (e.g. /esearch.fcgi get, /espell.fcgi get); its other 0 operation(s) came from the archive and were dropped from it. The archive is incomplete for this provider \u2014 re-harvest to restore _original/ as the full source of truth."
+  ],
   "notes": [
     "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "ncbi-datasets-api.yaml: upgraded openapi 3.0.1 -> OpenAPI 3.2.0",
-    "apis.yml register: already-registered"
+    "superseded outputs removed: ncbi-blast-url-api-openapi.yml, ncbi-e-utilities-fetch-api-openapi.yml, ncbi-e-utilities-info-api-openapi.yml, ncbi-e-utilities-link-api-openapi.yml, ncbi-e-utilities-search-api-openapi.yml",
+    "apis.yml register: written (+5 apis, 18 total)"
   ],
   "skipped": [
     "ncbi-biosample-api-openapi.yml: previously refined output, superseded by openapi/_original/",

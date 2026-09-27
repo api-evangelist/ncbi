@@ -37,14 +37,17 @@ paths:
                 $ref: '#/components/schemas/v2VersionReply'
 components:
   schemas:
-    protobufAny:
+    v2VersionReply:
       type: object
       properties:
-        type_url:
+        version:
           type: string
-        value:
-          type: string
-          format: byte
+        major_ver:
+          type: integer
+        minor_ver:
+          type: integer
+        patch_ver:
+          type: integer
     rpcStatus:
       type: object
       properties:
@@ -57,17 +60,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/protobufAny'
-    v2VersionReply:
+    protobufAny:
       type: object
       properties:
-        version:
+        type_url:
           type: string
-        major_ver:
-          type: integer
-        minor_ver:
-          type: integer
-        patch_ver:
-          type: integer
+        value:
+          type: string
+          format: byte
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

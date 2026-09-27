@@ -1,0 +1,85 @@
+openapi: 3.2.0
+info:
+  title: NCBI E-Utilities Link API
+  description: The NCBI E-Utilities (Entrez Programming Utilities) are the public API to the NCBI Entrez system providing access to all 41 Entrez databases including PubMed (biomedical literature), PMC (full-text articles), Gene, Nuccore (nucleotide sequences), Protein, SNP, and more. Supports search, retrieval, linking, posting, and spelling operations. API keys from https://www.ncbi.nlm.nih.gov/account/ increase the rate limit from 3 to 10 requests per second.
+  version: 1.0.0
+  contact:
+    name: NCBI
+    url: https://www.ncbi.nlm.nih.gov/home/develop/api/
+    email: info@ncbi.nlm.nih.gov
+  license:
+    name: Public Domain
+    url: https://www.usa.gov/government-works
+servers:
+- url: https://eutils.ncbi.nlm.nih.gov/entrez/eutils
+  description: NCBI E-Utilities API
+tags:
+- name: Link
+  description: Find linked records across databases
+paths:
+  /elink.fcgi:
+    get:
+      operationId: getLinkages
+      summary: Get Linked Records
+      description: Find records related to a set of input UIDs in any Entrez database. Supports finding related articles, linked sequences, gene-to-protein links, and other cross-database connections.
+      tags:
+      - Link
+      parameters:
+      - name: dbfrom
+        in: query
+        description: Source database
+        required: true
+        schema:
+          type: string
+        example: pubmed
+      - name: db
+        in: query
+        description: Target database (leave empty for related records in same db)
+        required: false
+        schema:
+          type: string
+      - name: id
+        in: query
+        description: Comma-separated source UIDs
+        required: true
+        schema:
+          type: string
+        example: '33515491'
+      - name: api_key
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: cmd
+        in: query
+        description: Link command (neighbor, prlinks, llinks, acheck, ncheck, lcheck)
+        required: false
+        schema:
+          type: string
+          default: neighbor
+      - name: linkname
+        in: query
+        description: Named link to follow (e.g. pubmed_pubmed_citedin)
+        required: false
+        schema:
+          type: string
+      - name: retmode
+        in: query
+        required: false
+        schema:
+          type: string
+          default: json
+      responses:
+        '200':
+          description: Linked record UIDs and link names
+          content:
+            application/json:
+              schema:
+                type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: query
+      name: api_key
+      description: NCBI API key from https://www.ncbi.nlm.nih.gov/account/
