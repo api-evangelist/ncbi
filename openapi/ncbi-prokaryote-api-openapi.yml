@@ -148,11 +148,6 @@ components:
       - FASTA_5P_UTR
       - FASTA_3P_UTR
       default: FASTA_UNSPECIFIED
-    v2ProkaryoteGeneRequestGeneFlankConfig:
-      type: object
-      properties:
-        length:
-          type: integer
     rpcStatus:
       type: object
       properties:
@@ -189,6 +184,11 @@ components:
         taxon:
           type: string
           title: Limit gene sequences and the genome assemblies described by the [annotation report file](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-reports/prokaryote-gene-location/) to the specified NCBI Taxonomy ID or name (common or scientific) at any taxonomic rank.
+    v2ProkaryoteGeneRequestGeneFlankConfig:
+      type: object
+      properties:
+        length:
+          type: integer
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

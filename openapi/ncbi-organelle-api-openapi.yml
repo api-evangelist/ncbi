@@ -391,20 +391,6 @@ paths:
                   - '9443'
 components:
   schemas:
-    v2IncludeTabularHeader:
-      type: string
-      enum:
-      - INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
-      - INCLUDE_TABULAR_HEADER_ALWAYS
-      - INCLUDE_TABULAR_HEADER_NEVER
-      default: INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
-    v2reportsMessage:
-      type: object
-      properties:
-        error:
-          $ref: '#/components/schemas/v2reportsError'
-        warning:
-          $ref: '#/components/schemas/v2reportsWarning'
     v2reportsErrorGeneErrorCode:
       type: string
       enum:
@@ -412,6 +398,32 @@ components:
       - INCOMPLETE_LOOKUP_SYMBOL
       - INVALID_TAXON_GENE_ARGUMENT
       default: UNKNOWN_GENE_ERROR_CODE
+    v2IncludeTabularHeader:
+      type: string
+      enum:
+      - INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
+      - INCLUDE_TABULAR_HEADER_ALWAYS
+      - INCLUDE_TABULAR_HEADER_NEVER
+      default: INCLUDE_TABULAR_HEADER_FIRST_PAGE_ONLY
+    v2reportsSequenceInformation:
+      type: object
+      properties:
+        accession:
+          type: string
+          title: The accession.version of the organelle genomic nucleotide sequence.
+        submission_date:
+          type: string
+          title: Date record was submitted to GenBank or Curated into RefSeq (ISO 8601)
+        submitter:
+          type: string
+          title: The submitter, e.g. NCBI Genome Project for RefSeq
+    v2reportsErrorOrganelleErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_ORGANELLE_ERROR_CODE
+      - INVALID_ORGANELLE_TAXON
+      - NO_ORGANELLES_FOR_ACCESSION
+      default: UNKNOWN_ORGANELLE_ERROR_CODE
     v2reportsLineageOrganism:
       type: object
       properties:
@@ -421,76 +433,47 @@ components:
         name:
           type: string
           title: Scientific name
-    v2reportsOrganelleGeneCounts:
-      type: object
-      properties:
-        total:
-          type: integer
-          title: Total number of annotated genes
-        protein_coding:
-          type: integer
-          title: Count of annotated genes that encode a protein
-        rrna:
-          type: integer
-          title: Count of ribosomal RNAs
-        trna:
-          type: integer
-          title: Count of transfer RNAs
-        lncrna:
-          type: integer
-          title: Count of long, non-coding RNAs
-    protobufAny:
-      type: object
-      properties:
-        type_url:
-          type: string
-        value:
-          type: string
-          format: byte
-    v2reportsOrganism:
-      type: object
-      properties:
-        tax_id:
-          type: integer
-          title: NCBI Taxonomy identifier
-        sci_name:
-          type: string
-          title: Scientific name
-        organism_name:
-          type: string
-          title: Scientific name
-        common_name:
-          type: string
-          title: Common name
-        lineage:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsLineageOrganism'
-        strain:
-          type: string
-        pangolin_classification:
-          type: string
-        infraspecific_names:
-          $ref: '#/components/schemas/v2reportsInfraspecificNames'
-    v2OrganelleSort:
-      type: object
-      properties:
-        field:
-          type: string
-        direction:
-          $ref: '#/components/schemas/v2SortDirection'
-    v2reportsOrganelleType:
+    v2reportsErrorAssemblyErrorCode:
       type: string
       enum:
-      - ORGANELLE_TYPE_UNKNOWN
-      - Mitochondrion
-      - Chloroplast
-      - Plastid
-      - Kinetoplast
-      - Apicoplast
-      - Chromatophore
-      - Cyanelle
-      default: ORGANELLE_TYPE_UNKNOWN
+      - UNKNOWN_ASSEMBLY_ERROR_CODE
+      - INVALID_BIOPROJECT_IDS
+      - NO_ASSEMBLIES_FOR_BIOPROJECTS
+      - INVALID_TAXON
+      - MISSING_SEARCH_FIELD
+      - INVALID_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
+      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
+      - INVALID_WGS_ACCESSIONS
+      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
+      default: UNKNOWN_ASSEMBLY_ERROR_CODE
+    v2reportsInfraspecificNames:
+      type: object
+      properties:
+        breed:
+          type: string
+          title: A homogenous group of animals within a domesticated species
+        cultivar:
+          type: string
+          title: A variety of plant within a species produced and maintained by cultivation
+        ecotype:
+          type: string
+          title: A population or subspecies occupying a distinct habitat
+        isolate:
+          type: string
+          title: The individual isolate from which the sequences in the genome assembly were derived
+        sex:
+          type: string
+          title: Physical sex of sampled organism
+        strain:
+          type: string
+          title: A genetic variant, subtype or culture within a species
+    v2OrganelleMetadataRequestContentType:
+      type: string
+      enum:
+      - COMPLETE
+      - ASSM_ACC
+      default: COMPLETE
     v2reportsBioProject:
       type: object
       properties:
@@ -506,145 +489,6 @@ components:
           type: array
           items:
             type: string
-    v2reportsSequenceInformation:
-      type: object
-      properties:
-        accession:
-          type: string
-          title: The accession.version of the organelle genomic nucleotide sequence.
-        submission_date:
-          type: string
-          title: Date record was submitted to GenBank or Curated into RefSeq (ISO 8601)
-        submitter:
-          type: string
-          title: The submitter, e.g. NCBI Genome Project for RefSeq
-    v2reportsError:
-      type: object
-      properties:
-        assembly_error_code:
-          $ref: '#/components/schemas/v2reportsErrorAssemblyErrorCode'
-        gene_error_code:
-          $ref: '#/components/schemas/v2reportsErrorGeneErrorCode'
-        organelle_error_code:
-          $ref: '#/components/schemas/v2reportsErrorOrganelleErrorCode'
-        virus_error_code:
-          $ref: '#/components/schemas/v2reportsErrorVirusErrorCode'
-        taxonomy_error_code:
-          $ref: '#/components/schemas/v2reportsErrorTaxonomyErrorCode'
-        reason:
-          type: string
-        message:
-          type: string
-        invalid_identifiers:
-          type: array
-          items:
-            type: string
-    v2reportsWarningReplacedId:
-      type: object
-      properties:
-        requested:
-          type: string
-        returned:
-          type: string
-    v2reportsWarningGeneWarningCode:
-      type: string
-      enum:
-      - UNKNOWN_GENE_WARNING_CODE
-      - ACCESSION_VERSION_MISMATCH
-      - REPLACED_GENE_ID
-      - DISCONTINUED_GENE_ID
-      - UNRECOGNIZED_GENE_ID
-      - UNRECOGNIZED_GENE_SYMBOL
-      - UNRECOGNIZED_ACCESSION
-      - UNRECOGNIZED_TAX_TOKEN
-      - NO_GENE_ANNOTATION_FOUND
-      - ABOVE_SPECIES_TAXON
-      default: UNKNOWN_GENE_WARNING_CODE
-    v2reportsErrorOrganelleErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_ORGANELLE_ERROR_CODE
-      - INVALID_ORGANELLE_TAXON
-      - NO_ORGANELLES_FOR_ACCESSION
-      default: UNKNOWN_ORGANELLE_ERROR_CODE
-    v2reportsErrorVirusErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_VIRUS_ERROR_CODE
-      default: UNKNOWN_VIRUS_ERROR_CODE
-    v2reportsErrorAssemblyErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_ASSEMBLY_ERROR_CODE
-      - INVALID_BIOPROJECT_IDS
-      - NO_ASSEMBLIES_FOR_BIOPROJECTS
-      - INVALID_TAXON
-      - MISSING_SEARCH_FIELD
-      - INVALID_BIOSAMPLE_IDS
-      - NO_ASSEMBLIES_FOR_BIOSAMPLE_IDS
-      - NO_ASSEMBLIES_FOR_ASSEMBLY_NAMES
-      - INVALID_WGS_ACCESSIONS
-      - NO_ASSEMBLIES_FOR_WGS_ACCESSIONS
-      default: UNKNOWN_ASSEMBLY_ERROR_CODE
-    v2reportsOrganelleBiosample:
-      type: object
-      properties:
-        accession:
-          type: string
-          title: BioSample Accession identifier
-    v2reportsOrganelle:
-      type: object
-      properties:
-        description:
-          $ref: '#/components/schemas/v2reportsOrganelleType'
-        genbank:
-          $ref: '#/components/schemas/v2reportsSequenceInformation'
-        refseq:
-          $ref: '#/components/schemas/v2reportsSequenceInformation'
-        organism:
-          $ref: '#/components/schemas/v2reportsOrganism'
-          title: Taxon for the organelle
-        bioprojects:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2reportsBioProject'
-        biosample:
-          $ref: '#/components/schemas/v2reportsOrganelleBiosample'
-          title: The associated BioSample.
-        gene_counts:
-          $ref: '#/components/schemas/v2reportsOrganelleGeneCounts'
-        length:
-          type: integer
-          title: Genome length
-        topology:
-          $ref: '#/components/schemas/v2reportsOrganelleTopology'
-        gene_count:
-          type: integer
-    v2reportsWarning:
-      type: object
-      properties:
-        gene_warning_code:
-          $ref: '#/components/schemas/v2reportsWarningGeneWarningCode'
-        reason:
-          type: string
-        message:
-          type: string
-        replaced_id:
-          $ref: '#/components/schemas/v2reportsWarningReplacedId'
-        unrecognized_identifier:
-          type: string
-    rpcStatus:
-      type: object
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-        details:
-          type: array
-          items:
-            $ref: '#/components/schemas/protobufAny'
     v2OrganelleMetadataRequest:
       type: object
       properties:
@@ -690,6 +534,205 @@ components:
         include_tabular_header:
           $ref: '#/components/schemas/v2IncludeTabularHeader'
           title: Specify when to include the table header when requesting a tabular report.
+    v2AnnotationForOrganelleType:
+      type: string
+      enum:
+      - DEFAULT
+      - GENOME_FASTA
+      - CDS_FASTA
+      - PROTEIN_FASTA
+      default: DEFAULT
+    rpcStatus:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/protobufAny'
+    v2reportsOrganism:
+      type: object
+      properties:
+        tax_id:
+          type: integer
+          title: NCBI Taxonomy identifier
+        sci_name:
+          type: string
+          title: Scientific name
+        organism_name:
+          type: string
+          title: Scientific name
+        common_name:
+          type: string
+          title: Common name
+        lineage:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsLineageOrganism'
+        strain:
+          type: string
+        pangolin_classification:
+          type: string
+        infraspecific_names:
+          $ref: '#/components/schemas/v2reportsInfraspecificNames'
+    protobufAny:
+      type: object
+      properties:
+        type_url:
+          type: string
+        value:
+          type: string
+          format: byte
+    v2OrganelleSort:
+      type: object
+      properties:
+        field:
+          type: string
+        direction:
+          $ref: '#/components/schemas/v2SortDirection'
+    v2OrganelleMetadataRequestOrganelleTableFormat:
+      type: string
+      enum:
+      - ORGANELLE_TABLE_FORMAT_NO_TABLE
+      - SUMMARY
+      default: ORGANELLE_TABLE_FORMAT_NO_TABLE
+    v2reportsError:
+      type: object
+      properties:
+        assembly_error_code:
+          $ref: '#/components/schemas/v2reportsErrorAssemblyErrorCode'
+        gene_error_code:
+          $ref: '#/components/schemas/v2reportsErrorGeneErrorCode'
+        organelle_error_code:
+          $ref: '#/components/schemas/v2reportsErrorOrganelleErrorCode'
+        virus_error_code:
+          $ref: '#/components/schemas/v2reportsErrorVirusErrorCode'
+        taxonomy_error_code:
+          $ref: '#/components/schemas/v2reportsErrorTaxonomyErrorCode'
+        reason:
+          type: string
+        message:
+          type: string
+        invalid_identifiers:
+          type: array
+          items:
+            type: string
+    v2reportsOrganelleGeneCounts:
+      type: object
+      properties:
+        total:
+          type: integer
+          title: Total number of annotated genes
+        protein_coding:
+          type: integer
+          title: Count of annotated genes that encode a protein
+        rrna:
+          type: integer
+          title: Count of ribosomal RNAs
+        trna:
+          type: integer
+          title: Count of transfer RNAs
+        lncrna:
+          type: integer
+          title: Count of long, non-coding RNAs
+    v2reportsWarningGeneWarningCode:
+      type: string
+      enum:
+      - UNKNOWN_GENE_WARNING_CODE
+      - ACCESSION_VERSION_MISMATCH
+      - REPLACED_GENE_ID
+      - DISCONTINUED_GENE_ID
+      - UNRECOGNIZED_GENE_ID
+      - UNRECOGNIZED_GENE_SYMBOL
+      - UNRECOGNIZED_ACCESSION
+      - UNRECOGNIZED_TAX_TOKEN
+      - NO_GENE_ANNOTATION_FOUND
+      - ABOVE_SPECIES_TAXON
+      default: UNKNOWN_GENE_WARNING_CODE
+    v2reportsErrorTaxonomyErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_TAXONOMY_ERROR_CODE
+      - INVALID_TAXONOMY_TAXON
+      default: UNKNOWN_TAXONOMY_ERROR_CODE
+    v2SortDirection:
+      type: string
+      enum:
+      - SORT_DIRECTION_UNSPECIFIED
+      - SORT_DIRECTION_ASCENDING
+      - SORT_DIRECTION_DESCENDING
+      default: SORT_DIRECTION_UNSPECIFIED
+    v2reportsOrganelleType:
+      type: string
+      enum:
+      - ORGANELLE_TYPE_UNKNOWN
+      - Mitochondrion
+      - Chloroplast
+      - Plastid
+      - Kinetoplast
+      - Apicoplast
+      - Chromatophore
+      - Cyanelle
+      default: ORGANELLE_TYPE_UNKNOWN
+    v2reportsOrganelle:
+      type: object
+      properties:
+        description:
+          $ref: '#/components/schemas/v2reportsOrganelleType'
+        genbank:
+          $ref: '#/components/schemas/v2reportsSequenceInformation'
+        refseq:
+          $ref: '#/components/schemas/v2reportsSequenceInformation'
+        organism:
+          $ref: '#/components/schemas/v2reportsOrganism'
+          title: Taxon for the organelle
+        bioprojects:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2reportsBioProject'
+        biosample:
+          $ref: '#/components/schemas/v2reportsOrganelleBiosample'
+          title: The associated BioSample.
+        gene_counts:
+          $ref: '#/components/schemas/v2reportsOrganelleGeneCounts'
+        length:
+          type: integer
+          title: Genome length
+        topology:
+          $ref: '#/components/schemas/v2reportsOrganelleTopology'
+        gene_count:
+          type: integer
+    v2reportsErrorVirusErrorCode:
+      type: string
+      enum:
+      - UNKNOWN_VIRUS_ERROR_CODE
+      default: UNKNOWN_VIRUS_ERROR_CODE
+    v2OrganelleDownloadRequest:
+      type: object
+      properties:
+        accessions:
+          type: array
+          items:
+            type: string
+        exclude_sequence:
+          type: boolean
+          title: If true, exclude the genome sequence from the data package.
+        include_annotation_type:
+          type: array
+          items:
+            $ref: '#/components/schemas/v2AnnotationForOrganelleType'
+    v2reportsOrganelleTopology:
+      type: string
+      enum:
+      - TOPOLOGY_UNKNOWN
+      - Circular
+      - Linear
+      - Tandem
+      default: TOPOLOGY_UNKNOWN
     v2reportsOrganelleDataReports:
       type: object
       properties:
@@ -707,82 +750,39 @@ components:
         next_page_token:
           type: string
           title: A token that can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
-    v2reportsErrorTaxonomyErrorCode:
-      type: string
-      enum:
-      - UNKNOWN_TAXONOMY_ERROR_CODE
-      - INVALID_TAXONOMY_TAXON
-      default: UNKNOWN_TAXONOMY_ERROR_CODE
-    v2AnnotationForOrganelleType:
-      type: string
-      enum:
-      - DEFAULT
-      - GENOME_FASTA
-      - CDS_FASTA
-      - PROTEIN_FASTA
-      default: DEFAULT
-    v2OrganelleDownloadRequest:
+    v2reportsMessage:
       type: object
       properties:
-        accessions:
-          type: array
-          items:
-            type: string
-        exclude_sequence:
-          type: boolean
-          title: If true, exclude the genome sequence from the data package.
-        include_annotation_type:
-          type: array
-          items:
-            $ref: '#/components/schemas/v2AnnotationForOrganelleType'
-    v2OrganelleMetadataRequestContentType:
-      type: string
-      enum:
-      - COMPLETE
-      - ASSM_ACC
-      default: COMPLETE
-    v2reportsInfraspecificNames:
+        error:
+          $ref: '#/components/schemas/v2reportsError'
+        warning:
+          $ref: '#/components/schemas/v2reportsWarning'
+    v2reportsOrganelleBiosample:
       type: object
       properties:
-        breed:
+        accession:
           type: string
-          title: A homogenous group of animals within a domesticated species
-        cultivar:
+          title: BioSample Accession identifier
+    v2reportsWarning:
+      type: object
+      properties:
+        gene_warning_code:
+          $ref: '#/components/schemas/v2reportsWarningGeneWarningCode'
+        reason:
           type: string
-          title: A variety of plant within a species produced and maintained by cultivation
-        ecotype:
+        message:
           type: string
-          title: A population or subspecies occupying a distinct habitat
-        isolate:
+        replaced_id:
+          $ref: '#/components/schemas/v2reportsWarningReplacedId'
+        unrecognized_identifier:
           type: string
-          title: The individual isolate from which the sequences in the genome assembly were derived
-        sex:
+    v2reportsWarningReplacedId:
+      type: object
+      properties:
+        requested:
           type: string
-          title: Physical sex of sampled organism
-        strain:
+        returned:
           type: string
-          title: A genetic variant, subtype or culture within a species
-    v2OrganelleMetadataRequestOrganelleTableFormat:
-      type: string
-      enum:
-      - ORGANELLE_TABLE_FORMAT_NO_TABLE
-      - SUMMARY
-      default: ORGANELLE_TABLE_FORMAT_NO_TABLE
-    v2reportsOrganelleTopology:
-      type: string
-      enum:
-      - TOPOLOGY_UNKNOWN
-      - Circular
-      - Linear
-      - Tandem
-      default: TOPOLOGY_UNKNOWN
-    v2SortDirection:
-      type: string
-      enum:
-      - SORT_DIRECTION_UNSPECIFIED
-      - SORT_DIRECTION_ASCENDING
-      - SORT_DIRECTION_DESCENDING
-      default: SORT_DIRECTION_UNSPECIFIED
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

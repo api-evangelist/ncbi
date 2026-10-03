@@ -37,17 +37,6 @@ paths:
                 $ref: '#/components/schemas/v2VersionReply'
 components:
   schemas:
-    v2VersionReply:
-      type: object
-      properties:
-        version:
-          type: string
-        major_ver:
-          type: integer
-        minor_ver:
-          type: integer
-        patch_ver:
-          type: integer
     rpcStatus:
       type: object
       properties:
@@ -60,6 +49,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/protobufAny'
+    v2VersionReply:
+      type: object
+      properties:
+        version:
+          type: string
+        major_ver:
+          type: integer
+        minor_ver:
+          type: integer
+        patch_ver:
+          type: integer
     protobufAny:
       type: object
       properties:
