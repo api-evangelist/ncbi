@@ -49,6 +49,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/protobufAny'
+    protobufAny:
+      type: object
+      properties:
+        type_url:
+          type: string
+        value:
+          type: string
+          format: byte
     v2VersionReply:
       type: object
       properties:
@@ -60,14 +68,6 @@ components:
           type: integer
         patch_ver:
           type: integer
-    protobufAny:
-      type: object
-      properties:
-        type_url:
-          type: string
-        value:
-          type: string
-          format: byte
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
