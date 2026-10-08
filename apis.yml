@@ -510,6 +510,10 @@ apis:
   - type: Portal
     url: https://clinicaltrials.gov/data-api/api#introduction
 common:
+  - type: Plans
+    url: plans/blast.yml
+  - type: RateLimits
+    url: rate-limits/blast.yml
   - type: Website
     url: https://www.ncbi.nlm.nih.gov/
   - type: AgenticAccess
