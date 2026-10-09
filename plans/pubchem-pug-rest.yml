@@ -1,3 +1,7 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (undated — the file carries no date and git cannot supply one), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
 name: PubChem PUG REST API Plans
 description: >
   The PubChem PUG REST API is free to use with no registration required.
@@ -27,3 +31,57 @@ plans:
       - Structure search (substructure, similarity)
       - JSON, XML, SDF, CSV response formats
       - Integration with E-utilities cross-database links
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models: []
+  units: []
+  plans:
+  - name: Public (Free)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Public (Free)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Anonymous (No API Key)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Registered API Key
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Public (Free)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Public (Free)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Public (Free)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Public (Free)
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []

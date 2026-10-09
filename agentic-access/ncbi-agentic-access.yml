@@ -1,19 +1,317 @@
-generated: '2026-07-15'
+generated: '2026-09-23'
 method: generated
-source: openapi/ncbi-datasets-api.yaml
+source: openapi/ncbi-biosample-api-openapi.yml, openapi/ncbi-gene-api-openapi.yml, openapi/ncbi-genome-api-openapi.yml,
+  openapi/ncbi-organelle-api-openapi.yml, openapi/ncbi-prokaryote-api-openapi.yml, openapi/ncbi-taxonomy-api-openapi.yml,
+  openapi/ncbi-version-api-openapi.yml, openapi/ncbi-virus-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 107
   by_action_class:
-    connected: 66
-    acting: 41
+    connected: 102
+    acting: 5
   by_consequence:
-    read: 66
-    write: 41
+    read: 102
+    write: 5
   human_in_the_loop_required: 0
 operations:
+- path: /biosample/accession/{accessions}/biosample_report
+  method: get
+  operationId: BioSample_dataset_report
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/id/{gene_ids}/download
+  method: get
+  operationId: download_gene_package
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/download
+  method: post
+  operationId: download_gene_package_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/id/{gene_ids}
+  method: get
+  operationId: gene_reports_by_id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/accession/{accessions}
+  method: get
+  operationId: gene_metadata_by_accession
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/symbol/{symbols}/taxon/{taxon}
+  method: get
+  operationId: gene_metadata_by_tax_and_symbol
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/taxon/{taxon}
+  method: get
+  operationId: gene_reports_by_taxon
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene
+  method: post
+  operationId: gene_metadata_by_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/id/{gene_ids}/dataset_report
+  method: get
+  operationId: gene_dataset_reports_by_id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/accession/{accessions}/dataset_report
+  method: get
+  operationId: gene_dataset_report_by_accession
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/symbol/{symbols}/taxon/{taxon}/dataset_report
+  method: get
+  operationId: gene_dataset_report_by_tax_and_symbol
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/taxon/{taxon}/dataset_report
+  method: get
+  operationId: gene_dataset_reports_by_taxon
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/locus_tag/{locus_tags}/dataset_report
+  method: get
+  operationId: gene_dataset_reports_by_locus_tag
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/dataset_report
+  method: post
+  operationId: gene_dataset_report
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/id/{gene_ids}/product_report
+  method: get
+  operationId: gene_product_reports_by_id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/accession/{accessions}/product_report
+  method: get
+  operationId: gene_product_report_by_accession
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/symbol/{symbols}/taxon/{taxon}/product_report
+  method: get
+  operationId: gene_product_report_by_tax_and_symbol
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/taxon/{taxon}/product_report
+  method: get
+  operationId: gene_product_reports_by_taxon
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/locus_tag/{locus_tags}/product_report
+  method: get
+  operationId: gene_product_reports_by_locus_tags
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/product_report
+  method: post
+  operationId: gene_product_report
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/id/{gene_ids}/download_summary
+  method: get
+  operationId: gene_download_summary_by_id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/download_summary
+  method: post
+  operationId: gene_download_summary_by_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/taxon/{taxon}/counts
+  method: get
+  operationId: gene_counts_for_taxon
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/taxon/counts
+  method: post
+  operationId: gene_counts_for_taxon_by_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/id/{gene_id}/orthologs
+  method: get
+  operationId: gene_orthologs_by_id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/orthologs
+  method: post
+  operationId: gene_orthologs_by_post
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /gene/id/{gene_ids}/links
+  method: get
+  operationId: gene_links_by_id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/links
+  method: post
+  operationId: gene_links_by_id_by_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /gene/taxon/{taxon}/annotation/{annotation_name}/chromosome_summary
+  method: get
+  operationId: gene_chromosome_summary
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /genome/accession/{accessions}/download_summary
   method: get
   operationId: genome_download_summary
@@ -28,18 +326,12 @@ operations:
   method: post
   operationId: genome_download_summary_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /genome/accession/{accessions}/dataset_report
   method: get
   operationId: genome_dataset_report
@@ -104,18 +396,12 @@ operations:
   method: post
   operationId: genome_dataset_report_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /genome/sequence_accession/{accession}/sequence_assemblies
   method: get
   operationId: assembly_accessions_for_sequence_accession
@@ -130,18 +416,12 @@ operations:
   method: post
   operationId: assembly_accessions_for_sequence_accession_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /genome/accession/{accession}/sequence_reports
   method: get
   operationId: genome_sequence_report
@@ -156,18 +436,12 @@ operations:
   method: post
   operationId: genome_sequence_report_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /genome/accession/{accessions}/links
   method: get
   operationId: genome_links_by_accession
@@ -182,18 +456,12 @@ operations:
   method: post
   operationId: genome_links_by_accession_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /genome/taxon/{species_taxon}/checkm_histogram
   method: get
   operationId: checkm_histogram_by_taxon
@@ -207,22 +475,6 @@ operations:
 - path: /genome/checkm_histogram
   method: post
   operationId: checkm_histogram_by_taxon_by_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /biosample/accession/{accessions}/biosample_report
-  method: get
-  operationId: BioSample_dataset_report
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -244,70 +496,12 @@ operations:
   method: post
   operationId: download_assembly_package_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /gene/id/{gene_ids}/download
-  method: get
-  operationId: download_gene_package
-  x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     token:
       max-ttl: 3600
     audit: none
-- path: /gene/download
-  method: post
-  operationId: download_gene_package_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /protein/accession/{accessions}/download
-  method: get
-  operationId: download_prokaryote_gene_package
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /protein/accession/download
-  method: post
-  operationId: download_prokaryote_gene_package_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /genome/accession/{accession}/annotation_report/download
   method: get
   operationId: download_genome_annotation_package
@@ -322,44 +516,12 @@ operations:
   method: post
   operationId: download_genome_annotation_package_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /taxonomy/taxon/{tax_ids}/download
-  method: get
-  operationId: download_taxonomy_package
-  x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     token:
       max-ttl: 3600
     audit: none
-- path: /taxonomy/download
-  method: post
-  operationId: download_taxonomy_package_by_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /genome/accession/{accessions}/check
   method: get
   operationId: check_assembly_availability
@@ -386,344 +548,6 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /organelle/accession/{accessions}/download
-  method: get
-  operationId: download_organelle_package
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /organelle/download
-  method: post
-  operationId: download_organelle_package_by_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /version
-  method: get
-  operationId: version
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/id/{gene_ids}
-  method: get
-  operationId: gene_reports_by_id
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/accession/{accessions}
-  method: get
-  operationId: gene_metadata_by_accession
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/symbol/{symbols}/taxon/{taxon}
-  method: get
-  operationId: gene_metadata_by_tax_and_symbol
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/taxon/{taxon}
-  method: get
-  operationId: gene_reports_by_taxon
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene
-  method: post
-  operationId: gene_metadata_by_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /gene/id/{gene_ids}/dataset_report
-  method: get
-  operationId: gene_dataset_reports_by_id
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/accession/{accessions}/dataset_report
-  method: get
-  operationId: gene_dataset_report_by_accession
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/symbol/{symbols}/taxon/{taxon}/dataset_report
-  method: get
-  operationId: gene_dataset_report_by_tax_and_symbol
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/taxon/{taxon}/dataset_report
-  method: get
-  operationId: gene_dataset_reports_by_taxon
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/locus_tag/{locus_tags}/dataset_report
-  method: get
-  operationId: gene_dataset_reports_by_locus_tag
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/dataset_report
-  method: post
-  operationId: gene_dataset_report
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /gene/id/{gene_ids}/product_report
-  method: get
-  operationId: gene_product_reports_by_id
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/accession/{accessions}/product_report
-  method: get
-  operationId: gene_product_report_by_accession
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/symbol/{symbols}/taxon/{taxon}/product_report
-  method: get
-  operationId: gene_product_report_by_tax_and_symbol
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/taxon/{taxon}/product_report
-  method: get
-  operationId: gene_product_reports_by_taxon
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/locus_tag/{locus_tags}/product_report
-  method: get
-  operationId: gene_product_reports_by_locus_tags
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/product_report
-  method: post
-  operationId: gene_product_report
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /gene/id/{gene_ids}/download_summary
-  method: get
-  operationId: gene_download_summary_by_id
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/download_summary
-  method: post
-  operationId: gene_download_summary_by_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /gene/taxon/{taxon}/counts
-  method: get
-  operationId: gene_counts_for_taxon
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/taxon/counts
-  method: post
-  operationId: gene_counts_for_taxon_by_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /gene/id/{gene_id}/orthologs
-  method: get
-  operationId: gene_orthologs_by_id
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/orthologs
-  method: post
-  operationId: gene_orthologs_by_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /gene/id/{gene_ids}/links
-  method: get
-  operationId: gene_links_by_id
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /gene/links
-  method: post
-  operationId: gene_links_by_id_by_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /gene/taxon/{taxon}/annotation/{annotation_name}/chromosome_summary
-  method: get
-  operationId: gene_chromosome_summary
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
 - path: /genome/accession/{accession}/annotation_report
   method: get
   operationId: genome_annotation_report
@@ -738,18 +562,12 @@ operations:
   method: post
   operationId: genome_annotation_report_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /genome/accession/{accession}/annotation_summary
   method: get
   operationId: annotation_report_facets_by_accession
@@ -764,18 +582,12 @@ operations:
   method: post
   operationId: annotation_report_facets_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /genome/accession/{accession}/annotation_report/download_summary
   method: get
   operationId: genome_annotation_download_summary
@@ -790,18 +602,52 @@ operations:
   method: post
   operationId: genome_annotation_download_summary_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
+- path: /genome/accession/{accession}/revision_history
+  method: get
+  operationId: assembly_revision_history_by_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /genome/revision_history
+  method: post
+  operationId: assembly_revision_history_by_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organelle/accession/{accessions}/download
+  method: get
+  operationId: download_organelle_package
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /organelle/download
+  method: post
+  operationId: download_organelle_package_by_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /organelle/accessions/{accessions}/dataset_report
   method: get
   operationId: organelle_datareport_by_accession
@@ -826,18 +672,52 @@ operations:
   method: post
   operationId: organelle_datareport_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
+- path: /protein/accession/{accessions}/download
+  method: get
+  operationId: download_prokaryote_gene_package
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /protein/accession/download
+  method: post
+  operationId: download_prokaryote_gene_package_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /taxonomy/taxon/{tax_ids}/download
+  method: get
+  operationId: download_taxonomy_package
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /taxonomy/download
+  method: post
+  operationId: download_taxonomy_package_by_post
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /taxonomy/taxon/{taxons}
   method: get
   operationId: taxonomy_metadata
@@ -852,18 +732,12 @@ operations:
   method: post
   operationId: taxonomy_metadata_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /taxonomy/taxon/{taxons}/dataset_report
   method: get
   operationId: taxonomy_data_report
@@ -878,18 +752,12 @@ operations:
   method: post
   operationId: taxonomy_data_report_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /taxonomy/taxon/{taxons}/name_report
   method: get
   operationId: taxonomy_names
@@ -904,18 +772,12 @@ operations:
   method: post
   operationId: taxonomy_names_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /taxonomy/taxon/{tax_id}/related_ids
   method: get
   operationId: taxonomy_related_ids
@@ -956,18 +818,12 @@ operations:
   method: post
   operationId: taxonomy_filtered_subtree_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /taxonomy/taxon_suggest/{taxon_query}
   method: get
   operationId: tax_name_query
@@ -1008,18 +864,12 @@ operations:
   method: post
   operationId: taxonomy_links_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /taxonomy/taxon/{taxon}/image
   method: get
   operationId: taxonomy_image
@@ -1034,18 +884,12 @@ operations:
   method: post
   operationId: taxonomy_image_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /taxonomy/taxon/{taxon}/image/metadata
   method: get
   operationId: taxonomy_image_metadata
@@ -1060,18 +904,22 @@ operations:
   method: post
   operationId: taxonomy_image_metadata_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
+- path: /version
+  method: get
+  operationId: version
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /virus/taxon/{taxon}/genome
   method: get
   operationId: virus_genome_summary
@@ -1086,18 +934,12 @@ operations:
   method: post
   operationId: virus_genome_summary_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /virus/taxon/sars2/protein/{proteins}
   method: get
   operationId: sars2_protein_summary
@@ -1112,18 +954,12 @@ operations:
   method: post
   operationId: sars2_protein_summary_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /virus/taxon/{taxon}/genome/table
   method: get
   operationId: virus_genome_table
@@ -1168,18 +1004,12 @@ operations:
   method: post
   operationId: virus_reports_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /virus/taxon/{taxon}/annotation_report
   method: get
   operationId: virus_annotation_reports_by_taxon
@@ -1204,18 +1034,12 @@ operations:
   method: post
   operationId: virus_annotation_reports_by_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /virus/accession/{accessions}/check
   method: get
   operationId: virus_accession_availability
@@ -1266,18 +1090,12 @@ operations:
   method: post
   operationId: virus_genome_download_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /virus/taxon/sars2/protein/{proteins}/download
   method: get
   operationId: sars2_protein_download
@@ -1292,41 +1110,9 @@ operations:
   method: post
   operationId: sars2_protein_download_post
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /genome/accession/{accession}/revision_history
-  method: get
-  operationId: assembly_revision_history_by_get
-  x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     token:
       max-ttl: 3600
     audit: none
-- path: /genome/revision_history
-  method: post
-  operationId: assembly_revision_history_by_post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
